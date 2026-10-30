@@ -1,0 +1,104 @@
+file_name,column_name,data_type,unit,description,example_value,allowed_values_or_constraints,required_or_optional,data_origin
+cng_stations.csv,station_id,string,,Stable station identifier assigned within this research package; it does not imply official operator ID.,AMD001,Unique; pattern AMD###,required,real_public
+cng_stations.csv,station_name,string,,Station name copied or normalized from a cited operator directory.,Visat Automobile,Must retain source attribution,required,real_public
+cng_stations.csv,address,string,,Address as listed or normalized from the cited directory; may need field validation.,"Near Visat Cross Roads, Chandkheda, Ahmedabad - 380005",Do not infer missing street/unit details,required,real_public
+cng_stations.csv,locality,string,,Locality terms used for practical urban-scope screening.,Chandkheda / Visat Cross Roads,"Locality-based, not polygon-verified",required,research classification
+cng_stations.csv,city,string,,City label as reported/normalized for the operator listing.,Ahmedabad,Ahmedabad only in primary inventory,required,real_public/normalized
+cng_stations.csv,district,string,,District label from public listing or normalized city context.,Ahmedabad,Does not prove in-city study boundary,required,real_public/normalized
+cng_stations.csv,state,string,,Indian state.,Gujarat,Gujarat,required,real_public
+cng_stations.csv,pincode,string,,Postal PIN code; stored as text to preserve leading zeros if any.,380005,Six digits when available,optional,real_public
+cng_stations.csv,latitude,float,decimal degrees,Authoritative/independently verified station point latitude. Blank until confirmed; never fill from candidate queue without checks.,,WGS84 latitude from -90 to 90; blank is permitted for unverified coordinates,optional,real_public; blank until verified
+cng_stations.csv,longitude,float,decimal degrees,Authoritative/independently verified station point longitude. Blank until confirmed; never fill from candidate queue without checks.,,WGS84 longitude from -180 to 180; blank is permitted for unverified coordinates,optional,real_public; blank until verified
+cng_stations.csv,operator,string,,CNG/distribution operator only when established from evidence; blank where dealer/operator relationship is not established.,Gujarat Energy Limited (formerly Gujarat Gas Limited),Blank where not independently established,optional,real_public
+cng_stations.csv,brand,string,,Brand or directory under which the outlet appears; not necessarily the legal dealer/operator.,HPCL-listed outlet,Do not treat as proof of ownership,optional,real_public
+cng_stations.csv,cng_status,string,,How the public operator directory characterizes the outlet; it is not a field inspection result.,listed_as_CNG_outlet_in_official_HPCL_directory,Use a descriptive status; do not imply in-person verification,required,real_public
+cng_stations.csv,station_source_url,string,URL,Direct page used for station identity/address evidence.,https://www.gujarat-energy.com/cng/cng-stations/,Must be a source actually accessed,required,source provenance
+cng_stations.csv,coordinates_source_url,string,URL,Source of approved point coordinates; blank because none is approved in primary station master.,,Only fill after coordinate independently checked,optional,source provenance
+cng_stations.csv,verification_method,string,,"Method used to review station identity, address and spatial status.",Official operator directory; address/locality reviewed; no field visit or point-in-polygon validation,Must match actual work performed,required,research process
+cng_stations.csv,coordinates_verified,boolean,,Whether a station point was independently verified for the primary master.,False,False for all current rows,required,research status
+cng_stations.csv,verification_status,string,,"What was actually accessed/extracted, rather than a blanket quality score.",accessed; two rows extracted,Must be evidence-based,required,provenance
+cng_stations.csv,in_study_area,string,,Scope screen for Ahmedabad urban prototype: yes=locality-screened inside; uncertain=fringe/urban boundary unresolved; no=outside. This is not point-in-polygon validation.,yes,yes / no / uncertain,required,research classification
+cng_stations.csv,source_access_date,date,YYYY-MM-DD,Date source was accessed.,2026-10-29,ISO date,required,provenance
+cng_stations.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+cng_stations.csv,verification_notes,string,,"Human-readable explanation of evidence, uncertainty and restrictions.",Coordinates are pending independent verification.,Do not overstate verification,required,research process
+station_coordinate_candidates.csv,station_id,string,,Stable station identifier assigned within this research package; it does not imply official operator ID.,AMD001,Unique; pattern AMD###,required,real_public
+station_coordinate_candidates.csv,station_name,string,,Station name copied or normalized from a cited operator directory.,Visat Automobile,Must retain source attribution,required,real_public
+station_coordinate_candidates.csv,candidate_latitude,float,decimal degrees,"Coordinate displayed by a secondary page; candidate only, not approved for production map use.",23.1157,-90 to 90; candidate only,required,secondary_coordinate_candidate
+station_coordinate_candidates.csv,candidate_longitude,float,decimal degrees,"Coordinate displayed by a secondary page; candidate only, not approved for production map use.",72.5878,-180 to 180; candidate only,required,secondary_coordinate_candidate
+station_coordinate_candidates.csv,candidate_coordinate_source_url,string,URL,Direct secondary station-detail page showing the candidate coordinate.,https://cngbunk.com/station/visat-automobile-adani-cng-visat-cross-roads-chandkheda-dist-ahmedabad/,Source was accessed; not an official coordinate feed,required,secondary source
+station_coordinate_candidates.csv,candidate_coordinate_source_name,string,,Publisher/category of candidate coordinate source.,CNGbunk secondary station page,Secondary research lead,required,secondary source
+station_coordinate_candidates.csv,source_claim,string,,What the secondary source says about its candidate coordinate.,Page presents GPS coordinates.,"Represents source wording, not independent validation",required,source statement
+station_coordinate_candidates.csv,independent_check_status,string,,Whether an independent authoritative point or boundary check has been completed.,not_independently_checked_against authoritative map or boundary,All current rows unverified,required,validation status
+station_coordinate_candidates.csv,cng_status_conflict,string,,Known conflict or caveat about CNG-operational status relevant to using the candidate.,"Official directory supports outlet, but secondary source flags CNG unconfirmed",Must be reviewed before use,required,source comparison
+station_coordinate_candidates.csv,approved_for_map_pin,string,,Permission flag for using candidate as a production map pin.,no,no until independent validation,required,quality control
+station_coordinate_candidates.csv,data_origin,string,,Source category for the column values.,real_public,real_public / synthetic / derived / candidate etc.,required,metadata
+station_coordinate_candidates.csv,notes,string,,Specific notes about how/why this source was used.,Two Chandkheda records extracted,Free text,optional,provenance
+synthetic_daily_sales.csv,station_id,string,,Stable station identifier assigned within this research package; it does not imply official operator ID.,AMD001,Unique; pattern AMD###,required,real_public
+synthetic_daily_sales.csv,date,date,YYYY-MM-DD,Calendar date in simulated or sourced dataset.,2024-01-01,ISO date; daily range 2024-01-01 through 2025-12-31 for synthetic data,required,synthetic
+synthetic_daily_sales.csv,synthetic_sales_kg,float,kg/day,Simulated daily quantity for a station; not actual sales.,1125.4,Numeric and >=0; synthetic only,required,synthetic
+synthetic_daily_sales.csv,day_of_week,string,,Weekday name derived from date.,Monday,Must match date,required,derived from simulated date
+synthetic_daily_sales.csv,is_weekend,boolean,,True when date falls on Saturday or Sunday.,False,Boolean consistent with date,required,derived from simulated date
+synthetic_daily_sales.csv,month,integer,month number,Calendar month derived from date.,1,1-12,required,derived from simulated date
+synthetic_daily_sales.csv,year,integer,year,Calendar year derived from date.,2024,2024 or 2025,required,derived from simulated date
+synthetic_daily_sales.csv,is_public_holiday,boolean or blank,,True/False only if a sourced official_holidays.csv is supplied; blank when holiday dates were not verified.,,Blank is intentional without source-backed calendar,required,synthetic calendar annotation / unknown
+synthetic_daily_sales.csv,event_name,string,,Sourced holiday or event name if present in optional official_holidays.csv; otherwise blank.,,Do not invent events,optional,real_public annotation or blank
+synthetic_daily_sales.csv,simulation_profile,string,,Assumed demand-pattern profile used by the synthetic generator.,commuter_corridor,central_urban / commuter_corridor / mixed_urban,required,synthetic assumption
+synthetic_daily_sales.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+synthetic_daily_sales.csv,generation_method,string,,Generation method/version/seed note for the simulated value.,python_synthetic_simulation; fixed_seed=20241029,Synthetic values only,required,synthetic
+synthetic_supply.csv,station_id,string,,Stable station identifier assigned within this research package; it does not imply official operator ID.,AMD001,Unique; pattern AMD###,required,real_public
+synthetic_supply.csv,date,date,YYYY-MM-DD,Calendar date in simulated or sourced dataset.,2024-01-01,ISO date; daily range 2024-01-01 through 2025-12-31 for synthetic data,required,synthetic
+synthetic_supply.csv,planned_available_supply_kg,float,kg/day,Simulated quantity assumed available for planning comparison; not actual stock or deliveries.,1250.0,Numeric and >=0; compare to forecasts for future planning,required,synthetic
+synthetic_supply.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+synthetic_supply.csv,generation_method,string,,Generation method/version/seed note for the simulated value.,python_synthetic_simulation; fixed_seed=20241029,Synthetic values only,required,synthetic
+synthetic_hourly_demand.csv,station_id,string,,Stable station identifier assigned within this research package; it does not imply official operator ID.,AMD001,Unique; pattern AMD###,required,real_public
+synthetic_hourly_demand.csv,datetime,datetime,local Ahmedabad time,Simulated local timestamp at the start of each hour; no timezone offset is encoded.,2025-12-02 00:00:00,ISO-like local datetime; not measured timestamp,required,synthetic
+synthetic_hourly_demand.csv,date,date,YYYY-MM-DD,Calendar date in simulated or sourced dataset.,2024-01-01,ISO date; daily range 2024-01-01 through 2025-12-31 for synthetic data,required,synthetic
+synthetic_hourly_demand.csv,hour,integer,hour of day,Hour number for a simulated observation.,0,0-23,required,derived from simulated datetime
+synthetic_hourly_demand.csv,hourly_cng_demand_kg,float,kg/hour,Simulated hourly demand normalized to corresponding synthetic daily total.,42.75,Numeric and >=0; 24 values sum to matching daily total within 0.011 kg,required,synthetic
+synthetic_hourly_demand.csv,day_of_week,string,,Weekday name derived from date.,Monday,Must match date,required,derived from simulated date
+synthetic_hourly_demand.csv,is_weekend,boolean,,True when date falls on Saturday or Sunday.,False,Boolean consistent with date,required,derived from simulated date
+synthetic_hourly_demand.csv,simulation_profile,string,,Assumed demand-pattern profile used by the synthetic generator.,commuter_corridor,central_urban / commuter_corridor / mixed_urban,required,synthetic assumption
+synthetic_hourly_demand.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+synthetic_hourly_demand.csv,generation_method,string,,Generation method/version/seed note for the simulated value.,python_synthetic_simulation; fixed_seed=20241029,Synthetic values only,required,synthetic
+data_sources.csv,source_id,string,,Field copied from source/dataset; see README and source attribution.,SRC001,See source/schema,required,Provenance inventory of sources actually reviewed in the research process.
+data_sources.csv,dataset_name,string,,Dataset/file that uses or documents the source.,cng_stations.csv,Relative package path or dataset name,required,provenance
+data_sources.csv,source_name,string,,Publisher or dataset name.,Petroleum Planning & Analysis Cell (PPAC),Must be traceable to source,required,provenance
+data_sources.csv,publisher,string,,Source publisher/organization.,Gujarat Energy Limited,As stated by source,required,provenance
+data_sources.csv,source_url,string,URL,Direct URL for the source that supports the record.,https://ppac.gov.in/,Must be an accessed source URL,required,provenance
+data_sources.csv,geographic_scope,string,,Geographic coverage of source as accessed.,Ahmedabad entries selected from Gujarat-wide directory,Do not overstate detail resolution,required,provenance
+data_sources.csv,reporting_period,string,,Period represented by source/data; distinguish access date from reporting period.,Current directory view,Be explicit where source has no report date,required,provenance
+data_sources.csv,access_date,date,YYYY-MM-DD,Date this source was accessed/reviewed.,2026-10-29,ISO date,required,provenance
+data_sources.csv,data_origin,string,,Source category for the column values.,real_public,real_public / synthetic / derived / candidate etc.,required,metadata
+data_sources.csv,verification_status,string,,"What was actually accessed/extracted, rather than a blanket quality score.",accessed; two rows extracted,Must be evidence-based,required,provenance
+data_sources.csv,licence_or_attribution,string,,Known or unassessed reuse terms and attribution obligation.,Retain source attribution; check reuse terms,Free text,required,provenance
+data_sources.csv,limitations,string,,Source limitations that matter for usage.,No point coordinates and not complete cross-operator inventory,Free text,required,provenance
+data_sources.csv,notes,string,,Specific notes about how/why this source was used.,Two Chandkheda records extracted,Free text,optional,provenance
+data_gaps.csv,dataset_or_information_needed,string,,Missing dataset or information.,Verified point coordinates for every station,Specific and concise,required,research gap
+data_gaps.csv,attempted_sources,string,,Sources actually checked or attempted.,Operator directories and secondary station pages,Must reflect actual action,required,research gap
+data_gaps.csv,source_urls,string,URLs,Relevant source URLs separated by semicolons.,https://www.gujarat-energy.com/cng/cng-stations/,Only actual or directly relevant sources,required,research gap
+data_gaps.csv,information_sought,string,,What evidence/fields were sought.,Reliable latitude/longitude tied to exact outlet,Free text,required,research gap
+data_gaps.csv,result,string,,Outcome of research attempt.,Official directory had no point coordinates,Distinguish found/not found/partially accessible,required,research gap
+data_gaps.csv,reason_unavailable_or_unsuitable,string,,Reason data could not be safely used.,No authoritative point confirmation,Do not invent access failures,required,research gap
+data_gaps.csv,effect_on_project,string,,Practical impact of this data gap.,No verified map pins,Explain feature dependency,required,research gap
+data_gaps.csv,recommended_next_step,string,,Concrete action to close the gap.,Verify point against operator locator and dated boundary,Actionable,required,research gap
+optional/cng_infrastructure.csv,record_id,string,,Stable identifier for this sourced contextual indicator.,INF001,Unique,required,real_public
+optional/cng_infrastructure.csv,indicator_name,string,,Name/definition of published metric.,CNG station count by authorized CGD area,Preserve the source definition,required,real_public
+optional/cng_infrastructure.csv,indicator_value,numeric,see unit,Value exactly as reported by source.,73,Must preserve published geographic scope/period,required,real_public
+optional/cng_infrastructure.csv,unit,string,,Unit of measurement when applicable.,kg/day,Blank where not applicable,optional,metadata
+optional/cng_infrastructure.csv,geographic_scope,string,,Geographic coverage of source as accessed.,Ahmedabad entries selected from Gujarat-wide directory,Do not overstate detail resolution,required,provenance
+optional/cng_infrastructure.csv,reporting_period,string,,Period represented by source/data; distinguish access date from reporting period.,Current directory view,Be explicit where source has no report date,required,provenance
+optional/cng_infrastructure.csv,publication_date,string,,Source publication edition/date when known.,2021-12,May be blank if unknown,optional,real_public metadata
+optional/cng_infrastructure.csv,source_name,string,,Publisher or dataset name.,Petroleum Planning & Analysis Cell (PPAC),Must be traceable to source,required,provenance
+optional/cng_infrastructure.csv,source_url,string,URL,Direct URL for the source that supports the record.,https://ppac.gov.in/,Must be an accessed source URL,required,provenance
+optional/cng_infrastructure.csv,source_access_date,date,YYYY-MM-DD,Date source was accessed.,2026-10-29,ISO date,required,provenance
+optional/cng_infrastructure.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+optional/cng_infrastructure.csv,notes,string,,Specific notes about how/why this source was used.,Two Chandkheda records extracted,Free text,optional,provenance
+data_dictionary.csv,file_name,string,relative file path,Path of CSV whose column is described.,cng_stations.csv,Relative to package root,required,metadata
+data_dictionary.csv,column_name,string,,Exact CSV column name described in this row.,station_id,Must match the named CSV schema,required,metadata
+data_dictionary.csv,data_type,string,,Logical/CSV data type for the column.,string,Use clear logical type,required,metadata
+data_dictionary.csv,unit,string,,Unit of measurement when applicable.,kg/day,Blank where not applicable,optional,metadata
+data_dictionary.csv,description,string,,Meaning of the field and any caveat.,Stable station identifier.,Must not imply unsupported certainty,required,metadata
+data_dictionary.csv,example_value,string,,Illustrative value from the schema; synthetic examples remain identified as such.,AMD001,Use empty string where blank is intentional,required,metadata
+data_dictionary.csv,allowed_values_or_constraints,string,,"Allowed values, range, uniqueness or cross-file rule.",Unique; pattern AMD###,Be specific,required,metadata
+data_dictionary.csv,required_or_optional,string,,Whether field is required by schema or may be blank.,required,required / optional,required,metadata
+data_dictionary.csv,data_origin,string,,Source category for the column values.,real_public,real_public / synthetic / derived / candidate etc.,required,metadata
