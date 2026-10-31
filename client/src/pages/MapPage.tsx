@@ -1,86 +1,156 @@
-import React from 'react';
-import { MapPin, ShieldAlert, Compass } from 'lucide-react';
+import React, { useState } from 'react';
+import { useStations } from '../hooks/useStations';
+import { useFixtureMode } from '../context/FixtureContext';
+import { Station } from '../types/api';
 import { Badge } from '../components/ui/Badge';
-import { DataOriginBadge } from '../components/ui/DataOriginBadge';
 import { Button } from '../components/ui/Button';
+import { DataOriginBadge } from '../components/ui/DataOriginBadge';
+import { ErrorState } from '../components/ui/ErrorState';
+import { StationMap } from '../components/map/StationMap';
+import { ZeroCoordinatesBanner } from '../components/map/ZeroCoordinatesBanner';
+import { ProposedLocationPanel } from '../components/map/ProposedLocationPanel';
+import { NearbyStationsPanel } from '../components/map/NearbyStationsPanel';
+import { MapStationSidebar } from '../components/map/MapStationSidebar';
+import { MapLegend } from '../components/map/MapLegend';
+import { RotateCcw } from 'lucide-react';
 
 export const MapPage: React.FC = () => {
+  const { useFixtures, toggleFixtures } = useFixtureMode();
+
+  // 1. Fetch station inventory from exact contract endpoint
+  const {
+    data: stationsData,
+    isLoading: isStationsLoading,
+    error: stationsError,
+    refetch: refetchStations,
+  } = useStations();
+
+  const stations = stationsData?.stations || [];
+
+  // 2. Map State: Proposed location candidate coordinates
+  const [proposedCoords, setProposedCoords] = useState<{ lat: number; lng: number } | null>({
+    lat: 23.05,
+    lng: 72.6,
+  });
+
+  // Selected station from sidebar for detail inspection
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+
+  const handleSelectProposedLocation = (coords: { lat: number; lng: number }) => {
+    setProposedCoords(coords);
+  };
+
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Dev Fixture Persistent Notice */}
+      {useFixtures && (
+        <div
+          role="status"
+          className="rounded-lg bg-amber-500 text-slate-950 p-3 text-xs font-medium flex items-center justify-between shadow-sm border border-amber-600"
+        >
+          <div className="flex items-center gap-2">
+            <span className="font-bold uppercase tracking-wider text-[11px] bg-black text-amber-300 px-2 py-0.5 rounded">
+              Dev Fixtures Active
+            </span>
+            <span>
+              Offline development fixtures enabled. Real API calls are bypassed; never used as a silent production fallback.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={toggleFixtures}
+            className="underline hover:text-white font-bold ml-2 cursor-pointer"
+          >
+            Switch to Live API
+          </button>
+        </div>
+      )}
+
+      {/* Header & Planning Context */}
       <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h2 className="text-base font-bold text-[#0F172A]">
+            <h2 className="text-base sm:text-lg font-bold text-[#0F172A] tracking-tight">
               Ahmedabad CNG Network Map
             </h2>
-            <Badge variant="neutral">Feature D</Badge>
+            <Badge variant="teal">Feature D</Badge>
             <DataOriginBadge origin="real_public" size="sm" />
           </div>
           <p className="text-xs text-[#64748B] max-w-2xl leading-relaxed">
             Geographic view of Ahmedabad study area (≈23.0225°N, 72.5714°E). Strict compliance with spatial data policy: zero unverified coordinates are rendered as confirmed operating stations.
           </p>
         </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleFixtures}
+            className="text-xs text-[#64748B]"
+          >
+            {useFixtures ? 'Disable Fixtures' : 'Enable Dev Fixtures'}
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refetchStations}
+            leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
+          >
+            Refresh
+          </Button>
+        </div>
       </div>
 
-      {/* Map Container with Honest Unavailable Overlay */}
-      <div className="relative rounded-card-lg border border-[#DCE4E8] bg-slate-100 overflow-hidden shadow-card h-[460px] flex items-center justify-center">
-        {/* Subtle Map Grid Background (Simulated Canvas) */}
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `radial-gradient(#0F766E 1px, transparent 1px), radial-gradient(#142B3A 1px, transparent 1px)`,
-            backgroundSize: '20px 20px',
-            backgroundPosition: '0 0, 10px 10px',
-          }}
+      {/* Honest Zero-Coordinates & Governance Banner */}
+      <ZeroCoordinatesBanner
+        mapAvailability={stationsData?.map_availability}
+        totalStations={stationsData?.total ?? 12}
+        eligiblePins={stationsData?.eligible_for_map_pin ?? 0}
+      />
+
+      {/* API Error State */}
+      {stationsError && !useFixtures && (
+        <ErrorState
+          title="Station Inventory Unavailable"
+          code={stationsError.code}
+          message={`${stationsError.message} Ensure Member 2's backend service is running on http://localhost:8000.`}
+          onRetry={refetchStations}
         />
+      )}
 
-        {/* Honest Map Unavailable Overlay */}
-        <div className="relative z-10 max-w-lg p-6 mx-4 rounded-card bg-white/95 backdrop-blur-xs border border-amber-200 shadow-modal text-center">
-          <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-3">
-            <ShieldAlert className="w-6 h-6" />
-          </div>
+      {/* Map Workspace Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Map Viewport & Legend */}
+        <div className="lg:col-span-2 space-y-4">
+          <StationMap
+            stations={stations}
+            proposedCoords={proposedCoords}
+            onSelectProposedLocation={handleSelectProposedLocation}
+            selectedStation={selectedStation}
+          />
 
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <h3 className="text-sm font-bold text-[#0F172A]">
-              Production Station Pins Unavailable
-            </h3>
-            <Badge variant="warning" size="sm">
-              0 Verified Pins
-            </Badge>
-          </div>
+          <MapLegend />
 
-          <p className="text-xs text-[#64748B] mb-4 leading-relaxed">
-            All 12 records in <code className="font-mono text-slate-700">cng_stations.csv</code> leave coordinates blank. The 8 secondary coordinate leads in <code className="font-mono text-slate-700">station_coordinate_candidates.csv</code> remain unapproved (<code className="font-mono text-slate-700">approved_for_map_pin=no</code>).
-          </p>
-
-          <div className="p-3 bg-slate-50 rounded-lg text-left text-xs text-[#64748B] space-y-1 mb-4 border border-slate-200">
-            <div className="font-semibold text-[#0F172A] flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-[#0F766E]" />
-              <span>Milestone 4 Interactive Capabilities:</span>
-            </div>
-            <ul className="list-disc pl-4 text-[11px] space-y-0.5">
-              <li>OpenStreetMap tiles centred on Ahmedabad (23.0225°N, 72.5714°E)</li>
-              <li>Interactive click to propose candidate location coordinates</li>
-              <li>Direct handoff of clicked coordinates into the Impact Simulator</li>
-            </ul>
-          </div>
-
-          <div className="flex justify-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => alert('Map tile layer activates in Milestone 4 with React Leaflet.')}
-              leftIcon={<MapPin className="w-3.5 h-3.5 text-[#0F766E]" />}
-            >
-              Test Centering (23.0225°N, 72.5714°E)
-            </Button>
-          </div>
+          {/* Nearby Station Distance Analysis Card */}
+          <NearbyStationsPanel proposedCoords={proposedCoords} />
         </div>
 
-        {/* Required OpenStreetMap Attribution */}
-        <div className="absolute bottom-2 right-2 text-[10px] text-slate-500 bg-white/90 px-2 py-0.5 rounded shadow-xs border border-slate-200">
-          © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-800">OpenStreetMap</a> contributors
+        {/* Right Sidebar: Candidate Controls & Station Directory */}
+        <div className="space-y-6">
+          {/* Candidate Proposed Location Input & Presets */}
+          <ProposedLocationPanel
+            proposedCoords={proposedCoords}
+            onSetCoords={setProposedCoords}
+          />
+
+          {/* Station Inventory Register */}
+          <MapStationSidebar
+            stations={stations}
+            isLoading={isStationsLoading}
+            selectedStation={selectedStation}
+            onSelectStation={setSelectedStation}
+          />
         </div>
       </div>
     </div>
