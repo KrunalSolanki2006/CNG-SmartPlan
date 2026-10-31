@@ -17,7 +17,7 @@ describe('App Component', () => {
     expect(screen.getByText('Demand Forecast')).toBeInTheDocument();
     expect(screen.getByText('Supply Alerts')).toBeInTheDocument();
     expect(screen.getByText('Network Map')).toBeInTheDocument();
-    expect(screen.getByText('Impact Simulator')).toBeInTheDocument();
+    expect(screen.getAllByText('Impact Simulator').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Data Quality & Provenance').length).toBeGreaterThan(0);
   });
 
