@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
 describe('Navigation Flow', () => {
+  beforeEach(() => {
+    localStorage.setItem('cng_smartplan_use_fixtures', 'true');
+  });
+
   it('navigates to Forecast page and verifies shell contents', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -59,7 +63,7 @@ describe('Navigation Flow', () => {
     await user.click(qualityLink);
 
     expect(screen.getAllByText('Data Quality & Provenance Ledger').length).toBeGreaterThan(0);
-    expect(screen.getByText('Documented Data Gaps Register')).toBeInTheDocument();
+    expect(await screen.findByText('Documented Data Gaps Register')).toBeInTheDocument();
     expect(screen.getByText('Verified station coordinates')).toBeInTheDocument();
   });
 });
