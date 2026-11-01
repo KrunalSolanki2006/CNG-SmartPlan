@@ -95,6 +95,11 @@ export async function apiClient<T>(endpoint: string, options: RequestOptions = {
     }
 
     if (err instanceof DOMException && err.name === 'AbortError') {
+      if (signal?.aborted) {
+        const abortErr = new Error('The request was cancelled.');
+        abortErr.name = 'AbortError';
+        throw abortErr;
+      }
       throw new ApiError(408, {
         code: 'REQUEST_TIMEOUT',
         message: 'The request took too long or was cancelled.',
