@@ -233,7 +233,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
                 dataKey="upper_bound_kg"
                 stroke="none"
                 fill="url(#uncertaintyGradient)"
-                name="Confidence Band (85-115%)"
+                name="Calibrated Prediction Interval (95% Empirical Residuals)"
                 isAnimationActive={false}
               />
             )}

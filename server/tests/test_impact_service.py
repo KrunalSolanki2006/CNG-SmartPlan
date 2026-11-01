@@ -235,3 +235,43 @@ def test_impact_simulator_extra_fields_forbidden(client):
     err = response.json()
     assert err["error"]["code"] == "VALIDATION_ERROR"
 
+
+
+def test_impact_simulation_screenshot_benchmark_arithmetic_and_sensitivity():
+    """Verify exact calculation from screenshot benchmark scenario (Defect 3.6):
+    Capacity: 5000 kg/day, Capture: 81% (0.81), Diversion: 60% (0.60), Accessibility: 0 kg/day.
+    Expected:
+    proposed = 5000 * 0.81 + 0 = 4050.0 kg/day
+    diverted = 4050 * 0.60 = 2430.0 kg/day
+    net_additional = 4050 - 2430 = 1620.0 kg/day
+    network_baseline = 14081.2 kg/day
+    scenario_network = 15701.2 kg/day
+    """
+    req = ImpactSimulatorRequest(
+        proposed_latitude=23.05,
+        proposed_longitude=72.60,
+        catchment_radius_km=3.0,
+        catchment_demand_kg_per_day=5000.0,
+        capture_proportion=0.81,
+        diversion_proportion=0.60,
+        accessibility_demand_kg_per_day=0.0,
+    )
+    resp = ImpactService.simulate_impact(req)
+
+    assert resp.results.proposed_station_demand_kg_per_day == pytest.approx(4050.0)
+    assert resp.results.estimated_diverted_demand_kg_per_day == pytest.approx(2430.0)
+    assert resp.results.net_additional_network_demand_kg_per_day == pytest.approx(1620.0)
+    assert resp.results.network_baseline_daily_demand_kg == pytest.approx(14081.2)
+    assert resp.results.scenario_network_daily_demand_kg == pytest.approx(15701.2)
+
+    # Check sensitivity analysis grid
+    assert resp.sensitivity_analysis is not None
+    assert len(resp.sensitivity_analysis) == 12  # 4 capture rates x 3 diversion rates
+    # Check matching grid point
+    pt_81_60 = next(
+        p for p in resp.sensitivity_analysis
+        if abs(p.capture_proportion - 0.81) < 0.001 and abs(p.diversion_proportion - 0.60) < 0.001
+    )
+    assert pt_81_60.proposed_station_demand_kg == pytest.approx(4050.0)
+    assert pt_81_60.diverted_demand_kg == pytest.approx(2430.0)
+    assert pt_81_60.net_additional_demand_kg == pytest.approx(1620.0)

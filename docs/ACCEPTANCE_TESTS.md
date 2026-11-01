@@ -285,6 +285,26 @@
 **Expected:** All three formulas displayed in plain language alongside their results.  
 **Pass criterion:** Formula text visible for all three calculations.
 
+
+### AT-I07: Screenshot benchmark scenario arithmetic and network totals
+
+**Setup:** Backend running.  
+**Action:** `POST /api/v1/impact-simulator` with `catchment_demand_kg_per_day=5000.0, capture_proportion=0.81, diversion_proportion=0.60, accessibility_demand_kg_per_day=0.0`.  
+**Expected:**  
+- `proposed_station_demand_kg_per_day` = 4050.00 (± 0.01)  
+- `estimated_diverted_demand_kg_per_day` = 2430.00 (± 0.01)  
+- `net_additional_network_demand_kg_per_day` = 1620.00 (± 0.01)  
+- `network_baseline_daily_demand_kg` = 14081.20 (± 0.01)  
+- `scenario_network_daily_demand_kg` = 15701.20 (± 0.01)  
+**Pass criterion:** All 5 values match exact benchmark arithmetic.
+
+### AT-I08: Multi-scenario sensitivity analysis matrix
+
+**Setup:** Frontend Simulator page loaded.  
+**Action:** View Sensitivity Analysis Matrix.  
+**Expected:** 12-cell grid representing 4 capture rates (20%, 35%, 50%, 81%) × 3 diversion rates (40%, 60%, 80%). Clicking any cell applies that scenario to the simulator.  
+**Pass criterion:** Grid renders, displays correct net values, and supports scenario selection.
+
 ---
 
 ## Category 8 — Reliability and Unavailable Data States

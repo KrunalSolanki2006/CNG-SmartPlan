@@ -75,6 +75,10 @@ export const ForecastSummaryCard: React.FC<ForecastSummaryCardProps> = ({ summar
         <p className="text-xs text-[#64748B] leading-relaxed">
           {summary.note}
         </p>
+
+        <div className="p-2 rounded bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 leading-tight">
+          <strong>Historical Demo Notice:</strong> Source data ends 31 Dec 2025; forecast shown from 1 Jan 2026.
+        </div>
       </CardContent>
 
       <CardFooter className="justify-between">

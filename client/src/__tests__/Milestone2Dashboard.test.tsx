@@ -28,11 +28,11 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       expect(screen.getByText(/0 \/ 12 Mapped/i)).toBeInTheDocument();
 
       // KPI 3: Mean daily demand
-      expect(screen.getByText('Mean Daily Demand')).toBeInTheDocument();
+      expect(screen.getByText('Network Mean Daily Total (11 stations)')).toBeInTheDocument();
       expect(screen.getByText('14,081.2')).toBeInTheDocument();
 
       // KPI 4: Supply shortfall station-days
-      expect(screen.getByText('Supply Shortfalls')).toBeInTheDocument();
+      expect(screen.getByText('Synthetic Constrained-Supply Days')).toBeInTheDocument();
       expect(screen.getByText('1,628')).toBeInTheDocument();
       expect(screen.getByText('Not Stockout')).toBeInTheDocument();
     });
@@ -108,7 +108,7 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
         />
       );
 
-      expect(screen.getByText('Live Data Provenance & Verification Audit')).toBeInTheDocument();
+      expect(screen.getByText('Data Provenance & Verification Audit')).toBeInTheDocument();
       expect(screen.getByText('False (0 Verified)')).toBeInTheDocument();
       expect(screen.getAllByText('False (100% Synthetic)').length).toBe(2);
       expect(screen.getByText('Blank (8,041 Unassigned)')).toBeInTheDocument();

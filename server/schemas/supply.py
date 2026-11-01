@@ -42,6 +42,10 @@ class SupplyComparisonPoint(BaseModel):
     supply_data_origin: str = Field(..., description="Provenance tag for supply value ('synthetic_demo', 'user_entered_scenario', 'unavailable')")
     potential_shortfall_kg: Optional[float] = Field(default=None, description="max(0, forecast - supply) in kg (null if supply unavailable)")
     has_shortfall: Optional[bool] = Field(default=None, description="True if potential shortfall > 0, null if unavailable")
+    supply_status: str = Field(
+        default="covered",
+        description="'covered' | 'shortfall' | 'no_shortfall' | 'unavailable' | 'user_override'",
+    )
 
 
 class SupplySummary(BaseModel):
@@ -52,6 +56,11 @@ class SupplySummary(BaseModel):
     days_with_shortfall: int = Field(..., description="Number of days in horizon with potential shortfall")
     max_shortfall_kg: float = Field(..., description="Maximum shortfall in kg observed over horizon")
     total_shortfall_kg: float = Field(..., description="Total cumulative shortfall in kg over horizon")
+    days_covered: int = Field(default=0, description="Count of days with valid supply data or overrides")
+    days_missing_supply: int = Field(default=0, description="Count of days where supply is unavailable")
+    active_user_overrides_count: int = Field(default=0, description="Count of user-provided values applied")
+    dates_requiring_override: List[str] = Field(default_factory=list, description="List of dates that currently have no supply data")
+    alert_label: str = Field(default="Potential Planning Shortfall", description="Operational alert label")
 
 
 class SupplyCheckResponse(BaseModel):
@@ -72,4 +81,3 @@ class SupplyCheckResponse(BaseModel):
         ],
         description="Mandatory supply check operational warnings",
     )
-

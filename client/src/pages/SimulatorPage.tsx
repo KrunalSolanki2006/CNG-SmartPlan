@@ -12,6 +12,7 @@ import { SimulatorResultsCards } from '../components/simulator/SimulatorResultsC
 import { SimulatorWaterfallChart } from '../components/simulator/SimulatorWaterfallChart';
 import { SimulatorFormulasPanel } from '../components/simulator/SimulatorFormulasPanel';
 import { SimulatorGeographicDisclosure } from '../components/simulator/SimulatorGeographicDisclosure';
+import { SimulatorSensitivityTable } from '../components/simulator/SimulatorSensitivityTable';
 
 export const BENCHMARK_SIMULATOR_INPUTS: ImpactSimulatorRequest = {
   proposed_latitude: 23.05,
@@ -160,6 +161,23 @@ export const SimulatorPage: React.FC = () => {
 
               {/* Demand Flow / Waterfall Chart */}
               <SimulatorWaterfallChart data={data} />
+
+              {/* Multi-scenario Sensitivity Matrix (Defect 3.6) */}
+              <SimulatorSensitivityTable
+                catchmentDemand={inputs.catchment_demand_kg_per_day}
+                accessibilityDemand={inputs.accessibility_demand_kg_per_day}
+                currentCapture={inputs.capture_proportion}
+                currentDiversion={inputs.diversion_proportion}
+                onSelectScenario={(cap, div) => {
+                  const updated = {
+                    ...inputs,
+                    capture_proportion: cap,
+                    diversion_proportion: div,
+                  };
+                  setInputs(updated);
+                  runSimulation(updated);
+                }}
+              />
             </>
           )}
 

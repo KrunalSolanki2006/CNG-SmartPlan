@@ -42,6 +42,8 @@ export function createImpactFixture(
       proposed_station_demand_kg_per_day: proposedDemand,
       estimated_diverted_demand_kg_per_day: divertedDemand,
       net_additional_network_demand_kg_per_day: netAdditionalDemand,
+      network_baseline_daily_demand_kg: 14081.2,
+      scenario_network_daily_demand_kg: Math.round((14081.2 + netAdditionalDemand) * 100) / 100,
     },
     formulas_applied: {
       proposed_station_demand: '(catchment_demand_kg_per_day * capture_proportion) + accessibility_demand_kg_per_day',

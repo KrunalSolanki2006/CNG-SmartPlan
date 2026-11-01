@@ -289,6 +289,11 @@ Generate a station-level demand forecast (Feature B).
   "model_used": "holt_winters",
   "data_origin": "synthetic_demo",
   "horizon_days": 7,
+  "forecast_origin_date": "2025-12-31",
+  "data_through_date": "2025-12-31",
+  "target_start_date": "2026-01-01",
+  "is_historical_replay": true,
+  "historical_demo_notice": "Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.",
   "train_period": {
     "start": "2024-01-01",
     "end": "2025-10-02",
@@ -382,13 +387,19 @@ Compare forecast demand against planned supply (Feature C).
       "planned_supply_kg": 1350.0,
       "supply_data_origin": "synthetic_demo",
       "potential_shortfall_kg": 70.5,
-      "has_shortfall": true
+      "has_shortfall": true,
+      "supply_status": "shortfall"
     }
   ],
   "summary": {
     "days_with_shortfall": 3,
     "max_shortfall_kg": 210.4,
-    "total_shortfall_kg": 450.2
+    "total_shortfall_kg": 450.2,
+    "days_covered": 7,
+    "days_missing_supply": 0,
+    "active_user_overrides_count": 0,
+    "dates_requiring_override": [],
+    "alert_label": "Potential Planning Shortfall"
   },
   "warnings": [
     "Synthetic supply covers only 2024-01-01 to 2025-12-31. Forecast dates beyond this require user-entered supply values.",
@@ -481,7 +492,9 @@ Illustrative new-station impact simulation (Feature E — Signature Feature).
   "results": {
     "proposed_station_demand_kg_per_day": 1750.0,
     "estimated_diverted_demand_kg_per_day": 1050.0,
-    "net_additional_network_demand_kg_per_day": 700.0
+    "net_additional_network_demand_kg_per_day": 700.0,
+    "network_baseline_daily_demand_kg": 14081.2,
+    "scenario_network_daily_demand_kg": 14781.2
   },
   "formulas_applied": {
     "proposed_station_demand": "(catchment_demand_kg_per_day * capture_proportion) + accessibility_demand_kg_per_day",

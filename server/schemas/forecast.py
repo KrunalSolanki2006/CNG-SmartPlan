@@ -95,6 +95,26 @@ class ForecastResponse(BaseModel):
     model_used: str = Field(..., description="Model selected for primary forecast")
     data_origin: str = Field(default="synthetic_demo", description="Provenance tag")
     horizon_days: int = Field(..., description="Forecast horizon in days")
+    forecast_origin_date: str = Field(
+        default="2025-12-31",
+        description="Last date of historical training/context data",
+    )
+    data_through_date: str = Field(
+        default="2025-12-31",
+        description="Cutoff date for historical data availability",
+    )
+    target_start_date: str = Field(
+        default="2026-01-01",
+        description="First date of forecasted horizon",
+    )
+    is_historical_replay: bool = Field(
+        default=True,
+        description="True indicates forecast projects from historical cutoff date, not current real-time",
+    )
+    historical_demo_notice: str = Field(
+        default="Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.",
+        description="Mandatory historical replay disclaimer",
+    )
     train_period: TrainPeriod
     test_period: TestPeriod
     evaluation: ForecastEvaluation
@@ -109,4 +129,3 @@ class ForecastResponse(BaseModel):
         ],
         description="Documented modeling limitations",
     )
-

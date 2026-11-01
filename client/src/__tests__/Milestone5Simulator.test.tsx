@@ -266,4 +266,46 @@ describe('Milestone 5 - New-Station Impact Simulator Acceptance Tests', () => {
       });
     });
   });
+  describe('Sensitivity Analysis Matrix & Network Totals (Defect 3.6)', () => {
+    it('renders Before and After Network Totals comparison in results cards', () => {
+      const fixture = createImpactFixture();
+      render(<SimulatorResultsCards data={fixture} />);
+
+      expect(screen.getByText(/Network Demand Totals: Baseline Before vs Scenario After/i)).toBeInTheDocument();
+      expect(screen.getByText(/1. Current Network Baseline \(Before\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/2. Net Incremental Gain/i)).toBeInTheDocument();
+      expect(screen.getByText(/3. Scenario Network Total \(After\)/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/14,081.2/).length).toBeGreaterThan(0);
+    });
+
+    it('renders Sensitivity Analysis Matrix with 12 combinations and supports selection', async () => {
+      const user = userEvent.setup();
+      const onSelect = vi.fn();
+      const { SimulatorSensitivityTable } = await import('../components/simulator/SimulatorSensitivityTable');
+
+      render(
+        <SimulatorSensitivityTable
+          catchmentDemand={5000}
+          accessibilityDemand={0}
+          currentCapture={0.35}
+          currentDiversion={0.60}
+          onSelectScenario={onSelect}
+        />
+      );
+
+      expect(screen.getByText(/Sensitivity Analysis Matrix \(Capture vs Diversion\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/81% Capture/i)).toBeInTheDocument();
+      expect(screen.getByText(/40% Diversion/i)).toBeInTheDocument();
+      expect(screen.getByText(/60% Diversion/i)).toBeInTheDocument();
+      expect(screen.getByText(/80% Diversion/i)).toBeInTheDocument();
+
+      // Click on benchmark cell (81% cap, 60% div -> +1,620 kg/d)
+      const benchmarkCell = screen.getByText(/\+1,620 kg\/d/i);
+      expect(benchmarkCell).toBeInTheDocument();
+      await user.click(benchmarkCell);
+
+      expect(onSelect).toHaveBeenCalledWith(0.81, 0.60);
+    });
+  });
+
 });

@@ -105,7 +105,7 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
 
       expect(screen.getByText('Proposed Candidate Location')).toBeInTheDocument();
       expect(
-        screen.getByText(/Coordinates are within the validated Ahmedabad study boundary/i)
+        screen.getByText(/Coordinates fall within the provisional coordinate envelope/i)
       ).toBeInTheDocument();
 
       // Enter out-of-bounds latitude

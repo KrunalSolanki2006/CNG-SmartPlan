@@ -154,6 +154,21 @@ export const ForecastPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Historical Synthetic Demo Notice Banner (Defect 3.1) */}
+      <div className="p-3.5 bg-blue-50/80 rounded-lg border border-blue-200/80 text-xs text-blue-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-xs">
+        <div className="flex items-center gap-2">
+          <Clock className="w-4 h-4 text-blue-600 shrink-0" />
+          <span className="font-semibold text-blue-950">
+            Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.
+          </span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-[11px] text-blue-700 bg-white/80 px-2.5 py-1 rounded border border-blue-200 shrink-0">
+          <span>Data Cutoff: 2025-12-31</span>
+          <span>&rarr;</span>
+          <span>Target Start: 2026-01-01</span>
+        </div>
+      </div>
+
       {/* Navigation Tabs (Forecast vs Diurnal Hourly Explorer) */}
       <div className="flex items-center gap-2 border-b border-slate-200 pb-1 text-xs">
         <button

@@ -21,7 +21,7 @@ export const DataQualityFlagsBanner: React.FC<DataQualityFlagsBannerProps> = ({
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#0F766E]" />
             <h4 className="text-xs font-bold text-[#0F172A] tracking-tight">
-              Live Data Provenance & Verification Audit
+              Data Provenance & Verification Audit
             </h4>
           </div>
           <span className="text-[11px] text-[#64748B]">

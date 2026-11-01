@@ -78,7 +78,7 @@ export const DashboardPage: React.FC = () => {
             <DataOriginBadge origin="synthetic_demo" size="sm" />
           </div>
           <p className="text-xs text-[#64748B] max-w-2xl leading-relaxed">
-            Ahmedabad CNG network decision support for Gujarat Gas Company Limited. Live overview telemetry connecting station inventory, synthetic time series, and data quality flags.
+            Ahmedabad CNG network decision support for Gujarat Gas Company Limited. Current prototype data snapshot connecting station inventory, synthetic time series, and data quality flags.
           </p>
         </div>
 

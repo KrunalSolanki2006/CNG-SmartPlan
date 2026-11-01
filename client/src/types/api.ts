@@ -188,6 +188,11 @@ export interface ForecastResponse {
   model_used: string;
   data_origin: DataOrigin;
   horizon_days: number;
+  forecast_origin_date?: string;
+  data_through_date?: string;
+  target_start_date?: string;
+  is_historical_replay?: boolean;
+  historical_demo_notice?: string;
   train_period: {
     start: string;
     end: string;
@@ -225,12 +230,18 @@ export interface SupplyComparisonPoint {
   supply_data_origin: DataOrigin;
   potential_shortfall_kg: number | null;
   has_shortfall: boolean | null;
+  supply_status?: string;
 }
 
 export interface SupplySummary {
   days_with_shortfall: number;
   max_shortfall_kg: number;
   total_shortfall_kg: number;
+  days_covered?: number;
+  days_missing_supply?: number;
+  active_user_overrides_count?: number;
+  dates_requiring_override?: string[];
+  alert_label?: string;
 }
 
 export interface SupplyCheckResponse {
@@ -280,6 +291,16 @@ export interface ImpactSimulatorResults {
   proposed_station_demand_kg_per_day: number;
   estimated_diverted_demand_kg_per_day: number;
   net_additional_network_demand_kg_per_day: number;
+  network_baseline_daily_demand_kg?: number;
+  scenario_network_daily_demand_kg?: number;
+}
+
+export interface SensitivityPoint {
+  capture_proportion: number;
+  diversion_proportion: number;
+  proposed_station_demand_kg: number;
+  diverted_demand_kg: number;
+  net_additional_demand_kg: number;
 }
 
 export interface ImpactSimulatorResponse {
@@ -304,6 +325,7 @@ export interface ImpactSimulatorResponse {
     reason: string;
     nearby_stations: null | unknown[];
   };
+  sensitivity_analysis?: SensitivityPoint[];
   warnings: string[];
 }
 

@@ -99,7 +99,7 @@ export const OverviewKPIs: React.FC<OverviewKPIsProps> = ({ data, isLoading }) =
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider">
-                Mean Daily Demand
+                Network Mean Daily Total (11 stations)
               </span>
               <DataOriginBadge origin={network_summary.data_origin} size="sm" />
             </div>
@@ -132,7 +132,7 @@ export const OverviewKPIs: React.FC<OverviewKPIsProps> = ({ data, isLoading }) =
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider">
-                Supply Shortfalls
+                Synthetic Constrained-Supply Days
               </span>
               <DataOriginBadge origin={shortfall_alerts.data_origin} size="sm" />
             </div>

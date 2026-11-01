@@ -160,7 +160,7 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
               <>
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                 <span>
-                  Coordinates are within the validated Ahmedabad study boundary (22.85°N–23.25°N, 72.40°E–72.75°E).
+                  Coordinates fall within the provisional coordinate envelope (approximate view range: 22.85°N–23.25°N, 72.40°E–72.75°E). Municipal boundary verification is unavailable (official AMC GIS polygon is not validated in dataset).
                 </span>
               </>
             ) : (

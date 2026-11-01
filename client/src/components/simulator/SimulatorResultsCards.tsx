@@ -16,11 +16,15 @@ export const SimulatorResultsCards: React.FC<SimulatorResultsCardsProps> = ({ da
   const diverted = results.estimated_diverted_demand_kg_per_day;
   const netAdditional = results.net_additional_network_demand_kg_per_day;
 
+  const baseline = results.network_baseline_daily_demand_kg ?? 14081.2;
+  const scenarioTotal = results.scenario_network_daily_demand_kg ?? (baseline + netAdditional);
+  const networkGrowthPct = ((netAdditional / baseline) * 100).toFixed(1);
+
   const diversionPct = proposed > 0 ? Math.round((diverted / proposed) * 100) : 0;
   const netPct = proposed > 0 ? Math.round((netAdditional / proposed) * 100) : 0;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-[#0F766E]" />
@@ -130,6 +134,75 @@ export const SimulatorResultsCards: React.FC<SimulatorResultsCardsProps> = ({ da
             <span className="text-emerald-700 font-bold">+{netPct}% new volume</span>
           </div>
         </div>
+      </div>
+
+      {/* Network Baseline vs Scenario Expansion (Before & After Network Totals - Defect 3.6) */}
+      <div className="rounded-card bg-slate-50/90 p-4 border border-slate-200 shadow-xs space-y-3">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-slate-800 uppercase tracking-wide">
+              Network Demand Totals: Baseline Before vs Scenario After
+            </span>
+            <Badge variant="neutral" size="sm">Network Scope (11 Stations)</Badge>
+          </div>
+          <span className="text-[11px] text-slate-500 font-mono">
+            Baseline: 14,081.2 kg/day
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div className="p-3 rounded-lg bg-white border border-slate-200">
+            <span className="text-[11px] text-slate-500 font-medium block">
+              1. Current Network Baseline (Before)
+            </span>
+            <div className="flex items-baseline gap-1 mt-1">
+              <span className="text-lg font-bold font-mono text-slate-800">
+                {baseline.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+              </span>
+              <span className="text-[11px] text-slate-500">kg/day</span>
+            </div>
+            <p className="text-[10px] text-slate-400 mt-1">
+              Aggregate mean historical daily demand across all 11 stations.
+            </p>
+          </div>
+
+          <div className="p-3 rounded-lg bg-white border border-emerald-200">
+            <span className="text-[11px] text-emerald-700 font-medium block">
+              2. Net Incremental Gain
+            </span>
+            <div className="flex items-baseline gap-1 mt-1">
+              <span className="text-lg font-bold font-mono text-emerald-800">
+                +{netAdditional.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+              </span>
+              <span className="text-[11px] text-slate-500">kg/day</span>
+            </div>
+            <p className="text-[10px] text-slate-400 mt-1">
+              Proposed demand ({proposed.toLocaleString()} kg) minus cannibalized ({diverted.toLocaleString()} kg).
+            </p>
+          </div>
+
+          <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-300">
+            <span className="text-[11px] text-emerald-900 font-bold block">
+              3. Scenario Network Total (After)
+            </span>
+            <div className="flex items-baseline gap-1 mt-1">
+              <span className="text-lg font-bold font-mono text-emerald-900">
+                {scenarioTotal.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+              </span>
+              <span className="text-[11px] text-emerald-700">kg/day</span>
+              <span className="ml-1 text-[10px] font-bold text-emerald-800 bg-white px-1.5 py-0.2 rounded border border-emerald-300">
+                +{networkGrowthPct}%
+              </span>
+            </div>
+            <p className="text-[10px] text-emerald-700 mt-1">
+              Net projected network volume under user-supplied scenario assumptions.
+            </p>
+          </div>
+        </div>
+
+        <p className="text-[11px] text-slate-500 italic">
+          * Note: Scenario simulation based on user assumptions. Not an empirical prediction or guaranteed commercial throughput.
+        </p>
       </div>
     </div>
   );

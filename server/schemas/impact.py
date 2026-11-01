@@ -76,6 +76,26 @@ class ImpactResults(BaseModel):
     proposed_station_demand_kg_per_day: float
     estimated_diverted_demand_kg_per_day: float
     net_additional_network_demand_kg_per_day: float
+    network_baseline_daily_demand_kg: Optional[float] = Field(
+        default=14081.2,
+        description="Historical network mean daily baseline sales sum across 11 stations (kg/day)",
+    )
+    scenario_network_daily_demand_kg: Optional[float] = Field(
+        default=None,
+        description="Scenario network total (baseline + net additional demand in kg/day)",
+    )
+
+
+class SensitivityPoint(BaseModel):
+    """Grid point in capture vs diversion sensitivity analysis."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    capture_proportion: float
+    diversion_proportion: float
+    proposed_station_demand_kg: float
+    diverted_demand_kg: float
+    net_additional_demand_kg: float
 
 
 class ImpactFormulas(BaseModel):
@@ -116,5 +136,8 @@ class ImpactSimulatorResponse(BaseModel):
     results: ImpactResults
     formulas_applied: ImpactFormulas = Field(default_factory=ImpactFormulas)
     geographic_analysis: GeographicAnalysis = Field(default_factory=GeographicAnalysis)
+    sensitivity_analysis: Optional[List[SensitivityPoint]] = Field(
+        default=None,
+        description="Multi-scenario sensitivity grid over varying capture and diversion rates",
+    )
     warnings: List[str]
-

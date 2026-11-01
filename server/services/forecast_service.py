@@ -184,6 +184,11 @@ class ForecastService:
             model_used=model_choice,
             data_origin="synthetic_demo",
             horizon_days=horizon,
+            forecast_origin_date="2025-12-31",
+            data_through_date="2025-12-31",
+            target_start_date=future_dates[0] if future_dates else "2026-01-01",
+            is_historical_replay=True,
+            historical_demo_notice="Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.",
             train_period=TrainPeriod(
                 start="2024-01-01",
                 end="2025-10-02",

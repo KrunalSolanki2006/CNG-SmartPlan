@@ -21,6 +21,8 @@ def test_supply_check_post_2025_handling(client):
         assert pt["planned_supply_kg"] is None
         assert pt["potential_shortfall_kg"] is None
         assert pt["has_shortfall"] is None
+        assert pt["supply_data_origin"] == "unavailable"
+        assert pt["supply_status"] == "unavailable"
 
     assert any("Synthetic supply covers only 2024-01-01 to 2025-12-31" in w for w in data["warnings"])
     assert any("potential planning shortfalls" in w for w in data["warnings"])
@@ -103,3 +105,25 @@ def test_supply_check_invalid_station_rejected(client):
     )
     assert response.status_code == 404
 
+
+
+def test_supply_check_coverage_summary_metrics(client):
+    """Verify Defect 3.2: summary coverage fields, days_covered, days_missing_supply, and alert_label."""
+    # Run with 5 days, 2 overrides
+    overrides = [
+        {"date": "2026-01-01", "supply_kg": 1500.0},
+        {"date": "2026-01-02", "supply_kg": 1400.0},
+    ]
+    response = client.post(
+        "/api/v1/supply-check",
+        json={"station_id": "AMD001", "horizon_days": 5, "user_supply_overrides": overrides},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    summary = data["summary"]
+    assert summary["days_covered"] == 2
+    assert summary["days_missing_supply"] == 3
+    assert summary["active_user_overrides_count"] == 2
+    assert summary["alert_label"] == "Potential Planning Shortfall"
+    assert len(summary["dates_requiring_override"]) == 3
+    assert summary["dates_requiring_override"][0] == "2026-01-03"

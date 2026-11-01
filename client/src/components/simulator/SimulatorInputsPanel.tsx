@@ -107,7 +107,24 @@ export const SimulatorInputsPanel: React.FC<SimulatorInputsPanelProps> = ({
             }
             className="py-1 px-2.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-[11px] font-medium text-slate-700 transition-colors shadow-xs cursor-pointer"
           >
-            Benchmark Scenario (AT-I01)
+            Standard Case (35% Cap, 60% Div)
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              applyPreset({
+                proposed_latitude: 23.05,
+                proposed_longitude: 72.60,
+                catchment_radius_km: 3.0,
+                catchment_demand_kg_per_day: 5000.0,
+                capture_proportion: 0.81,
+                diversion_proportion: 0.60,
+                accessibility_demand_kg_per_day: 0.0,
+              })
+            }
+            className="py-1 px-2.5 rounded bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-[11px] font-bold text-emerald-800 transition-colors shadow-xs cursor-pointer"
+          >
+            Screenshot Benchmark (81% Cap, 60% Div → 1,620 kg/d)
           </button>
           <button
             type="button"

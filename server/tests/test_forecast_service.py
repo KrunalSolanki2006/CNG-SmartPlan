@@ -141,3 +141,19 @@ def test_forecast_excluded_station_rejected(client):
     data = response.json()
     assert data["error"]["code"] == "STATION_NOT_FOUND"
 
+
+
+def test_forecast_origin_dates_and_historical_replay_notice(client):
+    """Verify Defect 3.1: forecast origin date, target start date, and historical notice."""
+    response = client.post(
+        "/api/v1/forecast",
+        json={"station_id": "AMD001", "horizon_days": 7},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["forecast_origin_date"] == "2025-12-31"
+    assert data["data_through_date"] == "2025-12-31"
+    assert data["target_start_date"] == "2026-01-01"
+    assert data["is_historical_replay"] is True
+    assert "Historical synthetic demo" in data["historical_demo_notice"]
+    assert "source data ends 31 Dec 2025" in data["historical_demo_notice"]

@@ -70,6 +70,10 @@ class SupplyService:
         shortfall_days_count = 0
         max_shortfall = 0.0
         total_shortfall = 0.0
+        days_covered = 0
+        days_missing_supply = 0
+        active_user_overrides_count = 0
+        dates_requiring_override: List[str] = []
 
         for pt in fc_res.forecast:
             d = pt.date
@@ -81,6 +85,9 @@ class SupplyService:
                 origin = "user_entered_scenario"
                 shortfall = round(max(0.0, f_demand - p_supply), 1)
                 has_shortfall = shortfall > 0.0
+                supply_status = "shortfall" if has_shortfall else "user_override"
+                days_covered += 1
+                active_user_overrides_count += 1
 
                 if has_shortfall:
                     shortfall_days_count += 1
@@ -93,6 +100,8 @@ class SupplyService:
                 origin = "synthetic_demo"
                 shortfall = round(max(0.0, f_demand - p_supply), 1)
                 has_shortfall = shortfall > 0.0
+                supply_status = "shortfall" if has_shortfall else "covered"
+                days_covered += 1
 
                 if has_shortfall:
                     shortfall_days_count += 1
@@ -102,9 +111,12 @@ class SupplyService:
             else:
                 # Date beyond synthetic range without user override (e.g. 2026 dates)
                 p_supply = None
-                origin = "synthetic_demo"
+                origin = "unavailable"
                 shortfall = None
                 has_shortfall = None
+                supply_status = "unavailable"
+                days_missing_supply += 1
+                dates_requiring_override.append(d)
 
             comparison_points.append(
                 SupplyComparisonPoint(
@@ -114,6 +126,7 @@ class SupplyService:
                     supply_data_origin=origin,
                     potential_shortfall_kg=shortfall,
                     has_shortfall=has_shortfall,
+                    supply_status=supply_status,
                 )
             )
 
@@ -127,10 +140,14 @@ class SupplyService:
                 days_with_shortfall=shortfall_days_count,
                 max_shortfall_kg=round(max_shortfall, 1),
                 total_shortfall_kg=round(total_shortfall, 1),
+                days_covered=days_covered,
+                days_missing_supply=days_missing_supply,
+                active_user_overrides_count=active_user_overrides_count,
+                dates_requiring_override=dates_requiring_override,
+                alert_label="Potential Planning Shortfall",
             ),
             warnings=[
                 "Synthetic supply covers only 2024-01-01 to 2025-12-31. Forecast dates beyond this require user-entered supply values.",
                 "These are potential planning shortfalls, not confirmed stockouts.",
             ],
         )
-
