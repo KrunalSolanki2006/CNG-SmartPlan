@@ -290,12 +290,115 @@ class GoogleMapsService:
                 )
             )
 
+        # In offline fixture mode (no SERPAPI_API_KEY configured), filter & supplement with
+        # real Gujarat city/locality/corridor coordinates from existing curated datasets
+        # so statewide searches (e.g. Surat, Sanand, Rajkot, Vadodara) resolve accurately.
+        if is_fixture:
+            suggestions = self._filter_and_augment_gujarat_places(clean_q, suggestions)
+
         return AutocompleteResponse(
             query=clean_q,
             cached=is_cached,
             is_fixture=is_fixture,
             suggestions=suggestions,
         )
+
+    @staticmethod
+    def _filter_and_augment_gujarat_places(
+        query: str,
+        fixture_suggestions: List[AutocompleteSuggestion],
+    ) -> List[AutocompleteSuggestion]:
+        """Match query against offline fixtures and curated Gujarat localities/corridors."""
+        q_lower = query.lower().strip()
+        place_matches: List[AutocompleteSuggestion] = []
+        seen_titles: set[str] = set()
+
+        for sug in fixture_suggestions:
+            if not sug.is_selectable_place:
+                continue
+            haystack = f"{sug.title} {sug.subtitle or ''}".lower()
+            if q_lower in haystack:
+                place_matches.append(sug)
+                seen_titles.add(sug.title.lower())
+
+        curated_dir = Path(__file__).resolve().parent.parent / "data" / "curated"
+        station_file = curated_dir / "gujarat_network_stations.json"
+        discovered_file = curated_dir / "discovered_cng_stations_gujarat.json"
+        candidate_file = curated_dir / "gujarat_candidate_locations.json"
+
+        # 1. Check curated candidate localities/corridors
+        if candidate_file.exists():
+            try:
+                with open(candidate_file, "r", encoding="utf-8") as f:
+                    for item in json.load(f):
+                        lat = item.get("latitude")
+                        lng = item.get("longitude")
+                        if lat is None or lng is None:
+                            continue
+                        loc_title = item.get("locality") or item.get("name") or item.get("city")
+                        subtitle = f"{item.get('city', '')}, {item.get('district', '')}, Gujarat"
+                        haystack = f"{loc_title} {item.get('name', '')} {item.get('address', '')} {item.get('road_corridor', '')} {subtitle}".lower()
+                        if q_lower in haystack and loc_title and loc_title.lower() not in seen_titles:
+                            seen_titles.add(loc_title.lower())
+                            place_matches.append(
+                                AutocompleteSuggestion(
+                                    title=loc_title,
+                                    subtitle=item.get("address") or subtitle,
+                                    description=f"{loc_title}, {subtitle}",
+                                    suggestion_type="place",
+                                    place_id=item.get("place_id"),
+                                    latitude=float(lat),
+                                    longitude=float(lng),
+                                    is_selectable_place=True,
+                                )
+                            )
+            except Exception:
+                pass
+
+        # 2. Check verified station cities/localities across Gujarat
+        for st_file in (station_file, discovered_file):
+            if not st_file.exists():
+                continue
+            try:
+                with open(st_file, "r", encoding="utf-8") as f:
+                    for item in json.load(f):
+                        if item.get("cng_classification") not in (None, "VERIFIED_OPERATING_CNG", "CONFIRMED_CNG"):
+                            continue
+                        lat = item.get("latitude")
+                        lng = item.get("longitude")
+                        if lat is None or lng is None:
+                            continue
+                        locality = item.get("locality") or item.get("city")
+                        city = item.get("city", "")
+                        district = item.get("district", "")
+                        address = item.get("address") or f"{locality}, {city}, Gujarat"
+                        haystack = f"{locality} {city} {district} {address}".lower()
+                        if q_lower in haystack and locality:
+                            label = f"{locality}, {city}" if locality.lower() != city.lower() and city else locality
+                            if label.lower() not in seen_titles:
+                                seen_titles.add(label.lower())
+                                place_matches.append(
+                                    AutocompleteSuggestion(
+                                        title=label,
+                                        subtitle=address,
+                                        description=address,
+                                        suggestion_type="place",
+                                        place_id=item.get("place_id"),
+                                        latitude=float(lat),
+                                        longitude=float(lng),
+                                        is_selectable_place=True,
+                                    )
+                                )
+                        if len(place_matches) >= 8:
+                            break
+            except Exception:
+                pass
+            if len(place_matches) >= 8:
+                break
+
+        if place_matches:
+            return place_matches[:8]
+        return fixture_suggestions
 
     async def get_place_details(self, req: PlaceDetailsRequest) -> PlaceDetailsResponse:
         """Fetch rich place details (hours, rating, phone, photos, reviews) using place_id or data_cid."""

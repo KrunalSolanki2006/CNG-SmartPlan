@@ -26,7 +26,13 @@ from schemas.candidates import (
     RecalculateRankingRequest,
     ScoringWeightsConfig,
 )
+from schemas.network_impact import (
+    NearbyStationsResponse,
+    NetworkImpactSimulationRequest,
+    NetworkImpactSimulationResponse,
+)
 from services.candidate_ranking_service import CandidateRankingService
+from services.network_impact_service import NetworkImpactService
 
 logger = logging.getLogger(__name__)
 
@@ -183,3 +189,33 @@ def get_gujarat_network_stations(
         district_filter=district,
         operational_status_filter=operational_status,
     )
+
+
+@network_router.get("/nearby-stations", response_model=NearbyStationsResponse)
+def get_nearby_verified_stations(
+    lat: float = Query(..., ge=-90.0, le=90.0, description="Proposed station latitude"),
+    lng: float = Query(..., ge=-180.0, le=180.0, description="Proposed station longitude"),
+    radius_km: float = Query(5.0, ge=0.5, le=50.0, description="Search radius in km (default: 5 km)"),
+    name: Optional[str] = Query(None, description="Optional proposed station name"),
+    location_label: Optional[str] = Query(None, description="Optional selected location label"),
+) -> NearbyStationsResponse:
+    """Find all existing verified CNG stations within radius_km using Haversine distance, sorted nearest first."""
+    try:
+        return NetworkImpactService.find_nearby_verified_stations(
+            lat=lat,
+            lng=lng,
+            radius_km=radius_km,
+            name=name,
+            location_label=location_label,
+        )
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(ve))
+
+
+@network_router.post("/simulate-impact", response_model=NetworkImpactSimulationResponse)
+def simulate_network_impact(req: NetworkImpactSimulationRequest) -> NetworkImpactSimulationResponse:
+    """Shared impact simulation engine used by Candidate Location Evaluation and Gujarat-Wide Network Map."""
+    try:
+        return NetworkImpactService.simulate_impact(req)
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(ve))

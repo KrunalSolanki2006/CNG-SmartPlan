@@ -97,6 +97,7 @@ class CandidateLocationModel(BaseModel):
     commercial_vehicle_density_proxy: Optional[float] = None
     pipeline_proximity_meters: Optional[float] = None
     land_zoning: str
+    expected_daily_capacity_kg: Optional[float] = None
     retrieved_at: str
     last_verified_at: Optional[str] = None
     available_criteria: List[str]
@@ -238,12 +239,13 @@ class CandidateCreateRequest(BaseModel):
     """Payload to create a new proposed candidate location (Method 1 Autocomplete or Method 2 Map Click)."""
 
     name: str = Field(..., min_length=2, max_length=150, description="Candidate location name")
-    city: str = Field(..., min_length=2, max_length=100, description="City / Town")
-    district: str = Field(..., min_length=2, max_length=100, description="District")
-    category: str = Field(default="industrial_hub", description="industrial_hub | highway_corridor | logistics_transit | underserved_rural_fringe | urban_commercial")
+    city: Optional[str] = Field(default=None, max_length=100, description="City / Town (optional; inferred from location if omitted)")
+    district: Optional[str] = Field(default=None, max_length=100, description="District (optional; inferred from location if omitted)")
+    category: str = Field(default="urban_commercial", description="industrial_hub | highway_corridor | logistics_transit | underserved_rural_fringe | urban_commercial")
     latitude: float = Field(..., ge=20.0, le=25.0, description="Latitude (Gujarat range 20.0 - 25.0)")
     longitude: float = Field(..., ge=68.0, le=75.0, description="Longitude (Gujarat range 68.0 - 75.0)")
-    address: Optional[str] = Field(default="", description="Detailed address")
+    address: Optional[str] = Field(default="", description="Detailed address or selected location")
+    selected_location: Optional[str] = Field(default=None, description="Selected location label from autocomplete or map pin")
     locality: Optional[str] = Field(default="", description="Locality or landmark")
     road_corridor: Optional[str] = Field(default="", description="Connecting highway / road name")
     nearest_major_highway: Optional[str] = Field(default="", description="Primary highway code")
@@ -252,6 +254,7 @@ class CandidateCreateRequest(BaseModel):
     commercial_vehicle_density_proxy: Optional[float] = Field(default=None, ge=0.0, le=100.0, description="Commercial vehicle fleet density (0-100)")
     pipeline_proximity_meters: Optional[float] = Field(default=None, ge=0.0, description="Distance to gas pipeline (meters)")
     land_zoning: Optional[str] = Field(default="Commercial / GIDC", description="Zoning type")
+    expected_daily_capacity_kg: Optional[float] = Field(default=None, ge=0.0, description="Optional expected daily capacity in kg/day")
     place_id: Optional[str] = Field(default=None, description="Google Maps Place ID if retrieved via autocomplete")
     notes: Optional[str] = Field(default="", description="Planner notes")
 

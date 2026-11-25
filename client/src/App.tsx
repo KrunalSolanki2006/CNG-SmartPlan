@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FixtureProvider } from './context/FixtureContext';
+import { ProposedEvaluationProvider } from './context/ProposedEvaluationContext';
 import { AppShell } from './components/layout/AppShell';
 import { DashboardPage } from './pages/DashboardPage';
 import { ForecastPage } from './pages/ForecastPage';
@@ -13,7 +14,8 @@ import { NotFoundPage } from './pages/NotFoundPage';
 export const App: React.FC = () => {
   return (
     <FixtureProvider>
-      <BrowserRouter>
+      <ProposedEvaluationProvider>
+        <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppShell />}>
             <Route index element={<DashboardPage />} />
@@ -26,7 +28,8 @@ export const App: React.FC = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ProposedEvaluationProvider>
     </FixtureProvider>
   );
 };

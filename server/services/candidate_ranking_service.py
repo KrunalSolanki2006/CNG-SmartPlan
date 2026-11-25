@@ -834,14 +834,27 @@ class CandidateRankingService:
         else:
             missing.append("demand")
 
+        location_str = (req.selected_location or req.address or "").strip()
+        inferred_city = (req.city or "").strip()
+        inferred_district = (req.district or "").strip()
+        if location_str and (not inferred_city or not inferred_district):
+            parts = [p.strip() for p in location_str.split(",") if p.strip()]
+            non_india = [p for p in parts if p.lower() not in ("india", "gujarat") and not p.isdigit()]
+            if not inferred_city and non_india:
+                inferred_city = non_india[-1] if len(non_india) == 1 else non_india[-2]
+            if not inferred_district and non_india:
+                inferred_district = non_india[-1]
+        inferred_city = inferred_city or "Gujarat"
+        inferred_district = inferred_district or inferred_city
+
         model = CandidateLocationModel(
             candidate_id=new_id,
             name=req.name,
             category=req.category,
-            address=req.address or f"{req.city}, Gujarat",
-            locality=req.locality or req.city,
-            city=req.city,
-            district=req.district,
+            address=location_str or f"{inferred_city}, Gujarat",
+            locality=req.locality or location_str or inferred_city,
+            city=inferred_city,
+            district=inferred_district,
             state="Gujarat",
             latitude=req.latitude,
             longitude=req.longitude,
@@ -856,6 +869,7 @@ class CandidateRankingService:
             commercial_vehicle_density_proxy=req.commercial_vehicle_density_proxy,
             pipeline_proximity_meters=req.pipeline_proximity_meters or 500.0,
             land_zoning=req.land_zoning or "Commercial / GIDC",
+            expected_daily_capacity_kg=req.expected_daily_capacity_kg,
             retrieved_at="2026-11-25T02:00:00Z",
             last_verified_at=None,
             available_criteria=available,

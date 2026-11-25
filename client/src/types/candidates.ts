@@ -218,12 +218,13 @@ export interface RecalculateRankingRequest {
 
 export interface CandidateCreateRequest {
   name: string;
-  city: string;
-  district: string;
-  category: string;
+  city?: string;
+  district?: string;
+  category?: string;
   latitude: number;
   longitude: number;
   address?: string;
+  selected_location?: string;
   locality?: string;
   road_corridor?: string;
   nearest_major_highway?: string;
@@ -232,8 +233,196 @@ export interface CandidateCreateRequest {
   commercial_vehicle_density_proxy?: number | null;
   pipeline_proximity_meters?: number | null;
   land_zoning?: string;
+  expected_daily_capacity_kg?: number | null;
   place_id?: string | null;
   notes?: string;
+}
+
+export type ValueClassification =
+  | 'Actual historical data'
+  | 'Forecasted value'
+  | 'Model-based estimate'
+  | 'Scenario assumption'
+  | 'Provided scenario input'
+  | 'Unavailable';
+
+export interface NearbyVerifiedStation {
+  station_id: string;
+  station_name: string;
+  distance_km: number;
+  address: string;
+  locality: string;
+  city: string;
+  district: string;
+  operator: string;
+  brand: string;
+  latitude: number;
+  longitude: number;
+  is_verified: boolean;
+  data_source: string;
+  demand_data_available: boolean;
+  historical_daily_demand_kg?: number | null;
+  forecasted_daily_demand_kg?: number | null;
+  daily_capacity_kg?: number | null;
+  capacity_data_available?: boolean;
+}
+
+export interface ProposedLocationPoint {
+  name?: string | null;
+  location_label?: string | null;
+  latitude: number;
+  longitude: number;
+  expected_daily_capacity_kg?: number | null;
+  in_gujarat_bounds: boolean;
+  status?: string;
+}
+
+export interface NearbyStationsResponse {
+  proposed_location: ProposedLocationPoint;
+  radius_km: number;
+  total_verified_stations_checked: number;
+  nearby_count: number;
+  nearby_stations: NearbyVerifiedStation[];
+  nearest_station: NearbyVerifiedStation | null;
+  farthest_nearby_station: NearbyVerifiedStation | null;
+  nearest_overall_station: NearbyVerifiedStation | null;
+  distance_method: string;
+  data_integrity_note: string;
+}
+
+export interface NetworkImpactSimulationRequest {
+  proposed_name?: string;
+  proposed_location_label?: string;
+  proposed_latitude: number;
+  proposed_longitude: number;
+  radius_km: number;
+  expected_daily_capacity_kg?: number | null;
+  candidate_id?: string | null;
+}
+
+export type OverallAssessmentLabel =
+  | 'Potential Coverage Gap'
+  | 'High Existing Station Density'
+  | 'Moderate Geographical Overlap'
+  | 'Potential Network Expansion Opportunity'
+  | 'Insufficient Data';
+
+export type BeneficialOutcomeLabel =
+  | 'Potentially Beneficial'
+  | 'Potentially Not Beneficial'
+  | 'Inconclusive / Insufficient Data';
+
+export interface DiversionAssessment {
+  status: string;
+  available: boolean;
+  spatial_overlap_risk: 'None' | 'Low' | 'Moderate' | 'High' | 'Unknown';
+  explanation: string;
+  demand_data_origin?: string;
+  stations_with_demand_data?: number;
+  stations_without_demand_data?: number;
+}
+
+export interface StationSalesImpactRow {
+  station_id: string;
+  station_name: string;
+  city: string;
+  operator: string;
+  distance_km: number;
+  is_nearest: boolean;
+  has_sales_data: boolean;
+  sales_data_classification: ValueClassification;
+  current_daily_sales_kg: number | null;
+  forecasted_daily_demand_kg: number | null;
+  estimated_diversion_share: number | null;
+  estimated_sales_loss_kg: number | null;
+  remaining_daily_sales_kg: number | null;
+  reduction_pct: number | null;
+  loss_classification: ValueClassification;
+  capacity_available: boolean;
+  daily_capacity_kg: number | null;
+  status_label: string;
+}
+
+export interface DemandAndSalesEstimate {
+  available: boolean;
+  status: 'Estimated (Scenario-Based)' | 'Insufficient Data';
+  data_origin: string;
+  methodology: string;
+  nearest_station_name: string | null;
+  nearest_station_distance_km: number | null;
+  nearby_with_sales_count: number;
+  nearby_total_count: number;
+  avg_nearby_daily_sales_kg: number | null;
+  potential_daily_demand_kg: number | null;
+  potential_daily_sales_kg: number | null;
+  potential_monthly_sales_kg: number | null;
+  diverted_from_nearby_kg: number | null;
+  incremental_coverage_gain_kg: number | null;
+  capacity_provided_kg: number | null;
+  capacity_utilization_pct: number | null;
+  capacity_status: string;
+  demand_classification: ValueClassification;
+  sales_classification: ValueClassification;
+  assumptions: string[];
+  limitations: string[];
+  reason_unavailable: string | null;
+}
+
+export interface NetworkSalesImpactSummary {
+  available: boolean;
+  status: 'Calculated (Scenario-Based)' | 'Insufficient Data';
+  proposed_station_daily_sales_kg: number | null;
+  total_nearby_sales_loss_kg: number | null;
+  net_network_sales_change_kg: number | null;
+  network_sales_before_kg: number | null;
+  network_sales_after_kg: number | null;
+  existing_stations_sales_after_kg: number | null;
+  net_network_impact_pct: number | null;
+  station_count_with_sales: number;
+  station_count_without_sales: number;
+  classification: ValueClassification;
+  note: string;
+  reason_unavailable: string | null;
+}
+
+export interface BeneficialAssessment {
+  outcome: BeneficialOutcomeLabel;
+  confidence: 'Scenario-based' | 'Insufficient data';
+  summary: string;
+  criteria_evaluated: string[];
+  missing_data_requirements: string[];
+  caveat: string;
+}
+
+export interface GeographicalMetrics {
+  nearby_verified_count: number;
+  total_verified_stations_checked: number;
+  nearest_station: NearbyVerifiedStation | null;
+  nearest_within_radius: NearbyVerifiedStation | null;
+  farthest_nearby_station: NearbyVerifiedStation | null;
+  average_nearby_distance_km: number | null;
+  coverage_improvement_level: 'High' | 'Moderate' | 'Low' | 'Minimal' | 'Insufficient Data';
+  coverage_improvement_summary: string;
+  overlap_level: 'None' | 'Low' | 'Moderate' | 'High' | 'Insufficient Data';
+  overlap_summary: string;
+}
+
+export interface NetworkImpactSimulationResponse {
+  proposed_station: ProposedLocationPoint;
+  radius_km: number;
+  candidate_id?: string | null;
+  overall_assessment: OverallAssessmentLabel;
+  assessment_summary: string;
+  geographical_metrics: GeographicalMetrics;
+  nearby_stations: NearbyVerifiedStation[];
+  diversion_assessment: DiversionAssessment;
+  station_impact_rows?: StationSalesImpactRow[];
+  demand_estimate?: DemandAndSalesEstimate;
+  network_sales_impact?: NetworkSalesImpactSummary;
+  beneficial_assessment?: BeneficialAssessment;
+  metric_methodology_note: string;
+  data_integrity_note: string;
+  warnings: string[];
 }
 
 export interface CandidateUpdateRequest {
