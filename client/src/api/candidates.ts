@@ -8,6 +8,9 @@ import {
   CandidateUpdateRequest,
   CandidateCompareResponse,
   CandidateLocationModel,
+  NearbyStationsResponse,
+  NetworkImpactSimulationRequest,
+  NetworkImpactSimulationResponse,
 } from '../types/candidates';
 
 export async function fetchCandidateRankings(
@@ -111,6 +114,33 @@ export async function compareCandidates(
   return apiClient<CandidateCompareResponse>('/candidates/compare', {
     method: 'POST',
     body: JSON.stringify({ candidate_ids: candidateIds }),
+    signal,
+  });
+}
+
+export async function fetchNearbyVerifiedStations(
+  params: {
+    lat: number;
+    lng: number;
+    radius_km: number;
+    name?: string;
+    location_label?: string;
+  },
+  signal?: AbortSignal
+): Promise<NearbyStationsResponse> {
+  return apiClient<NearbyStationsResponse>('/network/nearby-stations', {
+    params: params as Record<string, string | number | undefined>,
+    signal,
+  });
+}
+
+export async function simulateNetworkImpact(
+  payload: NetworkImpactSimulationRequest,
+  signal?: AbortSignal
+): Promise<NetworkImpactSimulationResponse> {
+  return apiClient<NetworkImpactSimulationResponse>('/network/simulate-impact', {
+    method: 'POST',
+    body: JSON.stringify(payload),
     signal,
   });
 }

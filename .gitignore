@@ -26,3 +26,4 @@ Thumbs.db
 # Scratch & runtime cache
 scratch/
 server/data/cache/
+.pytest_cache/

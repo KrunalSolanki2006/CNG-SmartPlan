@@ -10,6 +10,7 @@ import { MapLegend } from '../components/map/MapLegend';
 import { StationMap } from '../components/map/StationMap';
 import { MapPage } from '../pages/MapPage';
 import { FixtureProvider } from '../context/FixtureContext';
+import { ProposedEvaluationProvider } from '../context/ProposedEvaluationContext';
 import { STATIONS_FIXTURE } from '../fixtures/stationsFixture';
 
 // Mock useNavigate
@@ -242,13 +243,15 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       render(
         <MemoryRouter>
           <FixtureProvider>
-            <MapPage />
+            <ProposedEvaluationProvider>
+              <MapPage />
+            </ProposedEvaluationProvider>
           </FixtureProvider>
         </MemoryRouter>
       );
 
       expect(screen.getByText('Gujarat CNG Network Map')).toBeInTheDocument();
-      expect(screen.getByText(/Geospatial planning environment combining GGCL network registry/i)).toBeInTheDocument();
+      expect(screen.getByText(/Explore verified operating CNG stations across Gujarat/i)).toBeInTheDocument();
       expect(screen.getByText(/1\. Existing CNG Station Map/i)).toBeInTheDocument();
       expect(screen.getByText(/2\. Candidate Location Evaluation/i)).toBeInTheDocument();
 
@@ -256,7 +259,8 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       const candSectionBtn = screen.getByText(/2\. Candidate Location Evaluation/i);
       const user = userEvent.setup();
       await user.click(candSectionBtn);
-      expect(screen.getByText('Candidate Analysis')).toBeInTheDocument();
+      expect(screen.getByText('1. Select Proposed Location')).toBeInTheDocument();
+      expect(screen.getByText('2. New Station Details')).toBeInTheDocument();
     });
   });
 });

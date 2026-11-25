@@ -38,7 +38,7 @@ describe('Navigation Flow', () => {
     await user.click(mapLink);
 
     expect(screen.getAllByText('Gujarat CNG Network Map').length).toBeGreaterThan(0);
-    expect(await screen.findByText(/Geospatial planning environment/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Explore verified operating CNG stations across Gujarat/i)).toBeInTheDocument();
   });
 
   it('navigates to Simulator page and verifies shell contents', async () => {
@@ -48,8 +48,11 @@ describe('Navigation Flow', () => {
     const simulatorLink = screen.getByText('Impact Simulator');
     await user.click(simulatorLink);
 
-    expect(screen.getAllByText('New-Station Impact Simulator').length).toBeGreaterThan(0);
-    expect(screen.getByText('Scenario Planning Inputs')).toBeInTheDocument();
+    expect(screen.getAllByText('Impact Simulator').length).toBeGreaterThan(0);
+    expect(
+      screen.getByText(/What happens to the existing CNG network if we establish a new station at this location/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText('No Proposed CNG Station Selected')).toBeInTheDocument();
   });
 
   it('navigates to Data Quality page and verifies documented data gaps', async () => {
