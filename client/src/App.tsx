@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FixtureProvider } from './context/FixtureContext';
 import { AppShell } from './components/layout/AppShell';
 import { DashboardPage } from './pages/DashboardPage';
@@ -21,6 +21,7 @@ export const App: React.FC = () => {
             <Route path="alerts" element={<AlertsPage />} />
             <Route path="map" element={<MapPage />} />
             <Route path="simulator" element={<SimulatorPage />} />
+            <Route path="candidates" element={<Navigate to="/map" replace />} />
             <Route path="data-quality" element={<DataQualityPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

@@ -1,0 +1,2099 @@
+{
+  "source": "Genuine SerpApi Google Maps responses cached from Ahmedabad queries",
+  "search": {
+    "search_metadata": {
+      "id": "6ae995fc0c3a08af395a6786",
+      "status": "Success",
+      "json_endpoint": "https://serpapi.com/searches/ZZV3kuhrm0CIHtpMO3Km59Glqq96GaWHw72IKNAI9HY/6ae995fc0c3a08af395a6786.json",
+      "markdown_endpoint": "https://serpapi.com/searches/ZZV3kuhrm0CIHtpMO3Km59Glqq96GaWHw72IKNAI9HY/6ae995fc0c3a08af395a6786.md",
+      "created_at": "2026-11-03 08:06:20 UTC",
+      "processed_at": "2026-11-03 08:06:20 UTC",
+      "google_maps_url": "https://www.google.com/maps/search/CNG+pump+in+Ahmedabad/@23.05,72.6,12z/data=!3m1!4b1!4m2!2m1!6e5?hl=en",
+      "raw_html_file": "https://serpapi.com/searches/ZZV3kuhrm0CIHtpMO3Km59Glqq96GaWHw72IKNAI9HY/6ae995fc0c3a08af395a6786.html",
+      "prettify_html_file": "https://serpapi.com/searches/ZZV3kuhrm0CIHtpMO3Km59Glqq96GaWHw72IKNAI9HY/6ae995fc0c3a08af395a6786.prettify",
+      "total_time_taken": 0.74
+    },
+    "search_parameters": {
+      "engine": "google_maps",
+      "type": "search",
+      "q": "CNG pump in Ahmedabad",
+      "ll": "@23.05,72.6,12z",
+      "google_domain": "google.com",
+      "hl": "en"
+    },
+    "search_information": {
+      "local_results_state": "Results for exact spelling",
+      "query_displayed": "CNG pump in Ahmedabad"
+    },
+    "local_results": [
+      {
+        "position": 1,
+        "title": "Adani CNG Gas Pump Station",
+        "place_id": "ChIJ-dduOlidXjkRp-uaYwQziiI",
+        "data_id": "0x395e9d583a6ed7f9:0x228a3304639aeba7",
+        "data_cid": "2488857838019603367",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e9d583a6ed7f9%3A0x228a3304639aeba7&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e9d583a6ed7f9%3A0x228a3304639aeba7&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.068426199999998,
+          "longitude": 72.487376
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ-dduOlidXjkRp-uaYwQziiI",
+        "provider_id": "/g/11t5k61fnx",
+        "rating": 4.2,
+        "reviews": 222,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station"
+        ],
+        "address": "Sardar Patel Ring Rd, Thaltej, Ahmedabad, Gujarat 380059, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 4754 5252",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLcJCijCPTw8-RdIu4zH3ddQpdLXo6llGorgNQza8TcddgysqsdfDVl-4xhkWYvmbDpzmZww75903-9gpYD-u5haJnFiEYc_1XBBHfjsKEzNW-YdUBIxrc-EPc7ta0_1GdRileAB=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/svyM5HicHcTRboIwFADQL7pSgoqa-EAFUWeMGjfFF4P3YosWymgR5Qf3DfubJTsP5_dHWluZieMo6fWE1kJljclq1KXNSttDXTiiTo0BNE4Q8EexxtUsv8-2h3YEe1o2_W7hEe0qWp_0UKlY12Kz69LRAYnE23wbuoVfCvov-Tgmz-IaVl1xblt_MGYejEWVhNAMZLoq53mU4MU9cb643c1H1G2OkNAnX75qhGiLvk3ZxY1pn6ss4NPWZYyB_B-h_APpb0Vy"
+      },
+      {
+        "position": 2,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJWYFtOC-DXjkR8cgtAKCLbQ0",
+        "data_id": "0x395e832f386d8159:0xd6d8ba0002dc8f1",
+        "data_cid": "967583014268553457",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e832f386d8159%3A0xd6d8ba0002dc8f1&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e832f386d8159%3A0xd6d8ba0002dc8f1&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0975221,
+          "longitude": 72.5309101
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJWYFtOC-DXjkR8cgtAKCLbQ0",
+        "provider_id": "/g/11b5pjb2v6",
+        "rating": 4.1,
+        "reviews": 1558,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "3GXJ+293, Sarkhej - Gandhinagar Hwy, Vasant Nagar, Ognaj, Ahmedabad, Gujarat 380060, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 81019 81019",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLd-V_aM4xdGFa4mqIN5VHcvXyMtDLwen2XkR6M-gXlopJ59uMYzSfW2Sg2d8n8np24A16R_VLS7SB2fRychly7mSrdVsKM2SGCkVbzDDsqZtVhA0UmhfKN9LhSgWfT69pBel0KR=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/YZVSDnicHcRLcoIwAADQE0ViRBRnXIBMbQtxQWyk3TgYQjJDPkjiBy_oGbyNM32L93pK73u3CgIlZxNhrVD84vjArPHc-AmzOhBD7RxgLkiStNNFA-ixxuG92X7UoT5_7eb0k12rEfusuHGDqq6MMBCVsv33PL7g3wdpD4gI1CzN0vQoTKZReaQFWZAUteXIpBoXmgwNdTlGZLvp6OmRZe7856lM4I-Wbb6LC0nEod1HcZ9yBfNyfZtCCIH8nwHzBmEqRGk"
+      },
+      {
+        "position": 3,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJ-SQGSC-DXjkRUm7z3nm7lzQ",
+        "data_id": "0x395e832f480624f9:0x3497bb79def36e52",
+        "data_cid": "3789703743561494098",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e832f480624f9%3A0x3497bb79def36e52&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e832f480624f9%3A0x3497bb79def36e52&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.994123899999998,
+          "longitude": 72.4975079
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ-SQGSC-DXjkRUm7z3nm7lzQ",
+        "provider_id": "/g/1tdcpy3m",
+        "rating": 3.9,
+        "reviews": 2417,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "XFVX+J2R, Sarkhej, SG Hwy Service Rd, nr. Divya Bhasker, Makarba, Ahmedabad, Gujarat 382210, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2689 1187",
+        "website": "http://www.adanigas.com/",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLeUHXoo2NN-nAtNat5O7wtibR5GPaAZmrTwcTG1mNH-2eUlnllnoilJvyq96Q0oTEbfgwjpSTV1vnr_Ednd2trIIBtzuRxADW1x5gywy2MvMnhOWUsr--RujSwnqUtu3O0smr1N=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/1IMi5nicHcTRbsIgFADQL8JCTWe2xAfMjLoonbXVZS9LRUZ1cFG4LdYf9Bv8G5Odh_O4N4jn8JYkphkOtHPaqDYoLx2gAhxIZxPt6xCIDAnnkz-7VNX8y7lUCAIcRY1ZPop43BfZ7LPm39aXUZYzZsWcpKoyYAy4o_no-svry5q6crr_1fF03pRb1oH_mR7gkKJfLCZ4a4srf9-xa6b72KerbgVNvquCJ6RoT5sIlwrbYU6D9UyMI6OUkuZ_SeAJGvFHEQ"
+      },
+      {
+        "position": 4,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJ7X8yW8GdXjkRsUDok22LopA",
+        "data_id": "0x395e9dc15b327fed:0x90a28b6d93e840b1",
+        "data_cid": "10422045790437916849",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e9dc15b327fed%3A0x90a28b6d93e840b1&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e9dc15b327fed%3A0x90a28b6d93e840b1&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.1138029,
+          "longitude": 72.504346
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ7X8yW8GdXjkRsUDok22LopA",
+        "provider_id": "/g/11h4djt3_2",
+        "rating": 4.2,
+        "reviews": 323,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "4G73+GPH, NH147, nr. Bharat Petroleum Pump, Ognaj, Ahmedabad, Gujarat 380060, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfI6R1xrkpz5u-2a7eYAvfb7GVDXKR0ekIYPVFRIQqbvOCE5DGdMREgJv4PKvcH7igqE9Do_4pmPeXN6lR5qUu_YNXCrMqAdIBLcyhw_V3zQsaQxEYp1NMojOH88g0OYXXT5fhrvQ=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/Dt_VaXicHcRLjoIwAADQEyFlFHEmmQUKKqP8GiXtimAtrcOn0EL93NAjeBsT3-K9nnwYOvVjmjWfTpgQrKajopKIdqDtMCGiMZkslDKIMl13WTX7MphD6yar7mGPxlfhUOzq8uRsMg_tIKBVgJNsDYO0P-l45dve5hxCn_3pWbLTZOtcWO9_eyKfdU1CUTSvod0fxxxHaCXD3j0Hyz2582ueTR-pKtKbjzsrCsV_vF0sGIgxQge75FKnv1cLAGDwz8Ro3-UMRVo"
+      },
+      {
+        "position": 5,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJNUROe5-IXjkRjTzObPJW4Mc",
+        "data_id": "0x395e889f7b4e4435:0xc7e056f26cce3c8d",
+        "data_cid": "14402607207538375821",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e889f7b4e4435%3A0xc7e056f26cce3c8d&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e889f7b4e4435%3A0xc7e056f26cce3c8d&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9745141,
+          "longitude": 72.6390759
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJNUROe5-IXjkRjTzObPJW4Mc",
+        "provider_id": "/g/11gfhgs65s",
+        "rating": 4,
+        "reviews": 351,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "Plot No.635, B, GIDC, Phase IV, Vatva GIDC, Ahmedabad, Gujarat 382445, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfF1vnpor7iQrX_4t4PLCR4iybIGfsZOEPEqxkD-ACvnE91iBQDjP3iIBuWuRY789P4oQQ9HJDBm1xvcMXZ7Enq-bUp-jFG-MLpX9q87pLFLxGmbStqMwD3JG2b5QInqqzqI_JL=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/PFf6d3icHcRJDoIwAADAF1VAMIiJB8ompESqMSIXIw0CKl1oQfSDvsHfmDiH-X4apbhcadqjMWc1Y_WjGmTVE0ZVRdWMsE6r-4uUgEjNdeG9Q9fQGClnvd3iPj9bysqQt7PaVxlHV1lsgywQ090HrjfSwDFaiP1bZrYxHI7D7mQvncxiGDubxIedMY0kzQs7oAKUBw5uYQRSxHNHLG2OQjRFXblXIn36ZhLNywWOqRBvEZ8TtH4auq6D5j8B9Ac8S0Pc"
+      },
+      {
+        "position": 6,
+        "title": "Sabarmati Gas CNG Station",
+        "place_id": "ChIJvcU463aBXjkRGvUcSmWX2as",
+        "data_id": "0x395e8176eb38c5bd:0xabd997654a1cf51a",
+        "data_cid": "12383095111722792218",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e8176eb38c5bd%3A0xabd997654a1cf51a&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e8176eb38c5bd%3A0xabd997654a1cf51a&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.1112461,
+          "longitude": 72.6312583
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJvcU463aBXjkRGvUcSmWX2as",
+        "provider_id": "/g/1hdz6t_hm",
+        "rating": 4,
+        "reviews": 1092,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "Bhat, Ahmedabad, Gujarat 382428, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "website": "https://www.sabarmatigas.in/cng-stations.php",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLe1YAuAtp8ZKa7jvCDD2AwOQkX5gIQJIbMfSuz0-5gpg_HIVVxjhPoWTEYJV4p4viMAgTaiF2EIgUxrIYSZOqZG8Ox7fxaSlL7QvjOZp72SO1JV_d5dvvADDGzsFIO7ZGn1GCk=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/Igj__XicHcRdDoIgAADgE5k_5XBtPZCWYTlyliUvzcwwNSFBdB2wO3Sbtr6H7_sppeRirutNOZ1QxmhT9KLoctbKopWTnD112mVCaLnQIVzWz11hprCHkjtkm4FKuZ5nwQFH9dmmKArQNbzH_dvQbMrpZYOSZKzKPTsdVmmQzPhMPUJID9ljba0QPY4dSmOCX8R38AjuYxY3OxCpChMOrBibQXK52TeloOf5b7FGGBC_NX23XgymYRha-T_X2h8V4kPq"
+      },
+      {
+        "position": 7,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJZxIXPsaGXjkRftnRsK26_wA",
+        "data_id": "0x395e86c63e171267:0xffbaadb0d1d97e",
+        "data_cid": "71981374219868542",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e86c63e171267%3A0xffbaadb0d1d97e&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e86c63e171267%3A0xffbaadb0d1d97e&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0579494,
+          "longitude": 72.64321919999999
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJZxIXPsaGXjkRftnRsK26_wA",
+        "provider_id": "/g/1hm2knc5m",
+        "rating": 3.7,
+        "reviews": 676,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "11, Sardar Rd, Balkrishna Nagar, Krishnanagar, Krushnagar, Ahmedabad, Gujarat 382345, India",
+        "country": "India",
+        "open_state": "Open \u00b7 Closes 12\u202fAM",
+        "hours": "Open \u00b7 Closes 12\u202fAM",
+        "operating_hours": {
+          "tuesday": "5:30\u202fAM\u201312\u202fAM",
+          "wednesday": "5:30\u202fAM\u201312\u202fAM",
+          "thursday": "5:30\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "friday": "5:30\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "saturday": "5:30\u202fAM\u20132\u202fAM (Diwali might affect these hours)",
+          "sunday": "5:30\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "monday": "5:30\u202fAM\u201312\u202fAM (Diwali might affect these hours)"
+        },
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLcLZJRfTPA9JFBkwLW46AnOnrZ8vRwYzI9fQhfIGpWC8s8kxkgnL7CbEczW8lWmj550hFkscHDVilQ1RFfyyum75oOtTFqE9Sbos-2Gm4rd7vGHm6ZykqPodHztj0GaTyVEz4QKwA=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/dgqP-HicHcRJDoIwAADAFyFVQcDEQ0UWlYRFIpEbVqBa2iotIPzQJ_gbE-cw3w-W8inWqtrg5azmvG7KTpQt4kyWTM4Qp2rdFkIoSKgQbgkNUJAfkiqNoHVwt2QIMm0FWcja3OyT4TLtrSrG1d57ZrYpTPImNQsM--qgKTObjD50HWCXCOTvzvcmniduNY4dNXQeytR9OdbpyoWy8KjW3oze8-kqH8kr4jd_kg_gFel4diYtPg5wM8wBAAr-jxT2AyycRi4"
+      },
+      {
+        "position": 8,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJGdOgEr-DXjkR99gZgPXow4A",
+        "data_id": "0x395e83bf12a0d319:0x80c3e8f58019d8f7",
+        "data_cid": "9278515798427162871",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e83bf12a0d319%3A0x80c3e8f58019d8f7&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e83bf12a0d319%3A0x80c3e8f58019d8f7&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0912391,
+          "longitude": 72.58991329999999
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJGdOgEr-DXjkR99gZgPXow4A",
+        "provider_id": "/g/1ptxw1jyg",
+        "rating": 3.7,
+        "reviews": 729,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station"
+        ],
+        "address": "3HRQ+FXV, Highway Road, near ONGC Office, Ram Nagar, Sabarmati, Ahmedabad, Gujarat 380005, India",
+        "country": "India",
+        "open_state": "Open \u00b7 Closes 11\u202fPM",
+        "hours": "Open \u00b7 Closes 11\u202fPM",
+        "operating_hours": {
+          "tuesday": "6:15\u202fAM\u201311\u202fPM",
+          "wednesday": "6:15\u202fAM\u201311\u202fPM",
+          "thursday": "6:15\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "friday": "6:15\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "saturday": "6:15\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "sunday": "6:15\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "monday": "6:15\u202fAM\u201311\u202fPM (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2762 3264",
+        "website": "https://www.adanigas.com/cng/cng-locate",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLeeAzZxsuyp9cbhr-ozuowbF9D1OUJrE0BTMdt-QmrYPwiG5VQN5_j_Yj4BbU5uf5GnNuW0NaElOiYV3FkgmBBbMy9vcUI-PQ8wUHWexeey6s2G5LuE3VV2wbN4S9Nxy799F-U=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/R8Cj4HicHcRLjoIwAADQE1Wq2NGazIJmADVaJWMxzMbYTgUVqOnHggf0Dt7GxLd4r2dl7c3MgqCuwkGpVFlLZ6QWqrWytQOhmqDUR2OAMEEUkWuzkjJ6_HXG9TcseKWBejjleYJ_hhu21DEku_W_BVmji60_pyjPKDpcDsVlTDhD7oTSlro9pMe43pyLPEyuZUMIX_f4LtgCbLOpZ_O97KTsv8woRSsXh3k-8pyOfzHt-gnGCWDffgghBNVnAdo3lB5EUw"
+      },
+      {
+        "position": 9,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJ5Zx6niuJXjkRs6H8OkWjt-0",
+        "data_id": "0x395e892b9e7a9ce5:0xedb7a3453afca1b3",
+        "data_cid": "17129339225464676787",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e892b9e7a9ce5%3A0xedb7a3453afca1b3&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e892b9e7a9ce5%3A0xedb7a3453afca1b3&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9552107,
+          "longitude": 72.65558089999999
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ5Zx6niuJXjkRs6H8OkWjt-0",
+        "provider_id": "/g/11pwvc1fr3",
+        "rating": 4,
+        "reviews": 619,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "XM44+36P, Ahmedabad, Gujarat 382445, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 4754 5252",
+        "website": "https://www.adanigas.com/cng/cng-locate",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfww2_NQjMshb8Ys4n-E9pK0ICkS9lQvTS9u4HKQCn642lFyxBgSBcbrL_BpCot9nm5hEMYeIaIehXmmEBSZfwoIdXDs9mFguuoKaiW4DJQ9i0nBPlWUw_fOR68KDDjjLw2N-7q=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/vlKe-3icHcRLcoIwAADQE0UiRWuc6cIAThH8IDp-NgzGkIj5IAmNnrBn6G0641u8v19ubWumnif4x4BpzQTtDe2IVpYqOyBaeqyrjAHEeLMZvsusds4vV3mzNPwyOZlAgRi1KUzCe4FE_rMrUB98p3moxoEv5q8nZgUmly4rcRtqi5Qc8Xh5okmVUH6UMsbFuXY6uR4jg-Sc9b1Oq9shiBY5ukGFN-Kwd2W93o4naRQ1Teb8Ffh8fLkhhBDw9wSof4QlRLE"
+      },
+      {
+        "position": 10,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJSZf6uraFXjkRHSimL0iXiZQ",
+        "data_id": "0x395e85b6bafa9749:0x948997482fa6281d",
+        "data_cid": "10703252325715552285",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e85b6bafa9749%3A0x948997482fa6281d&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e85b6bafa9749%3A0x948997482fa6281d&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0115436,
+          "longitude": 72.5863791
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJSZf6uraFXjkRHSimL0iXiZQ",
+        "provider_id": "/g/124t4ws37",
+        "rating": 4,
+        "reviews": 1049,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "Near, Jamalpur St Rd, Jamalpur, Ahmedabad, Gujarat 380022, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2762 3264",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLcZL4XRNeP-Xg0opV3v65GJhm2k5hrHd_EzdZHd8Mk7hLQOhmFbXEiskKZa0xa4FVbkEK79DM4ooDw0wGbfLjwWlLjZfWDidEhmEHwqECDMZyrxXvs7G8PahZTj9yPo9WAdbif7OA=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/9eggpXicHcRRboIwGADgEyHdRBGTPaBUyCzKzCKkLwZa4IdSqhStesMdwduY7Hv4Xn8wjme9tO0OppNaqborr7ocmOrHsh8nTEm7HnKtLaZt318JSRglTnbYlYmV1Uidj9PbfBZ-g_wUMxgifsJPTiO-iIUL5GcPclNkuNFiS3N0z53NsRB463pB7CgVGGTCoiKtSTvS0ioNGo5B4shc8DqI6WO4ZzfthoskB_rbeo9EeanPi6Zy9_6X-UAIWfA_s_o3BYpF0A"
+      },
+      {
+        "position": 11,
+        "title": "Seema CNG Station -Adani Gas",
+        "place_id": "ChIJKWD01tSRXjkRqLu97xeKDaY",
+        "data_id": "0x395e91d4d6f46029:0xa60d8a17efbdbba8",
+        "data_cid": "11965371620404345768",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e91d4d6f46029%3A0xa60d8a17efbdbba8&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e91d4d6f46029%3A0xa60d8a17efbdbba8&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9422391,
+          "longitude": 72.4875282
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJKWD01tSRXjkRqLu97xeKDaY",
+        "provider_id": "/g/11x953sjgz",
+        "rating": 4.8,
+        "reviews": 229,
+        "type": "Gas station",
+        "types": [
+          "Gas station"
+        ],
+        "address": "Bakrol to Sanathal, Sardar Patel Ring Rd, Ahmedabad, Visalpur, Gujarat 382210, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 99094 31855",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLeYvV51bi-spOKwlBJhQ9ksaJXI1WcpnMlK8kuk4SBgsYHi5Q_5dCMKAQU64B3sOF8w4W3pk8u3urCctT5kjpqHkA7h7jOhpDz3BVgOruP8DkzTz5e-tGOHEB0ZOfh3WCRMkGOd49wjW7s=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/fktUfnicHcTRToMwFADQL-qAlAoz8YGyORySis7h9mJmV9txGVRuKwkf6bt_Y-J5OL8_xjmLt0HQGbrQw6A75VGNcuid6t1CDtdAjydEIjHIMg7XR3X43rPo40LQinLq-NbUS8DT9u0haqTtq65MwUP8wjUeigur39k5r8qsfr2JOUVxn05xQy2knvoxl27HoLVfBWSJSVph7GqmfK_F6J_SFcy7mSniNqJY8_AoPg1t8ucKNuIcL6e2SfBuisIwJOZ_Sfo_XDVGjg"
+      },
+      {
+        "position": 12,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJwTYhJMyEXjkROdsZN93mjvQ",
+        "data_id": "0x395e84cc242136c1:0xf48ee6dd3719db39",
+        "data_cid": "17622276229733931833",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e84cc242136c1%3A0xf48ee6dd3719db39&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e84cc242136c1%3A0xf48ee6dd3719db39&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0266532,
+          "longitude": 72.5260125
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJwTYhJMyEXjkROdsZN93mjvQ",
+        "provider_id": "/g/11t7npk38b",
+        "rating": 4,
+        "reviews": 109,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station"
+        ],
+        "address": "2GGG+MC6, Suryapooja Block B, Satellite, Ahmedabad, Gujarat 380015, India",
+        "country": "India",
+        "open_state": "Open \u00b7 Closes 12\u202fAM",
+        "hours": "Open \u00b7 Closes 12\u202fAM",
+        "operating_hours": {
+          "tuesday": "6\u202fAM\u201312\u202fAM",
+          "wednesday": "6\u202fAM\u201312\u202fAM",
+          "thursday": "6\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "friday": "6\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "saturday": "6\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "sunday": "6\u202fAM\u201312\u202fAM (Diwali might affect these hours)",
+          "monday": "6\u202fAM\u201312\u202fAM (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 4754 5252",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLd9xJhv48akNE3NLTaxqzbTpzS9x-LHdM5NbypaAyvooTtWM02bKlZzlzMy9aDSxPy4-yI7u4_dtYCk1osmAnhWZSVNpXThs2YfJvOpKSDMGmct11GHH7N-o4paSx21XEd6wkSPsg9-KCpv=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/MPBFJXicHcTbDoIgAADQLyLF7GJbD6YtS6U2XLeXhmiyeYGCDPzJnvubts7D-X6YUkIuLKth41HFedWUL1k-Ke9U2akR5a1VPYmUgErL91d1mxSe3rHenZMarccoyYh-DHkmBuxpkERFOkG5EcQ3PeeZOqW2k8fNdWiG1HgkxPpgXGC2s5d7K9QlqCGXrd-x0xUfkThnTDqX-67fixiH6aalCsJNFM0Q4K4gWDvwvC6m7xofZOWBOBD98g1t2wbsPwXdD0ZmSGM"
+      },
+      {
+        "position": 13,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJ90RwsAGFXjkRBqqNfIsfGTE",
+        "data_id": "0x395e8501b07044f7:0x31191f8b7c8daa06",
+        "data_cid": "3537893666226809350",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e8501b07044f7%3A0x31191f8b7c8daa06&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e8501b07044f7%3A0x31191f8b7c8daa06&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0136184,
+          "longitude": 72.5641188
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ90RwsAGFXjkRBqqNfIsfGTE",
+        "provider_id": "/g/1tdncnd0",
+        "rating": 4.1,
+        "reviews": 1389,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "2H77+CJX, Paldi Rd, Behind AMTS Bus Station, Paldi Gaam, Paldi, Ahmedabad, Gujarat 380007, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2762 3264",
+        "website": "http://www.adanigas.com/",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfnP58sWC41F6aJo_sYST7fVwMNLzgsT0_fpCDItKzQfnKipvpW-pcVVyDgMiVbnahcycwaHIU6WNLHgWtw6z_St69zUNLZVk5fs5aakwmPH0vHSuGP-I25ohS4aSoFmhFfPmPP=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/qOhzjnicHcRbjsIgFADQFWFxtJ1H4oeP1HasDQalmflpkBQwlUe8KLEbdA3uxsTzcZ4PHYKHnyQ568lIOafO3RW6i3A2dDaMhDOJunAAJCCZzxe9qaQl6Rc0y-k4z_iva-GP7j8li9u6GhTscSv9clWGzbCTdnPyN98gLxi7r9T2xI6Wa3EXkRflIWvqqlBNiNnQ0pB9D4e6-md9KiHlvI-GFPhW0OuaoPIjdZpOOXW50bkkhpBZHGOMkX4vkH0B7cxGCg"
+      },
+      {
+        "position": 14,
+        "title": "Adani CNG gas Station",
+        "place_id": "ChIJJ2lvchiBXjkR5uYylXFoJIM",
+        "data_id": "0x395e8118726f6927:0x832468719532e6e6",
+        "data_cid": "9449792755173877478",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e8118726f6927%3A0x832468719532e6e6&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e8118726f6927%3A0x832468719532e6e6&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.102039299999998,
+          "longitude": 72.68555909999999
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJJ2lvchiBXjkR5uYylXFoJIM",
+        "provider_id": "/g/11fq17y5xr",
+        "rating": 4.2,
+        "reviews": 462,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "4M2P+R67, Ahmedabad, Gujarat 382330, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "website": "https://www.adanigas.com/cng/cng-locate",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLevpuB4lwukfnYbH-QwO2HoUpAthS8bIhdvr6y6GHnhIERucvAgPNfrL1LCPP1od-GZGyqYhQnQvR7_tucHjjAJ3bR_JJIXdln0on-fRXEFgfm4WJecB_F1a5tgp9P4hE-ki8GBkQ=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/i_29GXicHcRJDoIwAADAF5VFcU08FIMsIQoYI3ghUEorS4u0hfhEn-BvTJzDfD9UykHsdb2jS41wTjqsBB4RZxIzqSHe62QshABI6BDabR_iaVC21c2qrVlWeiCeLwuP3wYo6XVb-rSaxvV77XqM-k6i0ARJdK7H0AyPUWTyCrgP9_3KaMziKdnkUiGvaWCwLJM8CPy06pjBGaiT1DmRurfuAUZ2fjKLlSTDLrKoA9rn1rXb-DCbhmEA-h8B9gOR3UYc"
+      },
+      {
+        "position": 15,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJNbtm2zuFXjkRuDNo1SDcmQc",
+        "data_id": "0x395e853bdb66bb35:0x799dc20d56833b8",
+        "data_cid": "547710863279666104",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e853bdb66bb35%3A0x799dc20d56833b8&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e853bdb66bb35%3A0x799dc20d56833b8&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9957517,
+          "longitude": 72.5363631
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJNbtm2zuFXjkRuDNo1SDcmQc",
+        "provider_id": "/g/1263w0jdf",
+        "rating": 3.8,
+        "reviews": 1166,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "Vasna Rd, 132 Feet Ring Rd, opp. APMC, Vishala, Ahmedabad, Gujarat 380007, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 4754 5252",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLddge84TfUhOhvjiEcdrz30JWWx4Z5BBiS7dJHdFHkHQfo0Eag9ihytOF6v_6SbI_IgMW1S_wkMEzgWdYTPPmqW9g8Cvz3eYg_Yp7QW2r95X89imcpQx9WvBQO9wrp1IIBfhk2W=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/32fK93icHcRRboIwGADgEyFFUOmSPViDAaNBgkvHXoi25S8ilLUdKBf0DLuNid_D9_-U1vbmw3Vv0p-BUnATf0ZopjorOjtjqnVBn41xmHHXa9K0e85BhMGp-pKpHK51xLiefLSj9B78LAip8xXfxXwbN3FWKRSdAdfyYdPtciiX-SUpEzhQLy_H5hBNQHlxOh7bX4oh3AyTLwooi36V0bnGi-8Q1y3rszumA8lSPOreSxJSyWZOP0cPIeTI98zpXqHZRQk"
+      },
+      {
+        "position": 16,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJg7ion72EXjkRJwFUZ2Ow0O4",
+        "data_id": "0x395e84bd9fa8b883:0xeed0b06367540127",
+        "data_cid": "17208448117164474663",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e84bd9fa8b883%3A0xeed0b06367540127&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e84bd9fa8b883%3A0xeed0b06367540127&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.0447022,
+          "longitude": 72.5428101
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJg7ion72EXjkRJwFUZ2Ow0O4",
+        "provider_id": "/g/124sr9zr_",
+        "rating": 4.1,
+        "reviews": 785,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "2GVV+V4M, Drive In Rd, near Helmet Cross Road, University Area, Ahmedabad, Gujarat 380009, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2762 3264",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfI4YmLt7BlKHreiy1-cKZ6gIRM3HzzP5-nA1vLR7X_4P3hfEfwYGUcW0O_zOUGK4d_Jd47OdFYB_I667WYqcoUSnjYPRG9klD_w5lSYH1S4ka5zHHcfhsrRv06NnM1FYoOsvLo=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/NqvUbHicHcRdboIwAADgE1XaUCCa7AGiUgQHgRCtL40pP1VK62gHGRfcGXabJX4P39-vsPZldo4jhbvpte5l-23aiWtlW2U3XI9OP92NAdw4YRgNY9YlmI6ZDSKZkql9_CDA05vfJ-XZJetaeECFaM7K4Mpw4Yru0C00rvkF5mzN6zjFDTs1OMibI41Y4vvBhX5xXVfqSYsy3g5yzxZPVpSgCg93byWEd8JM5Qz9T3VGR6pzM2f6Y0EQQiDec6D-Af3-Q7U"
+      },
+      {
+        "position": 17,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJnSkK2ZaFXjkRropuULt-rpE",
+        "data_id": "0x395e8596d90a299d:0x91ae7ebb506e8aae",
+        "data_cid": "10497467124420610734",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e8596d90a299d%3A0x91ae7ebb506e8aae&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e8596d90a299d%3A0x91ae7ebb506e8aae&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9899579,
+          "longitude": 72.5830251
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJnSkK2ZaFXjkRropuULt-rpE",
+        "provider_id": "/g/1hm5y_4kk",
+        "rating": 3.9,
+        "reviews": 739,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "Golden Trader Siniyar Complex, Narol Rd, Danilimda, Ahmedabad, Gujarat 380028, India",
+        "country": "India",
+        "open_state": "Open \u00b7 Closes 11\u202fPM",
+        "hours": "Open \u00b7 Closes 11\u202fPM",
+        "operating_hours": {
+          "tuesday": "7\u202fAM\u201311\u202fPM",
+          "wednesday": "Closed",
+          "thursday": "Closed (Diwali might affect these hours)",
+          "friday": "7\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "saturday": "7\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "sunday": "7\u202fAM\u201311\u202fPM (Diwali might affect these hours)",
+          "monday": "Closed (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 4754 5252",
+        "website": "https://www.adanigas.com/cng/cng-locate",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfLski_S8dJB7ROBlf0kTI5Lz5zQYWOnn25lmR2K0vDIEVahwycm6dJ3Dbt5FOAQ9sqPXUmKyTBK-CirVyjsJX-aX0n1VGaCW278iQcDkKwk8m_EPblb9yvRRIpgac2m6nWiH88=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/ovfv3nicHcRJDoIwAADAFxUqBq0mHthUlgRBBTyZUhGwC0qrBD_oG_yNiXOY76dR6i6Xus6aqVZ3Xc2qp6x60glVCaWRjut1j6UEROqWZVMeXSNJ2_MeXQJ7nsY2u0J68M3obb6TUx4LYZiMp0YIX67vZbgZRsJnl2Dqlspcx1aykI9dceTheLBD4LR9Nt5kUABcQDHJNtjJjTlqE-LScKCIn71dycrF-EpT_15jYvCZyNstQqthAiEEzX8CxA9P1kRE"
+      },
+      {
+        "position": 18,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJV003-NiFXjkRRi0OFFg04fM",
+        "data_id": "0x395e85d8f8374d57:0xf3e13458140e2d46",
+        "data_cid": "17573384773874625862",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e85d8f8374d57%3A0xf3e13458140e2d46&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e85d8f8374d57%3A0xf3e13458140e2d46&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.006458799999997,
+          "longitude": 72.61278759999999
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJV003-NiFXjkRRi0OFFg04fM",
+        "provider_id": "/g/1pwfbw19t",
+        "rating": 3.9,
+        "reviews": 531,
+        "type": "Gas station",
+        "types": [
+          "Gas station"
+        ],
+        "address": "2J47+H4M Khokhra, Road, near Kashi Nasta House, Amraiwadi, Ahmedabad, Gujarat 380021, India",
+        "country": "India",
+        "open_state": "Open \u00b7 Closes 10:30\u202fPM",
+        "hours": "Open \u00b7 Closes 10:30\u202fPM",
+        "operating_hours": {
+          "tuesday": "6:15\u202fAM\u201310:30\u202fPM",
+          "wednesday": "6\u202fAM\u201310:30\u202fPM",
+          "thursday": "6\u202fAM\u201310:30\u202fPM (Diwali might affect these hours)",
+          "friday": "6\u202fAM\u201310:30\u202fPM (Diwali might affect these hours)",
+          "saturday": "6\u202fAM\u201310:30\u202fPM (Diwali might affect these hours)",
+          "sunday": "6\u202fAM\u20139:15\u202fPM (Diwali might affect these hours)",
+          "monday": "9:30\u202fAM\u201310:30\u202fPM (Diwali might affect these hours)"
+        },
+        "phone": "+91 22 2286 3900",
+        "website": "http://www.hindustanpetroleum.com/",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLe7RgWzY4PZU0cUc4NlnQVwn5H1izX6d-9VEUxV8vegaAf-WB0EKm3dWxC_y3nXd4Kx3etNFIVMHbGq5zRTaieczHyr9NYZ72Fga6vx14bw6JfGIxepQ3uns_PBkb3UuveWBrae=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/4gaPPnicHcRLDoIwFADAExWKRfwkLsCo-CNqBNSNKeVZjFCUFqhc0DN4GxNnMd9PptRTjk0zz4jBy5LnUEuoWCkUCGWwsjB5RaVETJqu6z2KDQwOPO7O9u4SYhYyO8jFPmpF37fu3clJ0SiahToaNsCpe0Oxh2frgqSxnl7fRJxSe60JqGC-jLZ-snj1u8OR3oF1_rsaBefLoDfn1Gm0ZSets7otlhqee1ILed15j4SEdQOxV1GYtBbGGGX_GRI_ZMBFEw"
+      },
+      {
+        "position": 19,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJ5xPDrtiPXjkRLXagyOV-dMw",
+        "data_id": "0x395e8fd8aec313e7:0xcc747ee5c8a0762d",
+        "data_cid": "14732539806414304813",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e8fd8aec313e7%3A0xcc747ee5c8a0762d&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e8fd8aec313e7%3A0xcc747ee5c8a0762d&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 22.9353613,
+          "longitude": 72.5209289
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJ5xPDrtiPXjkRLXagyOV-dMw",
+        "provider_id": "/g/11s5hfwxw1",
+        "rating": 4.4,
+        "reviews": 161,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station"
+        ],
+        "address": "WGPC+49V, Bakrol Badrabad, Ahmedabad, Gujarat 382210, India",
+        "country": "India",
+        "open_state": "Open now",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLensF6O9qCD6TtfIcGF8bp2Dy4H7dvXfBQpwzVHo9Xe6Je5t2EhHLwTsmp73M8menyfO7XJImCJsK7lnQtShRnpduaV4x9y64o5aVVJE7Yts-5dfgWsuBZFTi9JV-_1uE8mmyodeVFamWc=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/9hNmr3icHcTdboIwGADQJ6qgAgWTXYjCsGqMk1T0xrBSqJH-6FfG8CG939ss8Vycv5ew1sDMcVoxHTVaNy3vgD-YVpYrO2JaOs2jBEAMnPk8vskNV5AGu-i-WAa5rVfsMw2_zWQ5eBmufoo63pv-STMdFTwg3LeTRGSbPgdp8HQbSq6GeocLspILAmvcqr09iC9lqq6k3m80BJ72S0pJgk8WkF_VzRG6-Jzm14hQdBl3SSjloCtO01Ie2Uc_dl0XifcMqX98PUeQ"
+      },
+      {
+        "position": 20,
+        "title": "Adani Gas CNG Station",
+        "place_id": "ChIJlS8kxHyDXjkReErTRG7VORM",
+        "data_id": "0x395e837cc4242f95:0x1339d56e44d34a78",
+        "data_cid": "1385373029970954872",
+        "reviews_link": "https://serpapi.com/search.json?data_id=0x395e837cc4242f95%3A0x1339d56e44d34a78&engine=google_maps_reviews&hl=en",
+        "photos_link": "https://serpapi.com/search.json?data_id=0x395e837cc4242f95%3A0x1339d56e44d34a78&engine=google_maps_photos&hl=en",
+        "gps_coordinates": {
+          "latitude": 23.064808499999998,
+          "longitude": 72.5570293
+        },
+        "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJlS8kxHyDXjkReErTRG7VORM",
+        "provider_id": "/g/1vyxgtdg",
+        "rating": 4,
+        "reviews": 1017,
+        "unclaimed_listing": true,
+        "type": "Compressed natural gas station",
+        "types": [
+          "Compressed natural gas station",
+          "Gas station"
+        ],
+        "address": "3H74+WRC, Pragati Nagar garden Naranpura, 132 Feet Ring Rd, \u0935\u093e\u0938\u0928\u093e \u091f\u0947\u0932\u0940\u092b\u094b\u0928 \u090f\u0915\u094d\u0938\u091a\u0947\u0902\u091c, Pragatinagar, Naranpura, Ahmedabad, Gujarat 380013, India",
+        "country": "India",
+        "open_state": "Open 24 hours",
+        "hours": "Open 24 hours",
+        "operating_hours": {
+          "tuesday": "Open 24 hours",
+          "wednesday": "Open 24 hours",
+          "thursday": "Open 24 hours (Diwali might affect these hours)",
+          "friday": "Open 24 hours (Diwali might affect these hours)",
+          "saturday": "Open 24 hours (Diwali might affect these hours)",
+          "sunday": "Open 24 hours (Diwali might affect these hours)",
+          "monday": "Open 24 hours (Diwali might affect these hours)"
+        },
+        "phone": "+91 79 2762 3264",
+        "website": "https://www.adanigas.com/cng/cng-locate",
+        "extensions": [
+          {
+            "accessibility": [
+              "Wheelchair accessible entrance",
+              "Wheelchair accessible parking lot",
+              "Wheelchair accessible restroom"
+            ]
+          }
+        ],
+        "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLfV-wB-O7dvDT4zD8Wbpsgdva04awJdEmAv8I8U_JePm6t5KKvEsEvswOqeWSpksq9wKytIHiry0gG2w0s6PhVi2pXFXfJmCtyYqzRpxtQ2aABugK3SejDyEqYzOsYoKK4hUJkYuA=w1000-h1000-c-n",
+        "serpapi_thumbnail": "https://serpapi.com/images/url/uZ68zXicHcRbcoIwFADQFUUiUqWd6Uco-CCdwdb64KtDISaKIYEbksIOu4TuxhnPx_n_E8ZoePG8m5hNuFL8xnpgXakawxozKZX0eFcAoBI8QqJavp8PyEUoW1Q2_grGODz-aOCVLXBQuLRKJLHhJtx_p2wr5-aJUptAYsFlLTvudA3ts6OD2awv3YD5yncY5ltxuPj6tDydU_lmhrwdP_Wv-fALEvWcznbsGg9Jm48Z5IrSQOzTOu_Jq5tijJF4XKLmDn_MR1A"
+      }
+    ],
+    "serpapi_pagination": {
+      "next": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&ll=%4023.05%2C72.6%2C12z&q=CNG+pump+in+Ahmedabad&start=20&type=search"
+    }
+  },
+  "place_details": {
+    "search_metadata": {
+      "id": "6ae99820256086fb0c56f56a",
+      "status": "Success",
+      "json_endpoint": "https://serpapi.com/searches/MUo7PHW_dWomvNkfMbJS4V2reLtcpe97gbR7WeBbivw/6ae99820256086fb0c56f56a.json",
+      "markdown_endpoint": "https://serpapi.com/searches/MUo7PHW_dWomvNkfMbJS4V2reLtcpe97gbR7WeBbivw/6ae99820256086fb0c56f56a.md",
+      "created_at": "2026-11-03 08:15:28 UTC",
+      "processed_at": "2026-11-03 08:15:28 UTC",
+      "google_maps_url": "https://www.google.com/maps/place///data=!4m6!3m5!1s0x395e86c63e171267:0xffbaadb0d1d97e!8m2!3d0!4d0!16s?hl=en",
+      "raw_html_file": "https://serpapi.com/searches/MUo7PHW_dWomvNkfMbJS4V2reLtcpe97gbR7WeBbivw/6ae99820256086fb0c56f56a.html",
+      "prettify_html_file": "https://serpapi.com/searches/MUo7PHW_dWomvNkfMbJS4V2reLtcpe97gbR7WeBbivw/6ae99820256086fb0c56f56a.prettify",
+      "total_time_taken": 0.72
+    },
+    "search_parameters": {
+      "engine": "google_maps",
+      "place_id": "ChIJZxIXPsaGXjkRftnRsK26_wA",
+      "google_domain": "google.com",
+      "hl": "en"
+    },
+    "place_results": {
+      "title": "Adani Gas CNG Station",
+      "place_id": "ChIJZxIXPsaGXjkRftnRsK26_wA",
+      "data_id": "0x395e86c63e171267:0xffbaadb0d1d97e",
+      "data_cid": "71981374219868542",
+      "reviews_link": "https://serpapi.com/search.json?data_id=0x395e86c63e171267%3A0xffbaadb0d1d97e&engine=google_maps_reviews&hl=en",
+      "photos_link": "https://serpapi.com/search.json?data_id=0x395e86c63e171267%3A0xffbaadb0d1d97e&engine=google_maps_photos&hl=en",
+      "gps_coordinates": {
+        "latitude": 23.0579494,
+        "longitude": 72.64321919999999
+      },
+      "place_id_search": "https://serpapi.com/search.json?engine=google_maps&google_domain=google.com&hl=en&place_id=ChIJZxIXPsaGXjkRftnRsK26_wA",
+      "provider_id": "/g/1hm2knc5m",
+      "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLeHI2bVwxSSCKhaj8a_D_NfqY5oYhb6ezubLgDzIahrPG4rnWa47dCwR4LK_4t1HKvVdlMfabi4Ie9ApU39CAsKPR5-3M6ogiO8rtgExi-JIxxm2-4ljnWU7gaYw4vRhWLgMkAHHfm8QPdt=w1000-h1000-c-n",
+      "serpapi_thumbnail": "https://serpapi.com/images/url/-V3iQnicHcTBDoIgAADQLyItqaytA1lLU8t05Tw5VARLoYDS9ZOd-5u23uF9P0zru1oaRsusERWCtuSpiCwF14TrUSk6g0qsFCiVgdD61gXE9SbFpR-SxPEZvto43-SH-pFNRcaKGXk_i4Bu3h5mMtpByVMM55XTxzDwc6jHrv-6VG1Y46KBHlmg-9laOEj5UTwFVjgTtDnaUtPt0IC9NwzdBMD2ytPznOKsh6-YpQENb8h1684-RZVe9WPTNAH7XwL-A9-BR54",
+      "rating_summary": [
+        {
+          "stars": 1,
+          "amount": 103
+        },
+        {
+          "stars": 2,
+          "amount": 34
+        },
+        {
+          "stars": 3,
+          "amount": 90
+        },
+        {
+          "stars": 4,
+          "amount": 156
+        },
+        {
+          "stars": 5,
+          "amount": 293
+        }
+      ],
+      "rating": 3.7,
+      "reviews": 676,
+      "unclaimed_listing": true,
+      "type": [
+        "Compressed natural gas station",
+        "Gas station"
+      ],
+      "extensions": [
+        {
+          "accessibility": [
+            "Wheelchair accessible entrance",
+            "Wheelchair accessible parking lot"
+          ]
+        }
+      ],
+      "address": "11, Sardar Rd, Balkrishna Nagar, Krishnanagar, Krushnagar, Ahmedabad, Gujarat 382345, India",
+      "country": "India",
+      "open_state": "Open \u00b7 Closes 12 AM",
+      "plus_code": "3J5V+57 Ahmedabad, Gujarat, India",
+      "hours": [
+        {
+          "tuesday": "5:30 AM\u201312 AM"
+        },
+        {
+          "wednesday": "5:30 AM\u201312 AM"
+        },
+        {
+          "thursday": "5:30 AM\u201312 AM (Diwali might affect these hours)"
+        },
+        {
+          "friday": "5:30 AM\u201312 AM (Diwali might affect these hours)"
+        },
+        {
+          "saturday": "5:30 AM\u20132 AM (Diwali might affect these hours)"
+        },
+        {
+          "sunday": "5:30 AM\u201312 AM (Diwali might affect these hours)"
+        },
+        {
+          "monday": "5:30 AM\u201312 AM (Diwali might affect these hours)"
+        }
+      ],
+      "user_reviews": {
+        "summary": [
+          {
+            "snippet": "\"Small space , good service\"",
+            "thumbnail": "https://lh3.googleusercontent.com/a/ACg8ocIa0RaVXxHyKdY4FMWvr7bG-UpEfVXTsQahJ_u3kn8r8rb69f0=s40-k-cc-rp-mo"
+          },
+          {
+            "snippet": "\"Adani staff are behaving very bad & unprofessional with customer.\"",
+            "thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjWfeHen4TW7_2xg_oBWqPqwwl2O33ySCINjc6jSCCaCYwBB_Btu=s40-k-cc-rp-mo"
+          },
+          {
+            "snippet": "\"Place located on Krishnanagar crossing & with good location..\"",
+            "thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjXn--xpPhkHB-z24FJI--IsjgTEZilmYs0aiAgjR-cAVmwNmjgw=s40-k-cc-rp-mo"
+          }
+        ],
+        "most_relevant": [
+          {
+            "username": "Shivang Patel",
+            "rating": 1,
+            "contributor_id": "109849484107555587356",
+            "user_review_count": 5,
+            "user_photo_count": 0,
+            "user_thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjUu7we_xOZsAuTnJEl1Wq62Oq-RBVpDG6Tf2iwgxw49UxEd9pqT=s120-c-rp-mo-br100",
+            "description": "They are fraud and cheaters dont go fo fill up cng at this pump sometimes the actual gas shown in meter is not filled in ur tank and they said its ur car tank sensor mistake or else but actually they cheat and mostly not accepting card and online payment and didnt give back the change.worst ever adani cng pump",
+            "link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT21KUk9YWkpZbkZGTlc5eGRUbDBPRU5DTUZsT1FtYxAB!2m1!1s0x0:0xffbaadb0d1d97e!3m1!1s2@1:CAIQACodChtycF9oOmJROXZJYnFFNW9xdTl0OENCMFlOQmc%7C%7C?hl=en-US",
+            "date": "3 months ago",
+            "date_iso8601": "2026-07-24T13:17:17+00:00"
+          },
+          {
+            "username": "Kashyap Pandya",
+            "rating": 5,
+            "contributor_id": "118152480324886432320",
+            "user_review_count": 53,
+            "user_photo_count": 67,
+            "user_thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjWkHRqayvMglPeJcNtUM9IU8USlA1E859AnTm5Qhwz2IM4U8tms=s120-c-rp-mo-ba12-br100",
+            "description": "\"Visited this Adani CNG station to refuel my Bajaj Freedom 125. The staff was familiar with the bike and used the standard nozzle without any issues. Gas pressure was excellent (around 200 bar), so I got a full tank quickly. The lines were moving fast. Highly recommended for CNG bike owners in the area!\"",
+            "link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2tNdFUwNUtUMmR4YmpKa1oyZzFMWGhxTkhSVFRrRRAB!2m1!1s0x0:0xffbaadb0d1d97e!3m1!1s2@1:CAIQACodChtycF9oOkMtU05KT2dxbjJkZ2g1LXhqNHRTTkE%7C%7C?hl=en-US",
+            "date": "8 months ago",
+            "date_iso8601": "2026-02-03T12:04:12+00:00"
+          },
+          {
+            "username": "Jignesh Solanki",
+            "rating": 4,
+            "contributor_id": "107698003664891370937",
+            "user_review_count": 62,
+            "user_photo_count": 221,
+            "user_thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjXquZ9-UxQ38MNR3N0lOARa3tkIjCetv8E0Qt0hEZoR-pVPj3U1Aw=s120-c-rp-mo-ba12-br100",
+            "description": "their staff mostly not accepte Cards.\nthey never give 2 or 4 rupee change back.\nHigh Gas pressure is always good.\nFree Air is not Available.\nsome more arrangement for CNG fueling, time taking pump.\nOverall all average experience.",
+            "link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sChZDSUhNMG9nS0VJQ0FnSUQ2MV83Z2FnEAE!2m1!1s0x0:0xffbaadb0d1d97e!3m1!1s2@1:CIHM0ogKEICAgID61_7gag%7C%7C?hl=en-US",
+            "images": [
+              {
+                "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLdM9j0q7Vda7g2ikrLj7IojBoSn0o5hBsP23khBw_P8otKG7NiB_ef3kE042k4CegESHCc5hiFxpCpqsvmQYtRueoyyCqjSTv5J0LVvAFG60QP26zqOBTa3sJyK9tjEuht1nWIg=k-no"
+              },
+              {
+                "thumbnail": "https://lh3.googleusercontent.com/grass-cs/AABkmLeXl_fR-mzOoy1xeFAh1k-Gp9hgIP7Gmt06P6H6_PtFtxz1JWW9D2XKHPFmGnSRfmyiJuRI6i9UHcWqBYtknPQd_aDSXrfZqRYedL_k4tVeBSKt7l2IxUZOO2O_-RoPUzpJrQjT=k-no"
+              }
+            ],
+            "date": "5 years ago",
+            "date_iso8601": "2021-10-14T05:08:42+00:00"
+          },
+          {
+            "username": "Chunch Chetan",
+            "rating": 1,
+            "contributor_id": "106745084087596702807",
+            "user_review_count": 95,
+            "user_photo_count": 7,
+            "user_thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjWfeHen4TW7_2xg_oBWqPqwwl2O33ySCINjc6jSCCaCYwBB_Btu=s120-c-rp-mo-ba12-br100",
+            "description": "Staff are erogent and not supportive. They only fill the gas but they will not close the bonnet / close the cap of CNG pipe in your car. They are saying that is not my job to close this bonnet. I had reffered the review of most of people still i thought to experience personal but review given by majority of people are True since I had experienced the same. U can experience too.\n\nAdani has to review & take strict action.\nI have filled CNG on 1st Jan 26 @ 16:00.\n\nAdani staff are behaving very bad & unprofessional with customer.\n\nAdditional there is zero management since utilisation of fuel filling can be done much better to address the quie but staff is not bought about it & no one senior looking around.\n\nI think this could be one of major reason across because of which Adani Gas share is falling down drastically.",
+            "link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2poVFoxUTFSbkYwVUVSR1ZtaGliMWxVT0hWZlkxRRAB!2m1!1s0x0:0xffbaadb0d1d97e!3m1!1s2@1:CAIQACodChtycF9oOjhTZ1Q1RnF0UERGVmhib1lUOHVfY1E%7C%7C?hl=en-US",
+            "date": "10 months ago",
+            "date_iso8601": "2026-01-01T11:06:58+00:00"
+          },
+          {
+            "username": "bhut jay",
+            "rating": 1,
+            "contributor_id": "116890762435292379143",
+            "user_review_count": 49,
+            "user_photo_count": 4,
+            "user_thumbnail": "https://lh3.googleusercontent.com/a-/ALV-UjUfvMtxOn229RKj_3MhuVEXCidFE_HpYJ91y6B-DGbhTC8lHO0m=s120-c-rp-mo-ba12-br100",
+            "description": "Wrost pump not accepting online payment or your amount rupes 412 not return 8 ruppes he cut 420 2,5,9 rupees not return for customer not suggest for this pump",
+            "link": "https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2xOU05XVnpVVWRpV1RSSFNUSTFlbEZVYUc1bFVVRRAB!2m1!1s0x0:0xffbaadb0d1d97e!3m1!1s2@1:CAIQACodChtycF9oOlNSNWVzUUdiWTRHSTI1elFUaG5lUUE%7C%7C?hl=en-US",
+            "date": "4 months ago",
+            "date_iso8601": "2026-06-25T18:12:57+00:00"
+          }
+        ]
+      }
+    }
+  },
+  "directions": {
+    "search_metadata": {
+      "id": "6ae998331bd4f017eb8ea460",
+      "status": "Success",
+      "json_endpoint": "https://serpapi.com/searches/hZEXDbVRkma28_M5pLxSQNDyYGmyYbZwXA2OJDQUV5M/6ae998331bd4f017eb8ea460.json",
+      "markdown_endpoint": "https://serpapi.com/searches/hZEXDbVRkma28_M5pLxSQNDyYGmyYbZwXA2OJDQUV5M/6ae998331bd4f017eb8ea460.md",
+      "created_at": "2026-11-03 08:15:47 UTC",
+      "processed_at": "2026-11-03 08:15:47 UTC",
+      "google_maps_directions_url": "https://www.google.com/maps/dir/23.0500000%2C+72.6000000/23.0579494%2C+72.6432192/data=!3m1!4b1!4m10!4m9!1m3!2m2!1d72.6!2d23.05!1m3!2m2!1d72.64321919999999!2d23.0579494!3e0?hl=en",
+      "raw_html_file": "https://serpapi.com/searches/hZEXDbVRkma28_M5pLxSQNDyYGmyYbZwXA2OJDQUV5M/6ae998331bd4f017eb8ea460.html",
+      "prettify_html_file": "https://serpapi.com/searches/hZEXDbVRkma28_M5pLxSQNDyYGmyYbZwXA2OJDQUV5M/6ae998331bd4f017eb8ea460.prettify",
+      "total_time_taken": 1.15
+    },
+    "search_parameters": {
+      "engine": "google_maps_directions",
+      "hl": "en",
+      "start_coords": "23.05,72.6",
+      "end_coords": "23.0579494,72.64321919999999",
+      "travel_mode": "0",
+      "distance_unit": "0"
+    },
+    "places_info": [
+      {
+        "address": "23.0500000, 72.6000000",
+        "gps_coordinates": {
+          "latitude": 23.05,
+          "longitude": 72.6
+        }
+      },
+      {
+        "address": "23.0579494, 72.6432192",
+        "gps_coordinates": {
+          "latitude": 23.0579494,
+          "longitude": 72.64321919999999
+        }
+      }
+    ],
+    "directions": [
+      {
+        "travel_mode": "Driving",
+        "via": "Jhaverchand Meghani Rd and Naroda Rd",
+        "distance": 7007,
+        "duration": 1138,
+        "typical_duration_range": "18\u201328 min",
+        "formatted_distance": "7.0 km",
+        "formatted_duration": "19 min",
+        "extensions": [
+          "Best route now due to traffic conditions"
+        ],
+        "icon": "https://serpapi.com/assets/google_maps_directions/driving.svg",
+        "trips": [
+          {
+            "travel_mode": "Driving",
+            "title": "Continue to  Civil Hospital Rd",
+            "distance": 305,
+            "duration": 80,
+            "formatted_distance": "300 m",
+            "formatted_duration": "1 min",
+            "details": [
+              {
+                "title": "Head  south",
+                "action": "straight",
+                "distance": 34,
+                "duration": 6,
+                "formatted_distance": "34 m",
+                "formatted_duration": "6 sec",
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/straight_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 56,
+                "duration": 16,
+                "formatted_distance": "56 m",
+                "formatted_duration": "16 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=kEElbzQ4ezwkYmt6hFGoUg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=191.57378&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04988557041458,
+                  "longitude": 72.60014508394751
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 215,
+                "duration": 58,
+                "formatted_distance": "220 m",
+                "formatted_duration": "58 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=bmvjfNvrXHtvk3Pdwe315g&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=102.31982&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04974920442743,
+                  "longitude": 72.59971807324897
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Drive from  Jhaverchand Meghani Rd  and  Naroda Rd  to  Thakkarbapanagar",
+            "distance": 6590,
+            "duration": 1019,
+            "formatted_distance": "6.6 km",
+            "formatted_duration": "17 min",
+            "details": [
+              {
+                "title": "Turn  left  onto  Civil Hospital Rd",
+                "action": "turn-left",
+                "distance": 381,
+                "duration": 80,
+                "formatted_distance": "400 m",
+                "formatted_duration": "1 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=VYLyW1b1JuOMUr1CKVl3dg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=108.241806&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.051338494066574,
+                  "longitude": 72.60054123229345
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Camp Rd / Jhaverchand Meghani Rd",
+                "action": "turn-right",
+                "distance": 2596,
+                "duration": 406,
+                "formatted_distance": "2.6 km",
+                "formatted_duration": "7 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=uYzVdijOl3uAr5SyiLSsWg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=176.87698&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05452950966673,
+                  "longitude": 72.60003481202169
+                },
+                "extensions": [
+                  "Pass by Jeel Children Hospital (on the left)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Lal Bahadur Shastri Rd",
+                "action": "turn-right",
+                "distance": 911,
+                "duration": 117,
+                "formatted_distance": "900 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=VVPiPOU9dtE-d21gchb0mQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=39.937046&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.058194814254893,
+                  "longitude": 72.62244042867255
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  onto  Naroda Rd",
+                "action": "turn-left",
+                "distance": 1836,
+                "duration": 286,
+                "formatted_distance": "1.8 km",
+                "formatted_duration": "5 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=-POKWIuUmoIk42YtscO5Aw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=329.21658&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.054370847579502,
+                  "longitude": 72.62981977819457
+                },
+                "extensions": [
+                  "Pass by the gas station (on the right)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "At  Naroda Patiya Cir , take the  4th  exit onto  Narol - Naroda Rd / Thakkarnagar Cross Rd",
+                "action": "roundabout-left",
+                "distance": 866,
+                "duration": 130,
+                "formatted_distance": "850 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=i0WES0D-_WI8IuSPwSAUJw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=224.65738&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.064738110607408,
+                  "longitude": 72.64275360837686
+                },
+                "extensions": [
+                  "Pass by Rudhraksh Hospital (on the left in 300m)"
+                ]
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Drive to your destination",
+            "distance": 112,
+            "duration": 127,
+            "formatted_distance": "110 m",
+            "formatted_duration": "2 min",
+            "details": [
+              {
+                "title": "Turn  left",
+                "action": "turn-left",
+                "distance": 13,
+                "duration": 14,
+                "formatted_distance": "13 m",
+                "formatted_duration": "14 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=1RvVYqgatyEuHoZS0x5m2w&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=185.5463&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.057732582952585,
+                  "longitude": 72.64287595192543
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left",
+                "action": "turn-left",
+                "distance": 38,
+                "duration": 19,
+                "formatted_distance": "38 m",
+                "formatted_duration": "19 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=BUQWGrd8TYo3ay2Y2c5WMg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=185.62805&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05754375446531,
+                  "longitude": 72.64285637335264
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 61,
+                "duration": 94,
+                "formatted_distance": "61 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=T1MNx9x3KHyOA6qiIccPMg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.372955&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05764664036902,
+                  "longitude": 72.6429940548971
+                },
+                "extensions": [
+                  "Destination will be on the left"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "travel_mode": "Driving",
+        "via": "Jhaverchand Meghani Rd",
+        "distance": 6199,
+        "duration": 1115,
+        "typical_duration_range": "16\u201326 min",
+        "formatted_distance": "6.2 km",
+        "formatted_duration": "19 min",
+        "icon": "https://serpapi.com/assets/google_maps_directions/driving.svg",
+        "trips": [
+          {
+            "travel_mode": "Driving",
+            "title": "Continue to  Civil Hospital Rd",
+            "distance": 305,
+            "duration": 80,
+            "formatted_distance": "300 m",
+            "formatted_duration": "1 min",
+            "details": [
+              {
+                "title": "Head  south",
+                "action": "straight",
+                "distance": 34,
+                "duration": 6,
+                "formatted_distance": "34 m",
+                "formatted_duration": "6 sec",
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/straight_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 56,
+                "duration": 16,
+                "formatted_distance": "56 m",
+                "formatted_duration": "16 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=kEElbzQ4ezwkYmt6hFGoUg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=191.57378&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04988557041458,
+                  "longitude": 72.60014508394751
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 215,
+                "duration": 58,
+                "formatted_distance": "220 m",
+                "formatted_duration": "58 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=bmvjfNvrXHtvk3Pdwe315g&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=102.31982&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04974920442743,
+                  "longitude": 72.59971807324897
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Drive from  Jhaverchand Meghani Rd  to  Thakkarbapanagar",
+            "distance": 5531,
+            "duration": 894,
+            "formatted_distance": "5.5 km",
+            "formatted_duration": "15 min",
+            "details": [
+              {
+                "title": "Turn  left  onto  Civil Hospital Rd",
+                "action": "turn-left",
+                "distance": 381,
+                "duration": 80,
+                "formatted_distance": "400 m",
+                "formatted_duration": "1 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=VYLyW1b1JuOMUr1CKVl3dg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=108.241806&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.051338494066574,
+                  "longitude": 72.60054123229345
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Camp Rd / Jhaverchand Meghani Rd",
+                "action": "turn-right",
+                "distance": 2596,
+                "duration": 406,
+                "formatted_distance": "2.6 km",
+                "formatted_duration": "7 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=uYzVdijOl3uAr5SyiLSsWg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=176.87698&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05452950966673,
+                  "longitude": 72.60003481202169
+                },
+                "extensions": [
+                  "Pass by Jeel Children Hospital (on the left)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Lal Bahadur Shastri Rd",
+                "action": "turn-right",
+                "distance": 911,
+                "duration": 117,
+                "formatted_distance": "900 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=VVPiPOU9dtE-d21gchb0mQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=39.937046&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.058194814254893,
+                  "longitude": 72.62244042867255
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  onto  Naroda Rd",
+                "action": "turn-left",
+                "distance": 916,
+                "duration": 148,
+                "formatted_distance": "900 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=-POKWIuUmoIk42YtscO5Aw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=329.21658&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.054370847579502,
+                  "longitude": 72.62981977819457
+                },
+                "extensions": [
+                  "Pass by the gas station (on the right)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  before  CANARA BANK - AHMEDABAD NARODA",
+                "action": "turn-right",
+                "distance": 598,
+                "duration": 117,
+                "formatted_distance": "600 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=EqKS9UAdgFGdRscSu_Uh8w&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=50.499195&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.058287590613038,
+                  "longitude": 72.63699716984364
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Narol - Naroda Rd / Thakkarnagar Cross Rd",
+                "action": "turn-right",
+                "distance": 129,
+                "duration": 26,
+                "formatted_distance": "130 m",
+                "formatted_duration": "26 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=4slNfdzp737-X48zCKArUg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=276.8972&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.056607958904287,
+                  "longitude": 72.6423783669943
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Drive to your destination",
+            "distance": 363,
+            "duration": 177,
+            "formatted_distance": "350 m",
+            "formatted_duration": "3 min",
+            "details": [
+              {
+                "title": "Turn  left  toward  Sardar Rd",
+                "action": "turn-left",
+                "distance": 11,
+                "duration": 6,
+                "formatted_distance": "11 m",
+                "formatted_duration": "6 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=zbtcq_lakIi4YhAMKJVvtA&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.429156&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05571511351299,
+                  "longitude": 72.64269532374533
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  toward  Sardar Rd",
+                "action": "turn-left",
+                "distance": 177,
+                "duration": 49,
+                "formatted_distance": "180 m",
+                "formatted_duration": "49 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=nMNInZNq2uYWqsFA7cjSiA&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=6.691059&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.055534619158998,
+                  "longitude": 72.64267637672602
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  onto  Sardar Rd",
+                "action": "turn-left",
+                "distance": 22,
+                "duration": 6,
+                "formatted_distance": "22 m",
+                "formatted_duration": "6 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=xQ_WmHX9MtPvJ2izIu2qrg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=6.431775&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05683300931693,
+                  "longitude": 72.6431152254216
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 92,
+                "duration": 22,
+                "formatted_distance": "92 m",
+                "formatted_duration": "22 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=IJNYT72HDAIA7K0eI_E3vg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=316.56137&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.057014721734767,
+                  "longitude": 72.64313796180548
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 61,
+                "duration": 94,
+                "formatted_distance": "61 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=T1MNx9x3KHyOA6qiIccPMg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.372955&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05764664036902,
+                  "longitude": 72.6429940548971
+                },
+                "extensions": [
+                  "Destination will be on the left"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "travel_mode": "Driving",
+        "via": "Narol - Naroda Rd/Thakkarnagar Cross Rd",
+        "distance": 8103,
+        "duration": 1311,
+        "typical_duration_range": "19\u201331 min",
+        "formatted_distance": "8.1 km",
+        "formatted_duration": "22 min",
+        "icon": "https://serpapi.com/assets/google_maps_directions/driving.svg",
+        "trips": [
+          {
+            "travel_mode": "Driving",
+            "title": "Continue to  Sahid Haribhai Rd",
+            "distance": 366,
+            "duration": 90,
+            "formatted_distance": "350 m",
+            "formatted_duration": "2 min",
+            "details": [
+              {
+                "title": "Head  south",
+                "action": "straight",
+                "distance": 80,
+                "duration": 20,
+                "formatted_distance": "80 m",
+                "formatted_duration": "20 sec",
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/straight_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 59,
+                "duration": 16,
+                "formatted_distance": "59 m",
+                "formatted_duration": "16 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=Do_xPOzz4ISwSic4pVU6GQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=10.551568&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.049444417745832,
+                  "longitude": 72.60003742895009
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left",
+                "action": "turn-left",
+                "distance": 227,
+                "duration": 54,
+                "formatted_distance": "230 m",
+                "formatted_duration": "54 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=VsEMDGZ0mfA9VDXB-E5KHQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=101.51133&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.049334027622596,
+                  "longitude": 72.5995913776309
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Continue on  Sahid Haribhai Rd . Drive from  Chamunda Flyover / Dr Ambedkar Brg / Dr Ambedkar Fly Over ,  Nutan Mill Rd ,  India Colony Rd  and  Narol - Naroda Rd / Thakkarnagar Cross Rd  to  Thakkarbapanagar",
+            "distance": 7374,
+            "duration": 1096,
+            "formatted_distance": "7.4 km",
+            "formatted_duration": "18 min",
+            "details": [
+              {
+                "title": "Turn  left  onto  Sahid Haribhai Rd",
+                "action": "turn-left",
+                "distance": 577,
+                "duration": 122,
+                "formatted_distance": "600 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=UNeNgB_ONp668pYVUHfPkA&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.7737575&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.047488493590897,
+                  "longitude": 72.59909244534998
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "At  Jahangirpura Chowk / Mohan Cinema Char Rasta , take the  3rd  exit onto  Chaman Pura Rd",
+                "action": "roundabout-left",
+                "distance": 296,
+                "duration": 50,
+                "formatted_distance": "300 m",
+                "formatted_duration": "50 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=Qp4bTM2k5AT0WF467Hbbeg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=81.115234&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04696676994029,
+                  "longitude": 72.60444556200349
+                }
+              },
+              {
+                "title": "Turn  right  toward  Hanumansingh Rd",
+                "action": "turn-right",
+                "distance": 99,
+                "duration": 21,
+                "formatted_distance": "99 m",
+                "formatted_duration": "21 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=1X1vi1UO9jpTpEXONqRisQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=108.421234&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.046063677928593,
+                  "longitude": 72.60706107876862
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Use the left lane to merge onto  Hanumansingh Rd",
+                "action": "merge",
+                "distance": 200,
+                "duration": 36,
+                "formatted_distance": "200 m",
+                "formatted_duration": "36 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=32luJN4b-OuIxtOn-AtYag&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=305.99808&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.04536289011978,
+                  "longitude": 72.60756811687585
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/merge_grey800_18dp.png"
+              },
+              {
+                "title": "At  Asarwa Cir , take the  2nd  exit",
+                "action": "roundabout-left",
+                "distance": 51,
+                "duration": 10,
+                "formatted_distance": "51 m",
+                "formatted_duration": "10 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=0zfWEzKmP1n9K3IxP4UPIQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=86.49063&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.045470493115285,
+                  "longitude": 72.6094176830759
+                }
+              },
+              {
+                "title": "Keep  right  to continue on  Chamunda Flyover / Dr Ambedkar Brg / Dr Ambedkar Fly Over",
+                "action": "turn-right",
+                "distance": 824,
+                "duration": 97,
+                "formatted_distance": "800 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=RXlwJa_CUYbMPTVUN9zocw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=185.30705&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.045459014786093,
+                  "longitude": 72.60982545752954
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Continue onto  Shri Khandubhai Desai Marg",
+                "action": "straight",
+                "distance": 176,
+                "duration": 29,
+                "formatted_distance": "180 m",
+                "formatted_duration": "29 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=tuOvIo54bCROhzJGtcROtw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=347.92712&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.038272843226956,
+                  "longitude": 72.61201293670834
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/straight_grey800_18dp.png"
+              },
+              {
+                "title": "At the roundabout, take the  1st  exit onto  Nutan Mill Rd",
+                "action": "roundabout-left",
+                "distance": 1221,
+                "duration": 156,
+                "formatted_distance": "1.2 km",
+                "formatted_duration": "3 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=8Fpj3zR7Ybr26Kh4XDeV1A&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=350.4026&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.03673792290892,
+                  "longitude": 72.61226017969827
+                }
+              },
+              {
+                "title": "Nutan Mill Rd  turns slightly  left  and becomes  Anil Starch Mill Rd",
+                "action": "turn-slight-left",
+                "distance": 91,
+                "duration": 13,
+                "formatted_distance": "91 m",
+                "formatted_duration": "13 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=eUa4tHruemvPxn3bv4wL6Q&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=65.15647&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.03998825163198,
+                  "longitude": 72.62316723871166
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_slight_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  India Colony Rd",
+                "action": "turn-right",
+                "distance": 1252,
+                "duration": 216,
+                "formatted_distance": "1.3 km",
+                "formatted_duration": "4 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=Dq5pdqni9wKlnQf7_aYXsw&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=45.51838&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.040433282717576,
+                  "longitude": 72.62389639268346
+                },
+                "extensions": [
+                  "Go through 1 roundabout"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Keep  left  to stay on  India Colony Rd",
+                "action": "turn-left",
+                "distance": 460,
+                "duration": 76,
+                "formatted_distance": "450 m",
+                "formatted_duration": "1 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=_qGoyZC1k71XUR4dQAuySQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=267.86877&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.03886068236523,
+                  "longitude": 72.63561012312887
+                },
+                "extensions": [
+                  "Pass by Nirav Children Hospital (on the left in 400m)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  onto  Narol - Naroda Rd / Thakkarnagar Cross Rd",
+                "action": "turn-left",
+                "distance": 1891,
+                "duration": 216,
+                "formatted_distance": "1.9 km",
+                "formatted_duration": "4 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=IXM94kODSForIBsj2k2yOQ&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=95.77188&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.03902567316641,
+                  "longitude": 72.64005526860291
+                },
+                "extensions": [
+                  "Pass by Vijay Park Shopping Center (on the left in 1.2 km)"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  after  Ath Shri Shanimaharaj Mandir (on the left)",
+                "action": "turn-left",
+                "distance": 13,
+                "duration": 2,
+                "formatted_distance": "13 m",
+                "formatted_duration": "2 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=H3s072n5lb5uzVQuxBJC0w&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=6.284311&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05568740259385,
+                  "longitude": 72.64246958345232
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  toward  GD High School Rd / Keshav Kunj Society Rd",
+                "action": "turn-right",
+                "distance": 81,
+                "duration": 17,
+                "formatted_distance": "81 m",
+                "formatted_duration": "17 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=eCCuzvlNhC7-1yIsjRwH6w&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=185.412&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.055876600954626,
+                  "longitude": 72.64249556795667
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  GD High School Rd / Keshav Kunj Society Rd",
+                "action": "turn-right",
+                "distance": 13,
+                "duration": 9,
+                "formatted_distance": "13 m",
+                "formatted_duration": "9 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=WWKo50WsMAUNZwh12Imh7g&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=184.7084&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.056447429453723,
+                  "longitude": 72.64242194518751
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right  onto  Narol - Naroda Rd / Thakkarnagar Cross Rd",
+                "action": "turn-right",
+                "distance": 129,
+                "duration": 26,
+                "formatted_distance": "130 m",
+                "formatted_duration": "26 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=wU1xBLN2Yys20fKaqfe8ag&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=284.2603&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05659135287369,
+                  "longitude": 72.64247833517805
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          },
+          {
+            "travel_mode": "Driving",
+            "title": "Drive to your destination",
+            "distance": 363,
+            "duration": 177,
+            "formatted_distance": "350 m",
+            "formatted_duration": "3 min",
+            "details": [
+              {
+                "title": "Turn  left  toward  Sardar Rd",
+                "action": "turn-left",
+                "distance": 11,
+                "duration": 6,
+                "formatted_distance": "11 m",
+                "formatted_duration": "6 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=zbtcq_lakIi4YhAMKJVvtA&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.429156&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05571511351299,
+                  "longitude": 72.64269532374533
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  toward  Sardar Rd",
+                "action": "turn-left",
+                "distance": 177,
+                "duration": 49,
+                "formatted_distance": "180 m",
+                "formatted_duration": "49 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=nMNInZNq2uYWqsFA7cjSiA&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=6.691059&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.055534619158998,
+                  "longitude": 72.64267637672602
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  left  onto  Sardar Rd",
+                "action": "turn-left",
+                "distance": 22,
+                "duration": 6,
+                "formatted_distance": "22 m",
+                "formatted_duration": "6 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=xQ_WmHX9MtPvJ2izIu2qrg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=6.431775&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05683300931693,
+                  "longitude": 72.6431152254216
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 92,
+                "duration": 22,
+                "formatted_distance": "92 m",
+                "formatted_duration": "22 sec",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=IJNYT72HDAIA7K0eI_E3vg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=316.56137&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.057014721734767,
+                  "longitude": 72.64313796180548
+                },
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              },
+              {
+                "title": "Turn  right",
+                "action": "turn-right",
+                "distance": 61,
+                "duration": 94,
+                "formatted_distance": "61 m",
+                "formatted_duration": "2 min",
+                "geo_photo": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=T1MNx9x3KHyOA6qiIccPMg&cb_client=unknown_client.gws.grass&w=203&h=100&yaw=5.372955&pitch=0&thumbfov=100",
+                "gps_coordinates": {
+                  "latitude": 23.05764664036902,
+                  "longitude": 72.6429940548971
+                },
+                "extensions": [
+                  "Destination will be on the left"
+                ],
+                "icon": "https://maps.gstatic.com/consumer/images/icons/2x/turn_left_grey800_18dp.png"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "durations": [
+      {
+        "travel_mode": "Driving",
+        "duration": 1138,
+        "formatted_duration": "19 min"
+      },
+      {
+        "travel_mode": "Two-wheeler",
+        "duration": 981,
+        "formatted_duration": "16 min"
+      },
+      {
+        "travel_mode": "Transit",
+        "duration": 1800,
+        "formatted_duration": "30 min"
+      },
+      {
+        "travel_mode": "Walking",
+        "duration": 4718,
+        "formatted_duration": "1 hr 19"
+      }
+    ]
+  },
+  "autocomplete": {
+    "suggestions": [
+      {
+        "type": "place",
+        "place": {
+          "title": "Vastrapur",
+          "address": "Ahmedabad, Gujarat 380015, India",
+          "place_id": "ChIJ7Yx6gSWHXjkR41f0U2Z_v0U",
+          "gps_coordinates": {
+            "latitude": 23.035,
+            "longitude": 72.528
+          }
+        }
+      },
+      {
+        "type": "place",
+        "place": {
+          "title": "Visat Corridor (Sabarmati)",
+          "address": "Visat-Gandhinagar Highway, Ahmedabad, Gujarat 380005, India",
+          "place_id": "ChIJ9YtKxV2HXjkRsL0vJq8Jz54",
+          "gps_coordinates": {
+            "latitude": 23.1042,
+            "longitude": 72.5925
+          }
+        }
+      },
+      {
+        "type": "place",
+        "place": {
+          "title": "Naroda Industrial Estate",
+          "address": "GIDC Naroda, Ahmedabad, Gujarat 382330, India",
+          "place_id": "ChIJ68x3eUWHXjkRD8qO7jG3bQE",
+          "gps_coordinates": {
+            "latitude": 23.067,
+            "longitude": 72.65
+          }
+        }
+      },
+      {
+        "type": "place",
+        "place": {
+          "title": "Bodakdev",
+          "address": "SG Highway, Ahmedabad, Gujarat 380054, India",
+          "place_id": "ChIJf7n1fXKHXjkRMqL-2q2_z0k",
+          "gps_coordinates": {
+            "latitude": 23.041,
+            "longitude": 72.512
+          }
+        }
+      },
+      {
+        "type": "keyword",
+        "value": "cng pump near me ahmedabad"
+      }
+    ]
+  }
+}

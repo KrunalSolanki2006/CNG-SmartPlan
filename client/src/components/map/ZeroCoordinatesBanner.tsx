@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, ExternalLink, Info } from 'lucide-react';
+import { ShieldAlert, ShieldCheck, ExternalLink, Info } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,6 +22,53 @@ export const ZeroCoordinatesBanner: React.FC<ZeroCoordinatesBannerProps> = ({
   eligiblePins = 0,
 }) => {
   const navigate = useNavigate();
+
+  if (eligiblePins > 0) {
+    return (
+      <div
+        role="region"
+        aria-label="Map Coordinate Availability Notice"
+        className="rounded-card bg-teal-50/80 border border-teal-200 p-4 shadow-sm space-y-3"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="w-7 h-7 rounded-full bg-teal-100 text-[#0F766E] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h3 className="text-xs sm:text-sm font-bold text-teal-950">
+              Verified Station Pins Active
+            </h3>
+            <Badge variant="success" size="sm">
+              {eligiblePins} Verified Pins
+            </Badge>
+            <Badge variant="neutral" size="sm">
+              {totalStations} Directory Records
+            </Badge>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => navigate('/data-quality')}
+            className="inline-flex items-center gap-1 text-xs font-semibold text-teal-900 hover:text-teal-950 underline self-start sm:self-auto cursor-pointer"
+          >
+            <span>View Data Provenance</span>
+            <ExternalLink className="w-3 h-3" />
+          </button>
+        </div>
+
+        <p className="text-xs text-teal-900/90 leading-relaxed">
+          {mapAvailability.reason}
+        </p>
+
+        <div className="flex items-center gap-2 pt-1 border-t border-teal-200/60 text-[11px] text-teal-800">
+          <Info className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
+          <span>
+            <strong>Spatial Verification:</strong> All {eligiblePins} station locations plotted with verified coordinates. AMD010 excluded due to outer-ring road boundary uncertainty.
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

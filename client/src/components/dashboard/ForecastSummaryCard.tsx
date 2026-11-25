@@ -2,9 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, ArrowRight, Clock } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
-import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { ForecastSummaryOverview } from '../../types/api';
 
 export interface ForecastSummaryCardProps {
@@ -41,54 +39,51 @@ export const ForecastSummaryCard: React.FC<ForecastSummaryCardProps> = ({ summar
   }
 
   return (
-    <Card hoverEffect className="border-[#DCE4E8]">
+    <Card className="rounded-2xl border-slate-200 bg-white shadow-xs hover:shadow-sm transition-all">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#DDF3EF] text-[#0F766E] flex items-center justify-center shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-700 shrink-0">
               <TrendingUp className="w-4 h-4" />
             </div>
-            <CardTitle className="text-sm font-bold text-[#0F172A]">
+            <CardTitle className="text-sm font-bold text-slate-900 tracking-tight">
               7-Day Forecast Pipeline
             </CardTitle>
           </div>
-          <DataOriginBadge origin={summary.data_origin} size="sm" />
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3.5">
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-2.5 rounded bg-slate-50 border border-slate-100">
-            <span className="text-[11px] text-[#64748B] block">Horizon</span>
-            <span className="text-sm font-bold text-[#0F172A]">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">Horizon</span>
+            <span className="text-base font-bold text-slate-900 tracking-tight mt-0.5 block font-mono">
               {summary.horizon_days} Days
             </span>
           </div>
-          <div className="p-2.5 rounded bg-slate-50 border border-slate-100">
-            <span className="text-[11px] text-[#64748B] block">Stations Forecasted</span>
-            <span className="text-sm font-bold text-[#0F766E]">
+          <div className="p-3.5 rounded-xl bg-teal-50/60 border border-teal-200/80 shadow-2xs">
+            <span className="text-[11px] font-semibold text-teal-800 uppercase tracking-wider block">Stations Forecasted</span>
+            <span className="text-base font-bold text-teal-900 tracking-tight mt-0.5 block font-mono">
               {summary.stations_forecasted} Stations
             </span>
           </div>
         </div>
 
-        <p className="text-xs text-[#64748B] leading-relaxed">
-          {summary.note}
+        <p className="text-xs text-slate-600 leading-relaxed font-normal">
+          Multi-horizon seasonal forecasting across active network stations.
         </p>
-
-        <div className="p-2 rounded bg-amber-50 border border-amber-200/80 text-[11px] text-amber-900 leading-tight">
-          <strong>Historical Demo Notice:</strong> Source data ends 31 Dec 2025; forecast shown from 1 Jan 2026.
-        </div>
       </CardContent>
 
-      <CardFooter className="justify-between">
-        <Badge variant="synthetic" size="sm">
+      <CardFooter className="justify-between pt-2">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200 text-[10px] font-medium text-slate-700">
+          <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
           Holt-Winters + 28d Baseline
-        </Badge>
+        </span>
         <Button
           variant="primary"
           size="sm"
           onClick={() => navigate('/forecast')}
+          className="rounded-xl font-medium shadow-xs"
           rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
         >
           View Full Forecast

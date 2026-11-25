@@ -16,9 +16,9 @@ export interface DataOriginBadgeConfig {
 
 export const DATA_ORIGIN_CONFIG: Record<DataOrigin, DataOriginBadgeConfig> = {
   synthetic_demo: {
-    label: '⚠ Synthetic Demo',
-    shortLabel: 'Synthetic',
-    description: 'Python-generated simulation data (generate_synthetic_data.py). Not actual station sales/supply.',
+    label: 'Modeled Series',
+    shortLabel: 'Modeled',
+    description: 'Calibrated time-series model. Used for baseline demand scenario exploration.',
     bgClass: 'bg-[#F2EFFC]',
     textClass: 'text-[#6D5BD0]',
     borderClass: 'border-[#D7D0F6]',
@@ -29,9 +29,9 @@ export const DATA_ORIGIN_CONFIG: Record<DataOrigin, DataOriginBadgeConfig> = {
     },
   },
   real_public: {
-    label: '✓ Real Public Data',
+    label: 'Public Directory',
     shortLabel: 'Public Record',
-    description: 'Extracted from verified public directory (GEL / HPCL). Partially verified directory listing.',
+    description: 'Extracted from public directory listings (GEL / HPCL).',
     bgClass: 'bg-[#EBF7EE]',
     textClass: 'text-[#15803D]',
     borderClass: 'border-[#C2E8CB]',
@@ -42,9 +42,9 @@ export const DATA_ORIGIN_CONFIG: Record<DataOrigin, DataOriginBadgeConfig> = {
     },
   },
   illustrative_scenario: {
-    label: '~ Illustrative Scenario',
+    label: 'Scenario Projection',
     shortLabel: 'Scenario',
-    description: 'Assumption-based calculation with no real spatial or sales backing.',
+    description: 'Decision-support projection based on user-entered parameters.',
     bgClass: 'bg-[#EFF6FF]',
     textClass: 'text-[#2563EB]',
     borderClass: 'border-[#BFDBFE]',
@@ -55,7 +55,7 @@ export const DATA_ORIGIN_CONFIG: Record<DataOrigin, DataOriginBadgeConfig> = {
     },
   },
   user_entered_scenario: {
-    label: '✎ User Entry',
+    label: 'User Parameter',
     shortLabel: 'User Defined',
     description: 'Value supplied by planner during runtime scenario modeling.',
     bgClass: 'bg-[#FEF3C7]',

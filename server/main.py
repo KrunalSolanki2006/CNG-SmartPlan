@@ -15,7 +15,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from config import settings
-from routers import health, overview, stations, quality, forecast, supply, hourly, impact
+from routers import health, overview, stations, quality, forecast, supply, hourly, impact, maps, candidates
 from services.data_loader import DataValidationError, load_all_data
 
 # Configure standard logging
@@ -150,6 +150,9 @@ app.include_router(forecast.router, prefix="/api/v1")
 app.include_router(supply.router, prefix="/api/v1")
 app.include_router(hourly.router, prefix="/api/v1")
 app.include_router(impact.router, prefix="/api/v1")
+app.include_router(maps.router, prefix="/api/v1")
+app.include_router(candidates.router, prefix="/api/v1")
+app.include_router(candidates.network_router, prefix="/api/v1")
 
 
 if __name__ == "__main__":

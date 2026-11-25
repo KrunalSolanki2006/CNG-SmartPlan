@@ -33,14 +33,19 @@ def list_stations(
     )
     stations_list = [Station(**s) for s in raw_stations]
 
+    map_pins_count = len(store.map_eligible_stations)
     return StationsListResponse(
         stations=stations_list,
         total=len(store.stations),
         eligible_for_simulation=len(store.eligible_stations),
-        eligible_for_map_pin=len(store.map_eligible_stations),
+        eligible_for_map_pin=map_pins_count,
         map_availability=MapAvailability(
-            available=False,
-            reason="No stations have independently verified coordinates. All 8 coordinate candidates are unapproved (approved_for_map_pin=no).",
+            available=map_pins_count > 0,
+            reason=(
+                f"{map_pins_count} stations have verified coordinates approved for interactive map display."
+                if map_pins_count > 0
+                else "No stations have independently verified coordinates. All 8 coordinate candidates are unapproved (approved_for_map_pin=no)."
+            ),
         ),
     )
 

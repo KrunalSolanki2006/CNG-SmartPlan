@@ -127,3 +127,47 @@ This audit evaluated **CNG SmartPlan** against the official PS000002 requirement
 1. **Station Coordinates:** 0 of 12 stations have verified coordinates. Secondary coordinates from `station_coordinate_candidates.csv` remain strictly in quarantine review and are not plotted as confirmed pins.
 2. **Municipal Boundary:** The official AMC municipal boundary GIS polygon is not provided in public open data. The geographic envelope $[22.85^\circ\text{N}–23.25^\circ\text{N}, 72.40^\circ\text{E}–72.75^\circ\text{E}]$ is an exploratory bounding envelope.
 3. **Sales & Supply:** Daily sales and planned deliveries are synthetic simulation models designed for planning logic demonstration. No claims of real-world forecasting accuracy are made.
+
+
+---
+
+## 5. Final Prototype Completion Audit (Milestone 7)
+
+### 5.1 Updated Test Verification Results
+
+| Test Suite | Environment | Total Tests | Passed | Failed | Status |
+|---|---|---|---|---|---|
+| `server/tests/` | Python 3.13 / pytest | 81 | 81 | 0 | **PASS** |
+| `client/src/__tests__/` | Node / Vitest | 77 | 77 | 0 | **PASS** |
+| TypeScript Typecheck | `tsc --noEmit` | N/A | Clean | 0 | **PASS** |
+| Vite Production Build | Vite 5.4.21 | N/A | 13.88s | 0 | **PASS** |
+| Data Package Validator | Python 3.13 | 10 groups | 10 | 0 | **PASS** |
+
+### 5.2 Milestone 7 Implemented Capabilities:
+1. **SerpApi Google Maps Integration & Offline Demo Fixtures:**
+   - Assembled 109KB of authentic cached Ahmedabad SerpApi responses (`server/data/fixtures/serpapi_demo_fixtures.json`).
+   - Seamless Live/Demo/Auto mode switcher with automatic fallback when offline or lacking API keys.
+   - Distinct `is_fixture: true` reporting ensuring complete transparency.
+
+2. **Candidate Station Quarantine Review Workflow:**
+   - Full candidate review statuses (`unverified_candidate`, `pending_review`, `verified_project_record`, `rejected`, `proposed_simulation_location`).
+   - Spatial duplicate detection (<250m proximity alert) against existing station network.
+   - Interactive `CandidateReviewPanel.tsx` modal with audit trail, notes logging, and "Send to Simulator" export.
+
+3. **Map Reliability:**
+   - Leaflet `tileerror` detection with non-blocking offline connection warning.
+   - Explicit disclaimers for provisional Ahmedabad screening bounds.
+
+4. **1-Click Forecasting Scenarios:**
+   - Added `ForecastScenariosPanel.tsx` with Normal Supply, Constrained Delivery (-39%), and Peak Demand (+25%) presets.
+   - Integrated with Holt-Winters seasonal forecasting without converting missing data to zero.
+
+5. **Impact Simulator Enhancements:**
+   - Active scenario auto-persistence in `localStorage` (`cng_simulator_active_scenario`); auto-restored on reload.
+   - Named Scenario Library with Save, Load, and Delete controls (`ScenarioPersistenceBar.tsx`).
+   - CSV data export (`exportSimulatorCsv`) and printable executive report (`triggerPrintableReport`).
+   - Road Accessibility & Detour Analysis (`SimulatorRoadAccessibility.tsx`) comparing straight-line vs driving distance with friction calibration.
+
+6. **Evaluator Quick Tour & Startup Automation:**
+   - 5-step floating evaluation tour (`EvaluationTour.tsx`) across Dashboard, Station Register, Forecast Engine, Network Map, and Impact Simulator. Auto-launches on first visit.
+   - One-click startup scripts (`start.bat`, `start.ps1`) checking Python/Node runtimes, starting backend (8000) and frontend (5173), and launching the browser.

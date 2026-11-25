@@ -315,7 +315,7 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
       );
 
       expect(screen.getByText('Station-Level Demand Forecasting')).toBeInTheDocument();
-      expect(screen.getByText('Dev Fixtures Active')).toBeInTheDocument();
+      expect(screen.getByText(/Multi-horizon seasonal forecasting/i)).toBeInTheDocument();
 
       // Wait for fixture resolution
       expect(await screen.findByText(/Demand Trajectory & Model Forecast/i)).toBeInTheDocument();
@@ -334,7 +334,7 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
       );
 
       expect(screen.getByText('Potential Supply-Shortfall Alerts')).toBeInTheDocument();
-      expect(screen.getByText('Dev Fixtures Active')).toBeInTheDocument();
+      expect(screen.getByText(/Compares station-level forecast demand/i)).toBeInTheDocument();
 
       // Wait for fixture resolution
       expect(await screen.findByText('Shortfall Frequency')).toBeInTheDocument();

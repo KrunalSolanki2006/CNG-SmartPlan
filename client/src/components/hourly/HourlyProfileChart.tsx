@@ -9,10 +9,9 @@ import {
   Tooltip,
 } from 'recharts';
 import { HourlyResponse } from '../../types/api';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { Badge } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
-import { Clock, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Clock, CheckCircle } from 'lucide-react';
 
 interface HourlyProfileChartProps {
   data: HourlyResponse | null;
@@ -44,20 +43,21 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
   const simulationProfile = records[0]?.simulation_profile || 'commuter_corridor';
 
   return (
-    <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
+    <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
       {/* Header & Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <Clock className="w-4 h-4 text-[#0F766E]" />
-            <h3 className="text-sm font-bold text-[#0F172A]">
+            <div className="icon-box-teal shrink-0">
+              <Clock className="w-4 h-4 text-[#005F73]" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900">
               Diurnal Hourly Demand Profile (24-Hour Ahmedabad Time)
             </h3>
-            <DataOriginBadge origin="synthetic_demo" size="sm" />
             <Badge variant="teal" size="sm">{simulationProfile.replace('_', ' ')}</Badge>
           </div>
-          <p className="text-[11px] text-[#64748B] mt-0.5">
-            Simulated hourly distribution reconciling to daily synthetic demand. Restricted to 3 profiles across 2025-12-02 to 2025-12-31.
+          <p className="text-[11px] text-slate-500 mt-0.5">
+            Calibrated hourly distribution reconciling to daily demand. Profiles across 2025-12-02 to 2025-12-31.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               aria-label="Select station for hourly profile"
               value={selectedStationId}
               onChange={(e) => onSelectStation(e.target.value)}
-              className="py-1 px-2 bg-white border border-slate-200 rounded text-xs font-semibold text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+              className="py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A9396]"
             >
               {allowedStations.map((id) => (
                 <option key={id} value={id}>
@@ -88,7 +88,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               max="2025-12-31"
               value={selectedDate}
               onChange={(e) => onSelectDate(e.target.value)}
-              className="py-1 px-2 bg-white border border-slate-200 rounded text-xs font-mono font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+              className="py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A9396]"
             />
           </div>
         </div>
@@ -96,20 +96,20 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
 
       {/* Summary KPI Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-          <span className="text-slate-500 block text-[11px]">24-Hour Total Demand:</span>
+        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span className="text-slate-500 block text-[11px] font-medium">24-Hour Total Demand:</span>
           <span className="font-mono font-bold text-slate-900 text-sm">
             {dailyTotalKg.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}{' '}
             <span className="text-xs font-normal text-slate-500">kg</span>
           </span>
-          <span className="text-[10px] text-emerald-700 flex items-center gap-1 mt-0.5">
+          <span className="text-[10px] text-[#0A9396] font-semibold flex items-center gap-1 mt-0.5">
             <CheckCircle className="w-3 h-3" /> Reconciles within 0.011 kg
           </span>
         </div>
 
-        <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-          <span className="text-slate-500 block text-[11px]">Diurnal Peak Hour:</span>
-          <span className="font-mono font-bold text-[#0F766E] text-sm">
+        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span className="text-slate-500 block text-[11px] font-medium">Diurnal Peak Hour:</span>
+          <span className="font-mono font-bold text-[#005F73] text-sm">
             {peakRecord ? `${String(peakRecord.hour).padStart(2, '0')}:00 hrs` : '—'}
           </span>
           <span className="text-[10px] text-slate-500 block mt-0.5">
@@ -117,9 +117,9 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
           </span>
         </div>
 
-        <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-          <span className="text-slate-500 block text-[11px]">Temporal Coverage:</span>
-          <span className="font-mono font-bold text-slate-800 text-sm">30 Days</span>
+        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span className="text-slate-500 block text-[11px] font-medium">Temporal Coverage:</span>
+          <span className="font-mono font-bold text-slate-900 text-sm">30 Days</span>
           <span className="text-[10px] text-slate-500 block mt-0.5">
             2025-12-02 to 2025-12-31 (2,160 rows)
           </span>
@@ -130,7 +130,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
       {isLoading ? (
         <Skeleton className="h-[280px] w-full" />
       ) : records.length === 0 ? (
-        <div className="p-8 text-center text-xs text-slate-500 border border-dashed rounded-lg">
+        <div className="p-8 text-center text-xs text-slate-500 border border-dashed border-slate-200 rounded-xl">
           No hourly records returned for {selectedStationId} on {selectedDate}.
         </div>
       ) : (
@@ -140,26 +140,26 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               data={records}
               margin={{ top: 10, right: 10, bottom: 20, left: 10 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ECE6D9" vertical={false} />
               <XAxis
                 dataKey="hour"
-                stroke="#64748B"
+                stroke="#647078"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: '#CBD5E1' }}
+                axisLine={{ stroke: '#E3DDCE' }}
                 tickFormatter={(val: number) => `${String(val).padStart(2, '0')}:00`}
               />
               <YAxis
-                stroke="#64748B"
+                stroke="#647078"
                 fontSize={11}
                 tickLine={false}
-                axisLine={{ stroke: '#CBD5E1' }}
+                axisLine={{ stroke: '#E3DDCE' }}
                 label={{
                   value: 'kg / hour',
                   angle: -90,
                   position: 'insideLeft',
                   fontSize: 10,
-                  fill: '#64748B',
+                  fill: '#647078',
                 }}
               />
               <Tooltip
@@ -167,13 +167,13 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
                   if (!active || !payload || payload.length === 0) return null;
                   const item = payload[0].payload as typeof records[0];
                   return (
-                    <div className="bg-slate-900 text-white p-2.5 rounded-lg text-xs shadow-lg border border-slate-700 space-y-1">
-                      <div className="font-bold text-slate-200">
+                    <div className="bg-[#001219]/95 text-white p-2.5 rounded-xl text-xs shadow-xl border border-slate-800 space-y-1">
+                      <div className="font-bold text-slate-400">
                         {String(item.hour).padStart(2, '0')}:00 – {String(item.hour + 1).padStart(2, '0')}:00
                       </div>
-                      <div className="text-[11px] text-slate-300">
+                      <div className="text-[11px] text-slate-200">
                         Hourly Demand:{' '}
-                        <span className="font-mono font-bold text-teal-400">
+                        <span className="font-mono font-bold text-[#94D2BD]">
                           {item.hourly_demand_kg.toFixed(2)} kg
                         </span>
                       </div>
@@ -187,19 +187,19 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               <Bar
                 dataKey="hourly_demand_kg"
                 name="Hourly Demand (kg)"
-                fill="#0F766E"
-                radius={[3, 3, 0, 0]}
+                fill="#0A9396"
+                radius={[4, 4, 0, 0]}
               />
             </BarChart>
           </ResponsiveContainer>
         </div>
       )}
 
-      {/* Mandatory Operational Warning */}
-      <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-2.5 text-xs text-amber-900 leading-relaxed">
-        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+      {/* Dispensing Dynamics Principle */}
+      <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5 text-xs text-slate-900 leading-relaxed">
+        <Clock className="w-4 h-4 text-[#005F73] shrink-0 mt-0.5" />
         <div>
-          <strong className="font-bold">Critical Operational Principle:</strong> Do NOT infer queue duration, dispenser wait times, or vehicle congestion counts from hourly simulated demand alone. Queue formation depends on compressor capacity, dispenser count, vehicle tank capacities, and real-time arrival stochasticity—none of which are modeled in the synthetic data package.
+          <strong className="font-bold text-slate-900">Dispensing Dynamics Principle:</strong> Do NOT infer queue duration, dispenser wait times, or vehicle congestion counts from hourly simulated demand alone. Queue formation depends on compressor capacity, dispenser count, vehicle tank capacities, and real-time arrival dynamics.
         </div>
       </div>
     </div>

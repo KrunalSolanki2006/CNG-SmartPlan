@@ -23,6 +23,5 @@ def initialize_data():
 @pytest.fixture
 def client():
     """Test client for FastAPI app."""
-    with TestClient(app) as test_client:
-        yield test_client
+    return TestClient(app)
 

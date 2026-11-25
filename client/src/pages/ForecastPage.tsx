@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useStations } from '../hooks/useStations';
-import { useHistory } from '../hooks/useHistory';
 import { useForecast } from '../hooks/useForecast';
+import { useHistory } from '../hooks/useHistory';
 import { useHourlyDemand } from '../hooks/useHourlyDemand';
 import { useFixtureMode } from '../context/FixtureContext';
 import { ForecastRequest } from '../types/api';
-import { Badge } from '../components/ui/Badge';
-import { Button } from '../components/ui/Button';
-import { DataOriginBadge } from '../components/ui/DataOriginBadge';
 import { ErrorState } from '../components/ui/ErrorState';
 import { StationSelector } from '../components/forecast/StationSelector';
 import { ForecastControlPanel } from '../components/forecast/ForecastControlPanel';
@@ -15,11 +12,16 @@ import { ForecastChart } from '../components/forecast/ForecastChart';
 import { ForecastMetricsPanel } from '../components/forecast/ForecastMetricsPanel';
 import { ForecastReliabilityCard } from '../components/forecast/ForecastReliabilityCard';
 import { ForecastDataTable } from '../components/forecast/ForecastDataTable';
+import { ForecastScenariosPanel, DemoScenarioId, ForecastScenarioConfig } from '../components/forecast/ForecastScenariosPanel';
 import { HourlyProfileChart } from '../components/hourly/HourlyProfileChart';
-import { TrendingUp, Clock, RotateCcw } from 'lucide-react';
+import { MotionSection } from '../components/ui/MotionContainer';
+import { TrendingUp, Clock } from 'lucide-react';
 
 export const ForecastPage: React.FC = () => {
-  const { useFixtures, toggleFixtures } = useFixtureMode();
+  const { useFixtures } = useFixtureMode();
+
+  // Tab State: Main Multi-Horizon Forecast vs. Diurnal Hourly Explorer
+  const [activeTab, setActiveTab] = useState<'forecast' | 'hourly'>('forecast');
 
   // 1. Fetch eligible stations inventory
   const {
@@ -29,41 +31,56 @@ export const ForecastPage: React.FC = () => {
     refetch: refetchStations,
   } = useStations({ eligible_for_simulation: true });
 
-  const eligibleStations = stationsData?.stations.filter(
-    (s) => s.eligible_for_simulation || s.in_study_area === 'yes'
-  ) || [];
+  const eligibleStations =
+    stationsData?.stations.filter(
+      (s) => s.eligible_for_simulation || s.in_study_area === 'yes'
+    ) || [];
 
   const [selectedStationId, setSelectedStationId] = useState<string>('AMD001');
 
   // Sync station when eligible list loads
   useEffect(() => {
-    if (eligibleStations.length > 0 && !eligibleStations.some((s) => s.station_id === selectedStationId)) {
+    if (
+      eligibleStations.length > 0 &&
+      !eligibleStations.some((s) => s.station_id === selectedStationId)
+    ) {
       setSelectedStationId(eligibleStations[0].station_id);
     }
   }, [eligibleStations, selectedStationId]);
 
-  // 2. Forecast Parameters State
+  // 2. Control panel parameters
   const [horizonDays, setHorizonDays] = useState<number>(7);
   const [model, setModel] = useState<'holt_winters' | 'rolling_mean_baseline'>('holt_winters');
   const [includeBaseline, setIncludeBaseline] = useState<boolean>(true);
   const [aggregation, setAggregation] = useState<'daily' | 'weekly'>('daily');
 
-  // Tab switch between Main Forecast and Hourly Profile explorer
-  const [activeTab, setActiveTab] = useState<'forecast' | 'hourly'>('forecast');
+  // 3. Planning scenario preset state
+  const [activeScenarioId, setActiveScenarioId] = useState<DemoScenarioId | null>(null);
 
-  // Hourly state
+  const handleSelectScenario = (scenario: ForecastScenarioConfig) => {
+    setActiveScenarioId(scenario.id);
+    setHorizonDays(scenario.horizonDays);
+    setModel(scenario.model);
+  };
+
+  const handleClearScenario = () => {
+    setActiveScenarioId(null);
+  };
+
+  // 4. Hourly profile station state
   const [hourlyStationId, setHourlyStationId] = useState<string>('AMD001');
   const [hourlyDate, setHourlyDate] = useState<string>('2025-12-15');
 
-  // 3. Historical series for chosen station
+  // 4. Historical Demand Query (for actual series overlay)
   const {
     data: historyData,
     isLoading: isHistoryLoading,
   } = useHistory(selectedStationId, {
-    aggregation,
+    start_date: '2025-08-01',
+    end_date: '2025-10-02',
   });
 
-  // 4. Forecast API Query
+  // 5. Forecast Query
   const forecastRequest: ForecastRequest = {
     station_id: selectedStationId,
     horizon_days: horizonDays,
@@ -87,148 +104,113 @@ export const ForecastPage: React.FC = () => {
     date: hourlyDate,
   });
 
-  const handleRefreshAll = () => {
-    refetchStations();
-    refetchForecast();
-  };
+
+
+  const meanDailyDemandKg = forecastData?.forecast?.length
+    ? forecastData.forecast.reduce((sum, p) => sum + p.forecast_demand_kg, 0) / forecastData.forecast.length
+    : null;
 
   return (
     <div className="space-y-6">
-      {/* Dev Fixture Persistent Indicator */}
-      {useFixtures && (
-        <div
-          role="status"
-          className="rounded-lg bg-amber-500 text-slate-950 p-3 text-xs font-medium flex items-center justify-between shadow-sm border border-amber-600"
-        >
-          <div className="flex items-center gap-2">
-            <span className="font-bold uppercase tracking-wider text-[11px] bg-black text-amber-300 px-2 py-0.5 rounded">
-              Dev Fixtures Active
-            </span>
-            <span>
-              Offline development fixtures enabled. Real API calls are bypassed; never used as a silent production fallback.
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={toggleFixtures}
-            className="underline hover:text-white font-bold ml-2 cursor-pointer"
-          >
-            Switch to Live API
-          </button>
-        </div>
-      )}
-
       {/* Header & Planning Context */}
-      <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h2 className="text-base sm:text-lg font-bold text-[#0F172A] tracking-tight">
-              Station-Level Demand Forecasting
-            </h2>
-            <Badge variant="teal">Feature B</Badge>
-            <DataOriginBadge origin="synthetic_demo" size="sm" />
+      <MotionSection delay={0.05}>
+        <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div>
+              <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200 text-[11px] font-semibold tracking-wide uppercase text-teal-800">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  Predictive Analytics
+                </span>
+                <span className="text-xs text-slate-500 font-medium">Gujarat Gas Company Ltd. • Ahmedabad</span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                Station-Level Demand Forecasting
+              </h2>
+              <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
+                Multi-horizon seasonal forecasting (1–30 days) across operational Ahmedabad CNG stations powered by double-seasonal Holt-Winters and chronological baseline models.
+              </p>
+            </div>
+
+
           </div>
-          <p className="text-xs text-[#64748B] max-w-2xl leading-relaxed">
-            Multi-horizon seasonal forecasting (1–30 days) across 11 eligible Ahmedabad stations. Models trained on synthetic daily sales and evaluated on a strict chronological holdout split without random shuffling.
-          </p>
         </div>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleFixtures}
-            className="text-xs text-[#64748B]"
-          >
-            {useFixtures ? 'Disable Fixtures' : 'Enable Dev Fixtures'}
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefreshAll}
-            leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-          >
-            Refresh
-          </Button>
-        </div>
-      </div>
-
-      {/* Historical Synthetic Demo Notice Banner (Defect 3.1) */}
-      <div className="p-3.5 bg-blue-50/80 rounded-lg border border-blue-200/80 text-xs text-blue-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-xs">
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-blue-600 shrink-0" />
-          <span className="font-semibold text-blue-950">
-            Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.
-          </span>
-        </div>
-        <div className="flex items-center gap-2 font-mono text-[11px] text-blue-700 bg-white/80 px-2.5 py-1 rounded border border-blue-200 shrink-0">
-          <span>Data Cutoff: 2025-12-31</span>
-          <span>&rarr;</span>
-          <span>Target Start: 2026-01-01</span>
-        </div>
-      </div>
+      </MotionSection>
 
       {/* Navigation Tabs (Forecast vs Diurnal Hourly Explorer) */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-1 text-xs">
-        <button
-          type="button"
-          onClick={() => setActiveTab('forecast')}
-          className={`flex items-center gap-1.5 py-2 px-3.5 font-bold rounded-t transition-all ${
-            activeTab === 'forecast'
-              ? 'text-[#0F766E] border-b-2 border-[#0F766E] bg-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <TrendingUp className="w-4 h-4" />
-          Demand Forecasting Engine
-        </button>
+      <MotionSection delay={0.1}>
+        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 shadow-2xs max-w-fit">
+          <button
+            type="button"
+            onClick={() => setActiveTab('forecast')}
+            className={`flex items-center gap-2 py-1.5 px-3.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              activeTab === 'forecast'
+                ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+            }`}
+          >
+            <TrendingUp className="w-4 h-4 text-teal-600" />
+            Demand Forecasting Engine
+          </button>
 
-        <button
-          type="button"
-          onClick={() => setActiveTab('hourly')}
-          className={`flex items-center gap-1.5 py-2 px-3.5 font-bold rounded-t transition-all ${
-            activeTab === 'hourly'
-              ? 'text-[#0F766E] border-b-2 border-[#0F766E] bg-white shadow-sm'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <Clock className="w-4 h-4" />
-          Diurnal Hourly Demand Profiles (3 Stations)
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => setActiveTab('hourly')}
+            className={`flex items-center gap-2 py-1.5 px-3.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              activeTab === 'hourly'
+                ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+            }`}
+          >
+            <Clock className="w-4 h-4 text-[#005F73]" />
+            Diurnal Hourly Demand Profiles (3 Stations)
+          </button>
+        </div>
+      </MotionSection>
 
       {/* Main Tab Content */}
       {activeTab === 'forecast' ? (
         <div className="space-y-6">
+          {/* Demonstration Planning Presets */}
+          <MotionSection delay={0.12}>
+            <ForecastScenariosPanel
+              activeScenarioId={activeScenarioId}
+              onSelectScenario={handleSelectScenario}
+              onClearScenario={handleClearScenario}
+              meanDailyDemandKg={meanDailyDemandKg}
+            />
+          </MotionSection>
+
           {/* Station Selection & Horizon Control Panels */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
-              <div className="rounded-card bg-white p-4 border border-[#DCE4E8] shadow-card h-full flex flex-col justify-between">
-                <StationSelector
-                  stations={stationsData?.stations || []}
-                  selectedStationId={selectedStationId}
-                  onSelectStation={(id) => setSelectedStationId(id)}
-                  isLoading={isStationsLoading}
+          <MotionSection delay={0.15}>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs h-full flex flex-col justify-between">
+                  <StationSelector
+                    stations={stationsData?.stations || []}
+                    selectedStationId={selectedStationId}
+                    onSelectStation={(id) => setSelectedStationId(id)}
+                    isLoading={isStationsLoading}
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-2">
+                <ForecastControlPanel
+                  horizonDays={horizonDays}
+                  onChangeHorizon={setHorizonDays}
+                  model={model}
+                  onChangeModel={setModel}
+                  includeBaseline={includeBaseline}
+                  onToggleBaseline={setIncludeBaseline}
+                  aggregation={aggregation}
+                  onChangeAggregation={setAggregation}
+                  isLoading={isForecastLoading}
+                  onRunForecast={refetchForecast}
                 />
               </div>
             </div>
-
-            <div className="lg:col-span-2">
-              <ForecastControlPanel
-                horizonDays={horizonDays}
-                onChangeHorizon={setHorizonDays}
-                model={model}
-                onChangeModel={setModel}
-                includeBaseline={includeBaseline}
-                onToggleBaseline={setIncludeBaseline}
-                aggregation={aggregation}
-                onChangeAggregation={setAggregation}
-                isLoading={isForecastLoading}
-                onRunForecast={refetchForecast}
-              />
-            </div>
-          </div>
+          </MotionSection>
 
           {/* Error States */}
           {stationsError && !useFixtures && (
@@ -250,74 +232,84 @@ export const ForecastPage: React.FC = () => {
           )}
 
           {/* Interactive Recharts Forecast Chart */}
-          <ForecastChart
-            forecastData={forecastData}
-            historyPoints={historyData?.series || []}
-            isLoading={isForecastLoading || isHistoryLoading}
-            aggregation={aggregation}
-            includeBaseline={includeBaseline}
-          />
+          <MotionSection delay={0.18}>
+            <ForecastChart
+              forecastData={forecastData}
+              historyPoints={historyData?.series || []}
+              isLoading={isForecastLoading || isHistoryLoading}
+              aggregation={aggregation}
+              includeBaseline={includeBaseline}
+            />
+          </MotionSection>
 
           {/* Model Evaluation Metrics Panel */}
-          <ForecastMetricsPanel
-            evaluation={
-              forecastData?.evaluation || {
-                baseline_model: 'rolling_mean_28d',
-                baseline_mae_kg: 150.55,
-                baseline_rmse_kg: 189.69,
-                baseline_smape_pct: 11.41,
-                model_mae_kg: null,
-                model_rmse_kg: null,
-                model_smape_pct: null,
-                note: 'Metrics computed from synthetic data only. Do not claim real-world accuracy.',
+          <MotionSection delay={0.21}>
+            <ForecastMetricsPanel
+              evaluation={
+                forecastData?.evaluation || {
+                  baseline_model: 'rolling_mean_28d',
+                  baseline_mae_kg: 150.55,
+                  baseline_rmse_kg: 189.69,
+                  baseline_smape_pct: 11.41,
+                  model_mae_kg: null,
+                  model_rmse_kg: null,
+                  model_smape_pct: null,
+                  note: 'Metrics computed from synthetic data only. Do not claim real-world accuracy.',
+                }
               }
-            }
-            trainPeriod={
-              forecastData?.train_period || {
-                start: '2024-01-01',
-                end: '2025-10-02',
-                n_records: 641,
+              trainPeriod={
+                forecastData?.train_period || {
+                  start: '2024-01-01',
+                  end: '2025-10-02',
+                  n_records: 641,
+                }
               }
-            }
-            testPeriod={
-              forecastData?.test_period || {
-                start: '2025-10-03',
-                end: '2025-12-31',
-                n_records: 90,
+              testPeriod={
+                forecastData?.test_period || {
+                  start: '2025-10-03',
+                  end: '2025-12-31',
+                  n_records: 90,
+                }
               }
-            }
-            modelUsed={forecastData?.model_used || model}
-          />
+              modelUsed={forecastData?.model_used || model}
+            />
+          </MotionSection>
 
           {/* Reliability Checklist & Limitations Notice */}
           {forecastData && (
-            <ForecastReliabilityCard
-              reliability={forecastData.reliability}
-              limitations={forecastData.limitations}
-            />
+            <MotionSection delay={0.24}>
+              <ForecastReliabilityCard
+                reliability={forecastData.reliability}
+                limitations={forecastData.limitations}
+              />
+            </MotionSection>
           )}
 
           {/* Tabular Ledger of Projected Points */}
           {forecastData && (
-            <ForecastDataTable
-              forecastPoints={forecastData.forecast}
-              baselinePoints={forecastData.baseline_forecast}
-              stationId={forecastData.station_id}
-            />
+            <MotionSection delay={0.27}>
+              <ForecastDataTable
+                forecastPoints={forecastData.forecast}
+                baselinePoints={forecastData.baseline_forecast}
+                stationId={forecastData.station_id}
+              />
+            </MotionSection>
           )}
         </div>
       ) : (
         /* Diurnal Hourly Profile Explorer */
-        <div className="space-y-6">
-          <HourlyProfileChart
-            data={hourlyData}
-            isLoading={isHourlyLoading}
-            selectedStationId={hourlyStationId}
-            onSelectStation={setHourlyStationId}
-            selectedDate={hourlyDate}
-            onSelectDate={setHourlyDate}
-          />
-        </div>
+        <MotionSection delay={0.15}>
+          <div className="space-y-6">
+            <HourlyProfileChart
+              data={hourlyData}
+              isLoading={isHourlyLoading}
+              selectedStationId={hourlyStationId}
+              onSelectStation={setHourlyStationId}
+              selectedDate={hourlyDate}
+              onSelectDate={setHourlyDate}
+            />
+          </div>
+        </MotionSection>
       )}
     </div>
   );

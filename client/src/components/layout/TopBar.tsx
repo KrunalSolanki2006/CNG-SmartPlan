@@ -1,7 +1,6 @@
 import React from 'react';
-import { Menu, Activity, ShieldAlert } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 
 export interface TopBarProps {
   onMobileMenuOpen: () => void;
@@ -15,47 +14,38 @@ export const TopBar: React.FC<TopBarProps> = ({
   pageSubtitle,
 }) => {
   return (
-    <header className="h-16 bg-white border-b border-[#DCE4E8] px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-30 shadow-2xs">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-30 shadow-xs">
       {/* Left: Mobile hamburger & title */}
       <div className="flex items-center gap-3">
         <IconButton
           ariaLabel="Open navigation menu"
           onClick={onMobileMenuOpen}
-          className="lg:hidden text-[#142B3A]"
+          className="lg:hidden text-slate-600 hover:text-slate-900"
         >
           <Menu className="w-5 h-5" />
         </IconButton>
 
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <h1 className="text-base sm:text-lg font-bold text-[#0F172A] tracking-tight">
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               {pageTitle}
             </h1>
-            <span className="hidden sm:inline-block text-[11px] font-medium text-slate-400">
-              | PS000002
-            </span>
           </div>
           {pageSubtitle && (
-            <p className="text-xs text-[#64748B] hidden sm:block truncate max-w-md">
+            <p className="text-xs text-slate-500 font-normal hidden sm:block truncate max-w-lg">
               {pageSubtitle}
             </p>
           )}
         </div>
       </div>
 
-      {/* Right: Integrity badges & Context */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="hidden md:flex items-center gap-2 text-xs text-[#64748B] bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
-          <Activity className="w-3.5 h-3.5 text-[#0F766E]" />
-          <span>Ahmedabad Study Area</span>
-        </div>
-
-        {/* Global Data Origin status */}
-        <DataOriginBadge origin="synthetic_demo" size="sm" />
-
-        <div className="hidden xl:flex items-center gap-1.5 text-xs text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
-          <ShieldAlert className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-          <span>0 Map Pins Approved</span>
+      {/* Right: Operational system status & quick tour */}
+      <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 text-xs font-medium bg-emerald-50 text-emerald-800 px-3.5 py-1.5 rounded-full border border-emerald-200 shadow-2xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+          <span className="hidden sm:inline font-medium text-slate-700">Gujarat Gas CGD</span>
+          <span className="text-slate-300 hidden sm:inline">•</span>
+          <span className="text-emerald-700 font-semibold">Network Planning Grid</span>
         </div>
       </div>
     </header>

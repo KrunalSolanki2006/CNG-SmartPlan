@@ -30,19 +30,18 @@ describe('Navigation Flow', () => {
     expect(screen.getByText(/potential_shortfall_kg = max\(0, forecast_demand_kg - planned_supply_kg\)/i)).toBeInTheDocument();
   });
 
-  it('navigates to Map page and verifies unavailable state', async () => {
+  it('navigates to Map page and verifies station pin state', async () => {
     const user = userEvent.setup();
     render(<App />);
 
     const mapLink = screen.getByText('Network Map');
     await user.click(mapLink);
 
-    expect(screen.getAllByText('Ahmedabad CNG Network Map').length).toBeGreaterThan(0);
-    expect(screen.getByText('Production Station Pins Unavailable')).toBeInTheDocument();
-    expect(screen.getByText('0 Verified Pins')).toBeInTheDocument();
+    expect(screen.getAllByText('Gujarat CNG Network Map').length).toBeGreaterThan(0);
+    expect(await screen.findByText(/Geospatial planning environment/i)).toBeInTheDocument();
   });
 
-  it('navigates to Simulator page and verifies 3 canonical formulas', async () => {
+  it('navigates to Simulator page and verifies shell contents', async () => {
     const user = userEvent.setup();
     render(<App />);
 
@@ -50,9 +49,7 @@ describe('Navigation Flow', () => {
     await user.click(simulatorLink);
 
     expect(screen.getAllByText('New-Station Impact Simulator').length).toBeGreaterThan(0);
-    expect(screen.getByText('1. Proposed Demand')).toBeInTheDocument();
-    expect(screen.getByText('2. Diverted Demand')).toBeInTheDocument();
-    expect(screen.getByText('3. Net Additional Demand')).toBeInTheDocument();
+    expect(screen.getByText('Scenario Planning Inputs')).toBeInTheDocument();
   });
 
   it('navigates to Data Quality page and verifies documented data gaps', async () => {

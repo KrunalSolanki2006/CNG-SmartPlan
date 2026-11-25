@@ -21,7 +21,7 @@ def test_data_store_loaded():
     assert isinstance(store, DataStore)
     assert len(store.stations) == 12
     assert len(store.eligible_stations) == 11
-    assert len(store.map_eligible_stations) == 0
+    assert len(store.map_eligible_stations) == 11
     assert len(store.daily_sales) == 8041
     assert len(store.supply) == 8041
     assert len(store.hourly) == 2160
@@ -43,10 +43,10 @@ def test_station_integrity():
     # All data_type must be real_public
     assert (stations["data_type"] == "real_public").all()
 
-    # Coordinates verified must be False for all stations
-    assert (stations["coordinates_verified"] == False).all()
-    assert stations["latitude"].isna().all()
-    assert stations["longitude"].isna().all()
+    # Coordinates verified is True for all stations
+    assert (stations["coordinates_verified"] == True).all()
+    assert stations["latitude"].notna().all()
+    assert stations["longitude"].notna().all()
 
     # Check eligible vs excluded
     eligible_ids = set(store.eligible_stations["station_id"])

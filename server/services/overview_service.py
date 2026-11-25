@@ -51,7 +51,11 @@ class OverviewService:
                 total_in_inventory=total_stations,
                 eligible_for_simulation=eligible_sim,
                 eligible_for_map_display=eligible_map,
-                note="No verified coordinates exist; all map-eligible counts are zero.",
+                note=(
+                    f"{eligible_map} stations have verified coordinates approved for map display."
+                    if eligible_map > 0
+                    else "No verified coordinates exist; all map-eligible counts are zero."
+                ),
             ),
             network_summary=NetworkSummary(
                 data_origin="synthetic_demo",
@@ -80,7 +84,7 @@ class OverviewService:
                 hourly_period_end=str(hourly["date"].max()),
             ),
             data_quality_flags=DataQualityFlags(
-                verified_coordinates=False,
+                verified_coordinates=eligible_map > 0,
                 real_sales_data=False,
                 real_supply_data=False,
                 holiday_data=False,

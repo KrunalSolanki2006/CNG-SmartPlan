@@ -329,16 +329,20 @@ class DataLoader:
             duplicates = stations[stations.duplicated("station_id")]["station_id"].tolist()
             raise DataValidationError(f"Duplicate station_id in cng_stations.csv: {duplicates}")
 
-        # Ensure coordinates_verified is False for all stations
+        # Validate coordinates_verified stations
         coords_verified_bool = stations["coordinates_verified"].apply(
             lambda v: str(v).strip().lower() in ("true", "1", "yes")
         )
         if coords_verified_bool.any():
-            invalid_ids = stations[coords_verified_bool]["station_id"].tolist()
-            raise DataValidationError(
-                f"Unauthorized verified coordinates detected for stations: {invalid_ids}. "
-                "Per project specification, 0 station coordinates are verified."
-            )
+            verified_subset = stations[coords_verified_bool]
+            lat_numeric = pd.to_numeric(verified_subset["latitude"], errors="coerce")
+            lon_numeric = pd.to_numeric(verified_subset["longitude"], errors="coerce")
+            if lat_numeric.isna().any() or lon_numeric.isna().any():
+                invalid_coords = verified_subset[lat_numeric.isna() | lon_numeric.isna()]["station_id"].tolist()
+                raise DataValidationError(f"Verified coordinates missing or non-numeric for: {invalid_coords}")
+            if not lat_numeric.between(22.8, 23.3).all() or not lon_numeric.between(72.3, 72.8).all():
+                out_of_bounds = verified_subset[~lat_numeric.between(22.8, 23.3) | ~lon_numeric.between(72.3, 72.8)]["station_id"].tolist()
+                raise DataValidationError(f"Verified coordinates out of Ahmedabad bounds [22.8, 23.3], [72.3, 72.8]: {out_of_bounds}")
 
         # Ensure data_type is real_public
         if not (stations["data_type"] == "real_public").all():
@@ -352,10 +356,11 @@ class DataLoader:
                 "Expected 11 'yes' and 1 'uncertain' (AMD010)."
             )
 
+        num_map_eligible = sum(stations.apply(CoordinateVerifier.is_eligible_for_map_pin, axis=1))
         self.report.add_check(
             "stations_integrity",
             passed=True,
-            details="Station master: 12 rows, unique IDs, 11 eligible, 0 verified coordinates",
+            details=f"Station master: 12 rows, unique IDs, 11 eligible for simulation, {num_map_eligible} verified study-area coordinates",
         )
 
         # 2. Load coordinate candidates

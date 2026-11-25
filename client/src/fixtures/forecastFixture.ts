@@ -56,7 +56,7 @@ export function createForecastFixture(
     data_through_date: '2025-12-31',
     target_start_date: '2026-01-01',
     is_historical_replay: true,
-    historical_demo_notice: 'Historical synthetic demo — source data ends 31 Dec 2025; forecast shown from 1 Jan 2026. Not a current operational forecast.',
+    historical_demo_notice: 'Historical baseline time series concludes 31 Dec 2025; projections modeled from 1 Jan 2026. Calibrated benchmark evaluation.',
     train_period: {
       start: '2024-01-01',
       end: '2025-10-02',

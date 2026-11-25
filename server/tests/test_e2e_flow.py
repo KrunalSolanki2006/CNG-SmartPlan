@@ -42,7 +42,7 @@ def test_full_e2e_workflow(client):
     overview_data = res_overview.json()
     assert overview_data["station_counts"]["total_in_inventory"] == 12
     assert overview_data["station_counts"]["eligible_for_simulation"] == 11
-    assert overview_data["station_counts"]["eligible_for_map_display"] == 0
+    assert overview_data["station_counts"]["eligible_for_map_display"] == 11
     assert overview_data["forecast_summary"]["stations_forecasted"] == 11
     assert overview_data["forecast_summary"]["data_origin"] == "synthetic_demo"
 
@@ -52,15 +52,18 @@ def test_full_e2e_workflow(client):
     stations_data = res_stations.json()
     assert stations_data["total"] == 12
     assert stations_data["eligible_for_simulation"] == 11
-    assert stations_data["eligible_for_map_pin"] == 0
-    assert stations_data["map_availability"]["available"] is False
+    assert stations_data["eligible_for_map_pin"] == 11
+    assert stations_data["map_availability"]["available"] is True
     assert len(stations_data["stations"]) == 12
-    # Verify all 12 stations have null coordinates and false map eligibility
     for s in stations_data["stations"]:
-        assert s["eligible_for_map_pin"] is False
-        assert s["coordinates_verified"] is False
-        assert s["latitude"] is None
-        assert s["longitude"] is None
+        assert s["coordinates_verified"] is True
+        if s["station_id"] == "AMD010":
+            assert s["eligible_for_map_pin"] is False
+            assert s["latitude"] is None
+        else:
+            assert s["eligible_for_map_pin"] is True
+            assert isinstance(s["latitude"], float)
+            assert isinstance(s["longitude"], float)
 
     # 4. Station sales history for AMD001
     res_hist = client.get("/api/v1/stations/AMD001/history?aggregation=daily")
@@ -145,7 +148,7 @@ def test_full_e2e_workflow(client):
     assert res_qual.status_code == 200
     qual_data = res_qual.json()
     assert qual_data["station_inventory"]["total_stations"] == 12
-    assert qual_data["station_inventory"]["eligible_for_map_pin"] == 0
+    assert qual_data["station_inventory"]["eligible_for_map_pin"] == 11
     assert qual_data["synthetic_data"]["daily_sales"]["rows"] == 8041
     assert qual_data["synthetic_data"]["supply"]["rows"] == 8041
     assert qual_data["synthetic_data"]["hourly_demand"]["rows"] == 2160

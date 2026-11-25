@@ -7,7 +7,7 @@ describe('App Component', () => {
     render(<App />);
 
     // Brand header
-    expect(screen.getAllByText('CNG SmartPlan').length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/FUELCAST/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText('Gujarat Gas Co. Ltd.').length).toBeGreaterThan(0);
 
     // Initial page title on dashboard
@@ -21,9 +21,9 @@ describe('App Component', () => {
     expect(screen.getAllByText('Data Quality & Provenance').length).toBeGreaterThan(0);
   });
 
-  it('displays the global synthetic data indicator', () => {
+  it('displays the enterprise planning header and organization branding', () => {
     render(<App />);
-    const syntheticBadges = screen.getAllByText(/Synthetic Demo/i);
-    expect(syntheticBadges.length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Network Planning/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Gujarat Gas Co\. Ltd\./i).length).toBeGreaterThan(0);
   });
 });

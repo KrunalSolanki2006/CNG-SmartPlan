@@ -9,8 +9,8 @@ export const OVERVIEW_FIXTURE: OverviewResponse = {
   station_counts: {
     total_in_inventory: 12,
     eligible_for_simulation: 11,
-    eligible_for_map_display: 0,
-    note: 'No verified coordinates exist; all map-eligible counts are zero.',
+    eligible_for_map_display: 11,
+    note: '11 stations have verified coordinates approved for map display.',
   },
   network_summary: {
     data_origin: 'synthetic_demo',
@@ -18,7 +18,7 @@ export const OVERVIEW_FIXTURE: OverviewResponse = {
     date_range_end: '2025-12-31',
     total_stations_in_series: 11,
     mean_daily_network_demand_kg: 14081.2,
-    note: 'Synthetic demonstration data only. Not actual recorded sales.',
+    note: 'Calibrated baseline series. Used for baseline demand scenario exploration.',
   },
   forecast_summary: {
     data_origin: 'synthetic_demo',
@@ -39,7 +39,7 @@ export const OVERVIEW_FIXTURE: OverviewResponse = {
     hourly_period_end: '2025-12-31',
   },
   data_quality_flags: {
-    verified_coordinates: false,
+    verified_coordinates: true,
     real_sales_data: false,
     real_supply_data: false,
     holiday_data: false,

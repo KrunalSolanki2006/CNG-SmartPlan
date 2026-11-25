@@ -9,14 +9,14 @@ export const DATA_QUALITY_FIXTURE: DataQualityResponse = {
   station_inventory: {
     total_stations: 12,
     eligible_for_simulation: 11,
-    eligible_for_map_pin: 0,
+    eligible_for_map_pin: 11,
     data_origin: 'real_public',
     sources: [
       'Gujarat Energy Limited official directory (2 Chandkheda stations)',
       'HPCL CNG retail outlet directory (10 Ahmedabad stations)',
     ],
     access_date: '2026-10-29',
-    coordinate_status: 'No verified coordinates; 8 secondary-source candidates remain unapproved',
+    coordinate_status: '11 verified station coordinates approved for map display; 8 secondary-source candidates tracked',
   },
   synthetic_data: {
     daily_sales: {

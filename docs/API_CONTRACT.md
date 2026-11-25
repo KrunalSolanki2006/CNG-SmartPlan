@@ -576,6 +576,82 @@ Provenance, coverage, and data-gap summary (Feature F).
 
 ---
 
+---
+
+## 3. Maps & Geospatial Intelligence Endpoints (SerpApi Google Maps)
+
+### 3.1 GET /api/v1/maps/search
+Search for CNG filling stations in the study area using Google Maps Search API. Discovered stations are marked as unverified_candidate and quarantined from original records.
+
+**Query Parameters:**
+- q (string, optional, default: 'CNG pump in Ahmedabad'): Search query string.
+- lat (float, optional, default: 23.0225): Search center latitude.
+- lng (float, optional, default: 72.5714): Search center longitude.
+- zoom (int, optional, default: 12): Search zoom level.
+
+### 3.2 GET /api/v1/maps/autocomplete
+Fast location autocomplete separating selectable places with coordinates from text keywords.
+
+**Query Parameters:**
+- q (string, required): Location search prefix.
+- lat (float, optional, default: 23.0225): Bias center latitude.
+- lng (float, optional, default: 72.5714): Bias center longitude.
+
+### 3.3 POST /api/v1/maps/place-details
+Retrieve rich details (weekly opening hours, user reviews, photo gallery, ratings) for a specific station using place_id, data_cid, or data_id with coordinates.
+
+### 3.4 POST /api/v1/maps/directions
+Calculate driving road directions, polyline waypoints for Leaflet rendering, and comparative straight-line vs road detour ratio.
+
+**Request Body:**
+- start_lat (float), start_lng (float), end_lat (float), end_lng (float), 	ravel_mode (int, default: 0).
+
+### 3.5 GET /api/v1/maps/discoveries
+Retrieve previously discovered candidate stations persisted in candidate quarantine storage (server/data/serpapi_geographic_discoveries.json).
+
+### 3.6 GET /api/v1/maps/status
+Retrieve operational status of SerpApi Google Maps integration, active mode (auto, live, demo), API key configuration state, and offline fixtures availability.
+
+### 3.7 POST /api/v1/maps/mode
+Switch SerpApi operational mode dynamically between auto, live, and demo.
+
+### 3.8 GET /api/v1/maps/candidates
+Retrieve candidate stations from quarantine with optional filter by verification_status.
+
+### 3.9 GET /api/v1/maps/candidates/summary
+Retrieve aggregate candidate review counts across all review stages.
+
+### 3.10 PUT /api/v1/maps/candidates/{candidate_id}/status
+Transition candidate verification status, record planner audit notes, and log timestamped review history.
+
+---
+
+## 3.11 Feature 3: Gujarat Candidate Location Ranking & Geospatial Network
+
+### GET /api/v1/candidates
+Filterable endpoint to query statewide candidate locations with MCDA scores.
+- Query parameters: `city` (string), `district` (string), `category` (string), `min_score` (float 0-100), `rankable_only` (bool).
+- Returns: `CandidateRankingsResponse`
+
+### GET /api/v1/candidates/rankings
+Canonical ranked leaderboard sorted by overall multi-criteria suitability score.
+
+### GET /api/v1/candidates/{candidate_id}
+Detailed analytical candidate dossier including 4-criteria mathematical decomposition, nearest station transit routing, and dynamic weight renormalization history.
+- Returns: `CandidateDossierResponse`
+
+### GET /api/v1/candidates/{candidate_id}/evidence
+Spatial and provenance evidence for a specific candidate location.
+
+### POST /api/v1/candidates/recalculate
+Dynamically recalculate candidate rankings given customized criterion weights (`demand_weight`, `service_gap_weight`, `road_accessibility_weight`, `distance_weight`) and spatial thresholds (`min_distance_threshold_km`, `service_gap_ideal_km`).
+- Request body: `RecalculateRankingRequest`
+- Returns: `CandidateRankingsResponse`
+
+### GET /api/v1/network/stations
+Authoritative Gujarat-wide operating stations inventory, cleanly segregating `Verified` (ground-truth operating CNG stations) from `Discovered` (SerpApi/quarantined web records requiring planner review).
+- Returns: `GujaratNetworkStationsResponse`
+
 ## 4. CORS Configuration
 
 **Backend `server/main.py`:**

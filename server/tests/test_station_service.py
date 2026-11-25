@@ -5,18 +5,22 @@ from services.station_service import StationService
 
 
 def test_get_all_stations():
-    """Verify get_all_stations returns all 12 stations with default flags."""
+    """Verify get_all_stations returns all 12 stations with verified coordinates and appropriate flags."""
     stations = StationService.get_all_stations()
     assert len(stations) == 12
 
     for s in stations:
-        # Strict rules: 0 stations have verified coordinates
-        assert s["coordinates_verified"] is False
-        assert s["latitude"] is None
-        assert s["longitude"] is None
-        assert s["eligible_for_map_pin"] is False
         assert s["data_origin"] == "real_public"
         assert s["station_id"].startswith("AMD")
+        assert s["coordinates_verified"] is True
+        if s["station_id"] == "AMD010":
+            assert s["eligible_for_map_pin"] is False
+            assert s["latitude"] is None
+            assert s["longitude"] is None
+        else:
+            assert s["eligible_for_map_pin"] is True
+            assert isinstance(s["latitude"], float)
+            assert isinstance(s["longitude"], float)
 
 
 def test_get_eligible_stations():

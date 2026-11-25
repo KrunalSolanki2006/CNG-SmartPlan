@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Navigation, ArrowRight, RotateCcw, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { useNavigate } from 'react-router-dom';
+import { LocationAutocomplete } from './LocationAutocomplete';
 
 interface ProposedLocationPanelProps {
   proposedCoords: { lat: number; lng: number } | null;
@@ -55,10 +55,10 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
     }
   };
 
-  const handlePresetSelect = (lat: number, lng: number) => {
-    setLatInput(lat.toFixed(4));
-    setLngInput(lng.toFixed(4));
-    onSetCoords({ lat, lng });
+  const handleAutocompleteSelect = (coords: { lat: number; lng: number; label?: string }) => {
+    setLatInput(coords.lat.toFixed(4));
+    setLngInput(coords.lng.toFixed(4));
+    onSetCoords({ lat: coords.lat, lng: coords.lng });
   };
 
   const handleSendToSimulator = () => {
@@ -68,56 +68,30 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
   };
 
   return (
-    <div className="rounded-card bg-white p-4 border border-[#DCE4E8] shadow-card space-y-4 text-xs">
+    <div className="rounded-2xl bg-white p-4 border border-slate-200 shadow-xs space-y-4 text-xs">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <MapPin className="w-4 h-4 text-[#0F766E]" />
-          <h4 className="font-bold text-[#0F172A] uppercase tracking-wider text-xs">
-            Proposed Candidate Location
-          </h4>
-          <DataOriginBadge origin="user_entered_scenario" size="sm" />
-        </div>
-        <span className="text-[11px] text-slate-500">
-          Click map or type coordinates
-        </span>
+      <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+        <MapPin className="w-4 h-4 text-[#005F73]" />
+        <h4 className="font-bold text-slate-900 uppercase tracking-wider text-xs">
+          Proposed Candidate Location
+        </h4>
       </div>
 
-      {/* Preset Quick Selectors */}
+      {/* Autocomplete Input Search */}
       <div className="space-y-1.5">
-        <span className="text-[11px] font-semibold text-slate-600 block">
-          Ahmedabad Study Area Presets:
-        </span>
-        <div className="flex flex-wrap gap-1.5">
-          <button
-            type="button"
-            onClick={() => handlePresetSelect(23.1042, 72.5925)}
-            className="py-1 px-2.5 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium text-slate-700 transition-colors cursor-pointer"
-          >
-            Visat Corridor (23.1042, 72.5925)
-          </button>
-          <button
-            type="button"
-            onClick={() => handlePresetSelect(23.0350, 72.5280)}
-            className="py-1 px-2.5 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium text-slate-700 transition-colors cursor-pointer"
-          >
-            Vastrapur (23.0350, 72.5280)
-          </button>
-          <button
-            type="button"
-            onClick={() => handlePresetSelect(23.0670, 72.6500)}
-            className="py-1 px-2.5 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium text-slate-700 transition-colors cursor-pointer"
-          >
-            Naroda Industrial (23.0670, 72.6500)
-          </button>
-        </div>
+        
+        <LocationAutocomplete
+          onSelectLocation={handleAutocompleteSelect}
+          centerLat={proposedCoords?.lat ?? 23.0225}
+          centerLng={proposedCoords?.lng ?? 72.5714}
+        />
       </div>
 
       {/* Form Inputs */}
-      <form onSubmit={handleApplyCoordinates} className="space-y-3">
+      <form onSubmit={handleApplyCoordinates} className="space-y-3 pt-2 border-t border-slate-100">
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
-            <label htmlFor="latitude-input" className="font-semibold text-slate-700 block text-[11px]">
+            <label htmlFor="latitude-input" className="font-semibold text-slate-500 block text-[11px]">
               Latitude (°N):
             </label>
             <input
@@ -127,12 +101,12 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
               value={latInput}
               onChange={(e) => setLatInput(e.target.value)}
               aria-label="Proposed station latitude"
-              className="w-full py-1.5 px-2.5 bg-white border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+              className="w-full py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#0A9396] focus:border-[#0A9396]"
             />
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="longitude-input" className="font-semibold text-slate-700 block text-[11px]">
+            <label htmlFor="longitude-input" className="font-semibold text-slate-500 block text-[11px]">
               Longitude (°E):
             </label>
             <input
@@ -142,7 +116,7 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
               value={lngInput}
               onChange={(e) => setLngInput(e.target.value)}
               aria-label="Proposed station longitude"
-              className="w-full py-1.5 px-2.5 bg-white border border-slate-200 rounded font-mono text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+              className="w-full py-1.5 px-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-[#0A9396] focus:border-[#0A9396]"
             />
           </div>
         </div>
@@ -150,22 +124,22 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
         {/* Validation Status */}
         {isValidNumber && (
           <div
-            className={`p-2.5 rounded text-[11px] flex items-start gap-2 ${
+            className={`p-2.5 rounded-xl text-[11px] flex items-start gap-2 ${
               isWithinStudyArea
-                ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                : 'bg-amber-50 text-amber-900 border border-amber-200'
+                ? 'bg-[#EAF6F2] text-[#005F73] border border-[#94D2BD]/60'
+                : 'bg-[#FEF6E9] text-[#CA6702] border border-[#E9D8A6]'
             }`}
           >
             {isWithinStudyArea ? (
               <>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#0A9396] shrink-0 mt-0.5" />
                 <span>
-                  Coordinates fall within the provisional coordinate envelope (approximate view range: 22.85°N–23.25°N, 72.40°E–72.75°E). Municipal boundary verification is unavailable (official AMC GIS polygon is not validated in dataset).
+                  Coordinates fall within the provisional coordinate envelope (approximate view range: 22.85°N–23.25°N, 72.40°E–72.75°E).
                 </span>
               </>
             ) : (
               <>
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <AlertTriangle className="w-3.5 h-3.5 text-[#CA6702] shrink-0 mt-0.5" />
                 <span>
                   <strong>Out-of-Study-Area Notice:</strong> Selected coordinates fall outside the Ahmedabad metropolitan screening boundary.
                 </span>
@@ -192,7 +166,7 @@ export const ProposedLocationPanel: React.FC<ProposedLocationPanelProps> = ({
               size="sm"
               onClick={() => onSetCoords(null)}
               leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-              className="text-slate-500 hover:text-red-600"
+              className="text-slate-500 hover:text-[#AE2012]"
             >
               Clear Marker
             </Button>

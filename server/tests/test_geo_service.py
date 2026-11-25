@@ -95,21 +95,22 @@ def test_study_area_bounding_box_checks():
     assert GeoService.is_within_study_area_bbox(23.00, 72.81) is False
 
 
-def test_find_nearby_approved_stations_returns_unavailable_state():
-    """find_nearby_approved_stations must return unavailable status because 0 stations have verified coordinates."""
+def test_find_nearby_approved_stations():
+    """find_nearby_approved_stations returns real nearby stations using Haversine distance."""
     res = GeoService.find_nearby_approved_stations(lat=23.05, lon=72.60, radius_km=3.0)
 
-    assert res["geographic_analysis_available"] is False
-    assert "No stations have independently verified coordinates" in res["reason"]
-    assert "approved_for_map_pin=no" in res["reason"]
-    assert res["nearby_stations"] == []
-    assert res["approved_station_count"] == 0
+    assert res["geographic_analysis_available"] is True
+    assert res["approved_station_count"] == 11
+    assert len(res["nearby_stations"]) > 0
     assert res["query_point"]["latitude"] == 23.05
     assert res["query_point"]["longitude"] == 72.60
     assert res["query_point"]["in_study_area_bbox"] is True
     assert res["radius_km"] == 3.0
     assert "straight-line" in res["distance_method"].lower()
-    assert "not road distance" in res["distance_method"].lower()
+    for st in res["nearby_stations"]:
+        assert st["distance_km"] <= 3.0
+        assert "station_id" in st
+        assert "station_name" in st
 
 
 def test_find_nearby_stations_invalid_radius():
@@ -127,7 +128,7 @@ def test_candidate_audit_summary_integrity():
 
     assert summary["total_stations"] == 12
     assert summary["candidates_found"] == 8
-    assert summary["approved_for_map_pin_count"] == 0
+    assert summary["approved_for_map_pin_count"] == 11
     assert summary["unapproved_candidates_count"] == 8
 
     # 4 stations have no candidate coordinates
@@ -160,12 +161,12 @@ def test_candidate_audit_summary_integrity():
 def test_station_service_delegates_to_geo_service():
     """StationService helper methods must delegate correctly to GeoService."""
     nearby = StationService.find_nearby_stations(23.05, 72.60, 3.0)
-    assert nearby["geographic_analysis_available"] is False
-    assert nearby["approved_station_count"] == 0
+    assert nearby["geographic_analysis_available"] is True
+    assert nearby["approved_station_count"] == 11
 
     audit = StationService.get_candidate_audit_summary()
     assert audit["total_stations"] == 12
-    assert audit["approved_for_map_pin_count"] == 0
+    assert audit["approved_for_map_pin_count"] == 11
 
 
 def test_evaluate_candidate_point_isolated_from_master():

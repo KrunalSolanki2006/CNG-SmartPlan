@@ -38,13 +38,13 @@ describe('Reduced Motion and Mobile Navigation', () => {
     await user.click(menuBtn);
 
     // Mobile drawer should be opened
-    const drawerTitle = screen.getByText('CNG SmartPlan', { selector: '#drawer-title' });
+    const drawerTitle = screen.getByText('FUELCAST', { selector: '#drawer-title' });
     expect(drawerTitle).toBeInTheDocument();
 
     const closeBtn = screen.getByRole('button', { name: 'Close drawer' });
     await user.click(closeBtn);
 
     // Drawer closes
-    expect(screen.queryByText('CNG SmartPlan', { selector: '#drawer-title' })).not.toBeInTheDocument();
+    expect(screen.queryByText('FUELCAST', { selector: '#drawer-title' })).not.toBeInTheDocument();
   });
 });

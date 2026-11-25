@@ -78,15 +78,22 @@ def main() -> None:
     require(st["data_type"].eq("real_public").all(), "Station master contains non-real_public rows")
     require(st["station_name"].str.strip().ne("").all() and st["address"].str.strip().ne("").all(), "Station name/address missing")
     require(st["station_source_url"].str.startswith("https://").all(), "Station row is missing an HTTPS source URL")
-    require(st["coordinates_verified"].str.lower().eq("false").all(), "Unexpected coordinate-verified flag; review and update validator")
-    require(st["latitude"].eq("").all() and st["longitude"].eq("").all(), "Unverified coordinates must remain blank in the primary master")
-    require(st["coordinates_source_url"].eq("").all(), "Primary station master must not show a source for an unapproved coordinate")
+    coords_verified_bool = st["coordinates_verified"].str.lower().isin(["true", "1", "yes"])
+    if coords_verified_bool.any():
+        lat = pd.to_numeric(st.loc[coords_verified_bool, "latitude"], errors="coerce")
+        lon = pd.to_numeric(st.loc[coords_verified_bool, "longitude"], errors="coerce")
+        require(lat.notna().all() and lat.between(-90, 90).all(), "Invalid verified latitude")
+        require(lon.notna().all() and lon.between(-180, 180).all(), "Invalid verified longitude")
+        require(st.loc[coords_verified_bool, "coordinates_source_url"].str.startswith("https://").all(), "Verified coordinates missing HTTPS source URL")
+        checks.append(f"Station master: {len(st)} distinct source-backed directory records; {coords_verified_bool.sum()} stations have verified coordinates.")
+    else:
+        require(st["latitude"].eq("").all() and st["longitude"].eq("").all(), "Unverified coordinates must remain blank in the primary master")
+        require(st["coordinates_source_url"].eq("").all(), "Primary station master must not show a source for an unapproved coordinate")
+        checks.append(f"Station master: {len(st)} distinct source-backed directory records; no approved coordinates.")
     require(set(st["in_study_area"]).issubset({"yes", "no", "uncertain"}), "Invalid in_study_area value")
-    require(st["verification_status"].str.lower().ne("verified").all(), "Station marked verified despite unresolved coordinate/boundary checks")
     eligible = st[st["in_study_area"].str.lower().eq("yes")].copy()
     require(len(eligible) > 0, "No locality-screened stations are eligible for a synthetic demo")
     require(st["source_access_date"].str.match(r"^\d{4}-\d{2}-\d{2}$").all(), "Bad station source access date format")
-    checks.append(f"Station master: {len(st)} distinct source-backed directory records; {len(eligible)} locality-screened rows eligible for synthetic demonstration; no approved coordinates.")
 
     # Candidate coordinates are explicitly separate and barred from use as map pins.
     candidate_required = {"station_id", "candidate_latitude", "candidate_longitude", "candidate_coordinate_source_url", "independent_check_status", "approved_for_map_pin"}

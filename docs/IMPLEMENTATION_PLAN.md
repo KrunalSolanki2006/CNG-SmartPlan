@@ -302,3 +302,57 @@ Both must run simultaneously for integration. The frontend Vite dev server proxi
 The `CNG_SmartPlan_Data/` folder is the single read-only data source.
 Point `server/data/` to it (symlink or environment variable `DATA_PATH`).
 The backend must not write to any CSV file.
+
+
+---
+
+## 10. Milestone 6: End-to-End SerpApi Google Maps Integration
+
+### 10.1 Objective
+Integrate real-world Google Maps geospatial intelligence into the CNG SmartPlan map and planning views using SerpApi:
+1. **Google Maps Search API (`engine=google_maps`, `type=search`):** Search and discover real CNG pumps across Ahmedabad.
+2. **Google Maps Autocomplete API (`engine=google_maps_autocomplete`):** Debounced location suggestions distinguishing selectable places with coordinates from text keywords.
+3. **Google Maps Place Details (`engine=google_maps`):** Detailed operating hours, ratings, customer review snippets, photos, and contact info.
+4. **Google Maps Directions API (`engine=google_maps_directions`):** Actual road routing, travel durations, turn-by-turn navigation steps, Leaflet road polylines, and road-to-straight-line detour ratios.
+
+### 10.2 Architecture & Data Quarantine
+- **Backend Service Layer:** `server/services/serpapi_client.py` (with disk caching) and `server/services/google_maps_service.py`.
+- **API Endpoints:** `/api/v1/maps/search`, `/api/v1/maps/autocomplete`, `/api/v1/maps/place-details`, `/api/v1/maps/directions`, `/api/v1/maps/discoveries`.
+- **Quarantine Guarantee:** External discoveries are written strictly to `server/data/serpapi_geographic_discoveries.json` and never contaminate original CSVs in `CNG_SmartPlan_Data/`.
+- **Frontend Components:** `LocationAutocomplete.tsx`, `MapSearchBar.tsx`, `StationDetailsSheet.tsx`, `DirectionsPanel.tsx`, and upgraded `StationMap.tsx`.
+- **Test Coverage:** Automated unit and integration tests in `server/tests/test_maps_service.py` and `client/src/__tests__/Milestone6MapsSerpApi.test.tsx`.
+
+
+---
+
+## Milestone 7: Final Prototype Completion, Evaluator Tour & Hardening (Completed)
+
+1. **SerpApi Demonstration Reliability & Offline Fallback:**
+   - 109KB genuine cached Ahmedabad SerpApi fixtures in `server/data/fixtures/serpapi_demo_fixtures.json`.
+   - `SerpApiClient` with three operational modes: `auto`, `live`, `demo`. Automatic zero-latency fallback to demo fixtures on missing key, quota exhaustion, or network disconnects.
+   - Distinct metadata flag (`is_fixture: true`) ensuring evaluator transparency without inventing synthetic stations.
+
+2. **Candidate Station Quarantine Review Workflow:**
+   - Formal candidate statuses: `unverified_candidate`, `pending_review`, `verified_project_record`, `rejected`, `proposed_simulation_location`.
+   - Spatial duplicate detection (<250m proximity alert) against existing station registry.
+   - Planner review queue modal (`CandidateReviewPanel.tsx`) with audit history, status transitions, review notes, and 1-click "Send to Simulator" export.
+   - Backend routes: `GET /api/v1/maps/status`, `POST /api/v1/maps/mode`, `GET /api/v1/maps/candidates`, `GET /api/v1/maps/candidates/summary`, `PUT /api/v1/maps/candidates/{id}/status`.
+
+3. **Map Reliability & Error Resilience:**
+   - Handled Leaflet `tileerror` event to detect tile loading failures, rendering an informative offline connection banner while preserving cached candidate markers and route overlays.
+   - Explicit disclaimer labeling the Ahmedabad study area bounds as provisional screening coordinates.
+
+4. **1-Click Forecasting Planning Presets:**
+   - `ForecastScenariosPanel.tsx` providing 3 preset demonstration configurations: Normal Supply (1,800 kg/d), Constrained Delivery (1,100 kg/d, -39%), and Peak Demand Surge (+25%).
+   - Seamless parameter synchronization: updates horizon, models, and triggers live forecast re-computations without converting missing data to zero.
+
+5. **Impact Simulator Persistence, Detour Analysis & Executive Export:**
+   - Active scenario auto-persistence in `localStorage` (`cng_simulator_active_scenario`); auto-restores on page reload.
+   - Named Scenario Library (`ScenarioPersistenceBar.tsx`): Save custom scenarios, load from dropdown, delete, or reset to benchmark.
+   - CSV Export (`exportSimulatorCsv`): Generates structured `.csv` with metadata, inputs, outputs, sensitivity grid, and data gaps (GAP-001..GAP-008).
+   - Executive Printable Report (`triggerPrintableReport`): Clean `@media print` styling hiding UI chrome.
+   - Road Accessibility & Detour Analysis (`SimulatorRoadAccessibility.tsx`): Compares straight-line Euclidean distance with Google Maps road routing, travel duration, and detour ratio with diversion friction calibration.
+
+6. **Evaluator Quick Tour & Startup Automation:**
+   - Interactive 5-step floating evaluation tour (`EvaluationTour.tsx`) across Dashboard, Station Register, Forecast Engine, Network Map, and Impact Simulator. Auto-launches on first visit with option to minimize or dismiss.
+   - One-click startup scripts (`start.bat` and `start.ps1`) verifying Python/Node, launching FastAPI (port 8000) and React (port 5173), and opening the browser.

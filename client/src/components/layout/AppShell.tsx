@@ -16,7 +16,7 @@ export const AppShell: React.FC = () => {
       : location.pathname.startsWith(item.path)
   );
 
-  const pageTitle = currentNav?.name || 'CNG SmartPlan';
+  const pageTitle = currentNav?.name || 'FUELCAST';
 
   const subtitles: Record<string, string> = {
     '/': 'Network demand summary, station inventory status, and early alert indicators',
@@ -30,7 +30,7 @@ export const AppShell: React.FC = () => {
   const pageSubtitle = subtitles[location.pathname] || 'Decision support platform for CNG planning';
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#F5F7FA] text-[#0F172A]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#F8FAFC] text-[#0F172A]">
       {/* Desktop Persistent Sidebar */}
       <SideBar className="hidden lg:flex" />
 
@@ -38,7 +38,7 @@ export const AppShell: React.FC = () => {
       <Drawer
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        title="CNG SmartPlan"
+        title="FUELCAST"
         position="left"
       >
         <SideBar onNavClick={() => setIsMobileMenuOpen(false)} className="w-full border-0" />
@@ -58,6 +58,7 @@ export const AppShell: React.FC = () => {
             <Outlet />
           </div>
         </main>
+
       </div>
     </div>
   );

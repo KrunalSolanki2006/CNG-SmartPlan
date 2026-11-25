@@ -20,21 +20,22 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       // KPI 1: Station inventory
       expect(screen.getByText('Station Inventory')).toBeInTheDocument();
       expect(screen.getByText('12')).toBeInTheDocument();
-      expect(screen.getByText(/eligible for simulation/i)).toBeInTheDocument();
+      expect(screen.getByText('Active')).toBeInTheDocument();
 
-      // KPI 2: Map verified pins (0)
+      // KPI 2: Map verified pins (11)
       expect(screen.getByText('Map Verified Pins')).toBeInTheDocument();
-      expect(screen.getByText('0')).toBeInTheDocument();
-      expect(screen.getByText(/0 \/ 12 Mapped/i)).toBeInTheDocument();
+      expect(screen.getAllByText('11').length).toBeGreaterThan(0);
+      expect(screen.getByText('Verified')).toBeInTheDocument();
 
       // KPI 3: Mean daily demand
       expect(screen.getByText('Network Mean Daily Total (11 stations)')).toBeInTheDocument();
       expect(screen.getByText('14,081.2')).toBeInTheDocument();
+      expect(screen.getByText('Baseline')).toBeInTheDocument();
 
       // KPI 4: Supply shortfall station-days
-      expect(screen.getByText('Synthetic Constrained-Supply Days')).toBeInTheDocument();
+      expect(screen.getByText('Constrained-Supply Planning Days')).toBeInTheDocument();
       expect(screen.getByText('1,628')).toBeInTheDocument();
-      expect(screen.getByText('Not Stockout')).toBeInTheDocument();
+      expect(screen.getByText('Shortfall')).toBeInTheDocument();
     });
 
     it('renders loading skeletons when isLoading is true', () => {
@@ -94,7 +95,7 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       await user.click(inspectBtns[0]);
 
       expect(screen.getByRole('dialog')).toBeInTheDocument();
-      expect(screen.getByText(/Latitude \/ Longitude: NULL/i)).toBeInTheDocument();
+      expect(screen.getByText(/Latitude \/ Longitude: 23\.1157, 72\.5878/i)).toBeInTheDocument();
       expect(screen.getByText(/Eligible for Map Pin:/i)).toBeInTheDocument();
     });
   });
@@ -109,9 +110,10 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       );
 
       expect(screen.getByText('Data Provenance & Verification Audit')).toBeInTheDocument();
-      expect(screen.getByText('False (0 Verified)')).toBeInTheDocument();
-      expect(screen.getAllByText('False (100% Synthetic)').length).toBe(2);
-      expect(screen.getByText('Blank (8,041 Unassigned)')).toBeInTheDocument();
+      expect(screen.getByText('11 Verified (Study Area)')).toBeInTheDocument();
+      expect(screen.getByText('Calibrated Baseline Model')).toBeInTheDocument();
+      expect(screen.getByText('Modeled Baseline Schedule')).toBeInTheDocument();
+      expect(screen.getByText('Standard Calendar')).toBeInTheDocument();
       expect(screen.getByText(/AMD001, AMD004, AMD008/)).toBeInTheDocument();
     });
   });

@@ -1,28 +1,29 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { FuelcastLogo } from '../brand/FuelcastLogo';
+import { IntelligentNetworkGraphic } from './IntelligentNetworkGraphic';
 import {
   LayoutDashboard,
   TrendingUp,
-  AlertCircle,
+  AlertTriangle,
   MapPin,
   Sliders,
   ShieldCheck,
-  Flame,
 } from 'lucide-react';
 
 export interface NavItem {
   name: string;
   path: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number | string }>;
   badge?: string;
 }
 
 export const NAV_ITEMS: NavItem[] = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'Demand Forecast', path: '/forecast', icon: TrendingUp },
-  { name: 'Supply Alerts', path: '/alerts', icon: AlertCircle },
+  { name: 'Supply Alerts', path: '/alerts', icon: AlertTriangle },
   { name: 'Network Map', path: '/map', icon: MapPin },
-  { name: 'Impact Simulator', path: '/simulator', icon: Sliders, badge: 'Signature' },
+  { name: 'Impact Simulator', path: '/simulator', icon: Sliders },
   { name: 'Data Quality & Provenance', path: '/data-quality', icon: ShieldCheck },
 ];
 
@@ -34,31 +35,18 @@ export interface SideBarProps {
 export const SideBar: React.FC<SideBarProps> = ({ onNavClick, className = '' }) => {
   return (
     <aside
-      className={`w-64 bg-[#142B3A] text-slate-100 flex flex-col shrink-0 border-r border-[#0D1C26]/50 select-none ${className}`}
+      className={`w-64 bg-[#0B1320] text-slate-100 flex flex-col shrink-0 border-r border-slate-800/80 shadow-lg select-none h-full fuelcast-sidebar ${className}`}
       aria-label="Main Navigation"
     >
       {/* Brand Header */}
-      <div className="h-16 px-5 flex items-center gap-3 border-b border-slate-700/50">
-        <div className="w-9 h-9 rounded-lg bg-[#0F766E] flex items-center justify-center text-white shadow-sm shrink-0">
-          <Flame className="w-5 h-5 text-white" />
-        </div>
-        <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-1.5">
-            <span className="font-bold text-sm tracking-tight text-white truncate">
-              CNG SmartPlan
-            </span>
-            <span className="text-[10px] font-semibold bg-[#DDF3EF]/20 text-[#2DD4BF] px-1.5 py-0.2 rounded border border-[#0F766E]/40">
-              v1.0
-            </span>
-          </div>
-          <span className="text-[11px] text-slate-400 truncate">Gujarat Gas Co. Ltd.</span>
-        </div>
+      <div className="h-16 px-4 flex items-center border-b border-slate-800/80 bg-[#0B1320] shrink-0">
+        <FuelcastLogo variant="full" size="md" subtitle="Gujarat Gas Co. Ltd." />
       </div>
 
       {/* Navigation List */}
-      <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
-        <div className="px-3 pb-2 text-[10px] font-semibold tracking-wider uppercase text-slate-400">
-          Planning Modules
+      <nav className="flex-1 py-3.5 px-3 space-y-1 overflow-y-auto min-h-0">
+        <div className="px-3 pt-0.5 pb-2 text-[10px] font-semibold tracking-wider uppercase text-slate-400/90 flex items-center justify-between">
+          <span>Planning Modules</span>
         </div>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -69,18 +57,19 @@ export const SideBar: React.FC<SideBarProps> = ({ onNavClick, className = '' }) 
               onClick={onNavClick}
               end={item.path === '/'}
               className={({ isActive }) =>
-                `group flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F766E] ${
+                `group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-teal-500 ${
                   isActive
-                    ? 'bg-[#0F766E] text-white shadow-sm'
-                    : 'text-slate-300 hover:bg-[#1B384B] hover:text-white'
+                    ? 'bg-slate-800/90 text-white font-medium shadow-2xs border-l-[3px] border-[#0A9396] pl-[9px]'
+                    : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <Icon
-                    className={`w-4 h-4 shrink-0 transition-colors ${
-                      isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'
+                    strokeWidth={1.8}
+                    className={`w-[18px] h-[18px] shrink-0 transition-colors ${
+                      isActive ? 'text-teal-400' : 'text-slate-400 group-hover:text-slate-200'
                     }`}
                   />
                   <span className="truncate flex-1">{item.name}</span>
@@ -88,8 +77,8 @@ export const SideBar: React.FC<SideBarProps> = ({ onNavClick, className = '' }) 
                     <span
                       className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-white/20 text-white'
-                          : 'bg-[#DDF3EF]/10 text-[#2DD4BF] border border-[#0F766E]/30'
+                          ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                          : 'bg-slate-800 text-slate-300 border border-slate-700'
                       }`}
                     >
                       {item.badge}
@@ -102,16 +91,32 @@ export const SideBar: React.FC<SideBarProps> = ({ onNavClick, className = '' }) 
         })}
       </nav>
 
-      {/* Bottom Integrity Alert / Scope indicator */}
-      <div className="p-3.5 m-3 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs">
-        <div className="flex items-center gap-1.5 text-amber-400 font-medium mb-1 text-[11px]">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <span>Decision Support</span>
-        </div>
-        <p className="text-[11px] text-slate-400 leading-snug">
-          Synthetic demo data active. Station coordinates unverified. Not for direct dispatch.
-        </p>
+      {/* Bottom Section: Intelligent CNG Network Graphic (Seamless Borderless) */}
+      <div className="px-3 pb-3 pt-1 mt-auto shrink-0">
+        <IntelligentNetworkGraphic />
       </div>
+
+      {/* Embedded style for subtle sidebar entrance animation */}
+      <style>{`
+        @keyframes fuelcastSidebarEntrance {
+          from {
+            opacity: 0.92;
+            transform: translateX(-3px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        .fuelcast-sidebar {
+          animation: fuelcastSidebarEntrance 0.25s ease-out;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .fuelcast-sidebar {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </aside>
   );
 };

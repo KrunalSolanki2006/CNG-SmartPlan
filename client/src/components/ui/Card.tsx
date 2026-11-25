@@ -9,8 +9,8 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={`bg-white rounded-card border border-[#DCE4E8] shadow-card ${
-          hoverEffect ? 'hover:shadow-card-hover transition-shadow duration-200' : ''
+        className={`bg-white rounded-card border border-slate-200 shadow-xs ${
+          hoverEffect ? 'hover:shadow-sm hover:border-slate-300 transition-all duration-200' : ''
         } ${className}`}
         {...props}
       >
@@ -26,7 +26,7 @@ export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className = '',
   ...props
 }) => (
-  <div className={`p-5 pb-3 border-b border-[#F1F5F9] flex flex-col gap-1 ${className}`} {...props}>
+  <div className={`p-5 pb-3 border-b border-slate-100 flex flex-col gap-1 ${className}`} {...props}>
     {children}
   </div>
 );
@@ -36,7 +36,7 @@ export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   className = '',
   ...props
 }) => (
-  <h3 className={`text-base font-semibold text-[#0F172A] tracking-tight ${className}`} {...props}>
+  <h3 className={`text-base font-bold text-slate-900 tracking-tight ${className}`} {...props}>
     {children}
   </h3>
 );
@@ -46,7 +46,7 @@ export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement
   className = '',
   ...props
 }) => (
-  <p className={`text-xs text-[#64748B] ${className}`} {...props}>
+  <p className={`text-xs text-slate-500 ${className}`} {...props}>
     {children}
   </p>
 );
@@ -66,7 +66,7 @@ export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className = '',
   ...props
 }) => (
-  <div className={`p-4 pt-3 border-t border-[#F1F5F9] bg-[#FAFCFD] rounded-b-card flex items-center ${className}`} {...props}>
+  <div className={`p-4 pt-3 border-t border-slate-100 bg-slate-50/70 rounded-b-card text-slate-600 flex items-center ${className}`} {...props}>
     {children}
   </div>
 );

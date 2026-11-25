@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Sliders, RefreshCw, AlertCircle } from 'lucide-react';
-import { Badge } from '../components/ui/Badge';
-import { DataOriginBadge } from '../components/ui/DataOriginBadge';
+import { Sliders, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Spinner } from '../components/ui/Spinner';
 import { useImpactSimulator } from '../hooks/useImpactSimulator';
@@ -10,9 +8,10 @@ import { ImpactSimulatorRequest } from '../types/api';
 import { SimulatorInputsPanel } from '../components/simulator/SimulatorInputsPanel';
 import { SimulatorResultsCards } from '../components/simulator/SimulatorResultsCards';
 import { SimulatorWaterfallChart } from '../components/simulator/SimulatorWaterfallChart';
-import { SimulatorFormulasPanel } from '../components/simulator/SimulatorFormulasPanel';
-import { SimulatorGeographicDisclosure } from '../components/simulator/SimulatorGeographicDisclosure';
 import { SimulatorSensitivityTable } from '../components/simulator/SimulatorSensitivityTable';
+import { ScenarioPersistenceBar } from '../components/simulator/ScenarioPersistenceBar';
+import { SimulatorRoadAccessibility } from '../components/simulator/SimulatorRoadAccessibility';
+import { MotionSection } from '../components/ui/MotionContainer';
 
 export const BENCHMARK_SIMULATOR_INPUTS: ImpactSimulatorRequest = {
   proposed_latitude: 23.05,
@@ -24,6 +23,8 @@ export const BENCHMARK_SIMULATOR_INPUTS: ImpactSimulatorRequest = {
   accessibility_demand_kg_per_day: 0.0,
 };
 
+const STORAGE_KEY_ACTIVE_SCENARIO = 'cng_simulator_active_scenario';
+
 export const SimulatorPage: React.FC = () => {
   const [searchParams] = useSearchParams();
 
@@ -32,21 +33,40 @@ export const SimulatorPage: React.FC = () => {
   const lngParam = searchParams.get('lng');
   const hasMapCoords = Boolean(latParam && lngParam);
 
-  const initialInputs = useMemo<ImpactSimulatorRequest>(() => {
-    const lat = latParam ? parseFloat(latParam) : BENCHMARK_SIMULATOR_INPUTS.proposed_latitude;
-    const lng = lngParam ? parseFloat(lngParam) : BENCHMARK_SIMULATOR_INPUTS.proposed_longitude;
+  const [activeScenarioName, setActiveScenarioName] = useState<string>('Default Benchmark');
 
-    return {
-      ...BENCHMARK_SIMULATOR_INPUTS,
-      proposed_latitude: !isNaN(lat) ? lat : BENCHMARK_SIMULATOR_INPUTS.proposed_latitude,
-      proposed_longitude: !isNaN(lng) ? lng : BENCHMARK_SIMULATOR_INPUTS.proposed_longitude,
-    };
+  const initialInputs = useMemo<ImpactSimulatorRequest>(() => {
+    // If explicit coordinates in URL from Map page, use those
+    if (latParam && lngParam) {
+      const lat = parseFloat(latParam);
+      const lng = parseFloat(lngParam);
+      return {
+        ...BENCHMARK_SIMULATOR_INPUTS,
+        proposed_latitude: !isNaN(lat) ? lat : BENCHMARK_SIMULATOR_INPUTS.proposed_latitude,
+        proposed_longitude: !isNaN(lng) ? lng : BENCHMARK_SIMULATOR_INPUTS.proposed_longitude,
+      };
+    }
+
+    // Otherwise check for persistent active scenario in localStorage
+    try {
+      const savedActive = localStorage.getItem(STORAGE_KEY_ACTIVE_SCENARIO);
+      if (savedActive) {
+        const parsed = JSON.parse(savedActive);
+        if (parsed && typeof parsed.proposed_latitude === 'number') {
+          return parsed;
+        }
+      }
+    } catch {
+      // fallback
+    }
+
+    return BENCHMARK_SIMULATOR_INPUTS;
   }, [latParam, lngParam]);
 
   const [inputs, setInputs] = useState<ImpactSimulatorRequest>(initialInputs);
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const { data, isLoading, error, runSimulation, clearError, isFixtureData } = useImpactSimulator();
+  const { data, isLoading, error, runSimulation, clearError } = useImpactSimulator();
 
   // Automatically execute default simulation on initial load
   useEffect(() => {
@@ -57,6 +77,11 @@ export const SimulatorPage: React.FC = () => {
     setInputs(newInputs);
     setValidationError(null);
     clearError();
+    try {
+      localStorage.setItem(STORAGE_KEY_ACTIVE_SCENARIO, JSON.stringify(newInputs));
+    } catch {
+      // ignore
+    }
   };
 
   const handleRunSimulation = useCallback(
@@ -69,129 +94,162 @@ export const SimulatorPage: React.FC = () => {
 
   const handleResetToBenchmark = () => {
     setInputs(BENCHMARK_SIMULATOR_INPUTS);
+    setActiveScenarioName('Default Benchmark');
     setValidationError(null);
+    try {
+      localStorage.removeItem(STORAGE_KEY_ACTIVE_SCENARIO);
+    } catch {
+      // ignore
+    }
     runSimulation(BENCHMARK_SIMULATOR_INPUTS);
+  };
+
+  const handleLoadSavedScenario = (savedInputs: ImpactSimulatorRequest, name: string) => {
+    setInputs(savedInputs);
+    setActiveScenarioName(name);
+    setValidationError(null);
+    try {
+      localStorage.setItem(STORAGE_KEY_ACTIVE_SCENARIO, JSON.stringify(savedInputs));
+    } catch {
+      // ignore
+    }
+    runSimulation(savedInputs);
   };
 
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <h2 className="text-base font-bold text-[#0F172A]">
-              New-Station Impact Simulator
-            </h2>
-            <Badge variant="synthetic">Signature Feature E</Badge>
-            <DataOriginBadge origin="illustrative_scenario" size="sm" />
-            {isFixtureData && (
-              <Badge variant="warning" size="sm">
-                Fixture Dev Mode Active
-              </Badge>
-            )}
+      <MotionSection delay={0.05}>
+        <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div>
+              <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200 text-[11px] font-semibold tracking-wide uppercase text-teal-800">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  Network Capital Planning
+                </span>
+                <span className="text-xs text-slate-500 font-medium">Gujarat Gas Company Ltd. • Ahmedabad</span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+                New-Station Impact Simulator
+              </h2>
+              <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
+                Transparent decision-support scenario model evaluating whether a candidate station will capture incremental CNG volume or cannibalize sales from existing operating stations.
+              </p>
+            </div>
+
+
           </div>
-          <p className="text-xs text-[#64748B] max-w-2xl leading-relaxed">
-            Transparent decision-support scenario model evaluating whether a candidate station will capture incremental CNG volume or cannibalize sales from existing operating stations.
-          </p>
         </div>
+      </MotionSection>
 
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleRunSimulation(inputs)}
-            isLoading={isLoading}
-            leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
-          >
-            Recalculate
-          </Button>
-        </div>
-      </div>
+      {/* Scenario Persistence & Export Bar */}
+      <MotionSection delay={0.08}>
+        <ScenarioPersistenceBar
+          currentInputs={inputs}
+          currentResults={data}
+          onLoadScenario={handleLoadSavedScenario}
+          onResetToBenchmark={handleResetToBenchmark}
+          activeScenarioName={activeScenarioName}
+          setActiveScenarioName={setActiveScenarioName}
+        />
+      </MotionSection>
 
-      {/* Canonical Simulation Formulas (Preserved & Visible) */}
-      <SimulatorFormulasPanel data={data} />
 
       {/* Main Grid: Inputs on Left, Results on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Interactive Scenario Controls */}
-        <div className="lg:col-span-5 space-y-4">
-          <SimulatorInputsPanel
-            inputs={inputs}
-            onChange={handleInputChange}
-            onSubmit={handleRunSimulation}
-            onReset={handleResetToBenchmark}
-            isLoading={isLoading}
-            validationError={validationError || (error?.status === 422 ? error.message : null)}
-            fromMap={hasMapCoords}
-          />
-        </div>
+      <MotionSection delay={0.15}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: Interactive Scenario Controls */}
+          <div className="lg:col-span-5 space-y-4">
+            <SimulatorInputsPanel
+              inputs={inputs}
+              onChange={handleInputChange}
+              onSubmit={handleRunSimulation}
+              onReset={handleResetToBenchmark}
+              isLoading={isLoading}
+              validationError={validationError || (error?.status === 422 ? error.message : null)}
+              fromMap={hasMapCoords}
+            />
+          </div>
 
-        {/* Right Column: Calculated Results & Demand Visualizer */}
-        <div className="lg:col-span-7 space-y-5">
-          {error && error.status !== 422 && (
-            <div className="p-4 rounded-card bg-red-50 border border-red-200 text-xs text-red-800 space-y-2">
-              <div className="flex items-center gap-2 font-bold">
-                <AlertCircle className="w-4 h-4 text-red-600" />
-                <span>Simulation Service Unavailable</span>
+          {/* Right Column: Calculated Results & Demand Visualizer */}
+          <div className="lg:col-span-7 space-y-5">
+            {error && error.status !== 422 && (
+              <div className="p-4 rounded-2xl bg-[#FDF0EE] border border-[#F5C2BC] text-xs text-[#AE2012] space-y-2">
+                <div className="flex items-center gap-2 font-bold">
+                  <AlertCircle className="w-4 h-4 text-[#AE2012]" />
+                  <span>Simulation Service Unavailable</span>
+                </div>
+                <p>{error.message || 'Unable to compute simulation. Check backend connection.'}</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleRunSimulation(inputs)}
+                  className="mt-2"
+                >
+                  Retry Simulation
+                </Button>
               </div>
-              <p>{error.message || 'Unable to compute simulation. Check backend connection.'}</p>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleRunSimulation(inputs)}
-                className="mt-2"
-              >
-                Retry Simulation
-              </Button>
-            </div>
-          )}
+            )}
 
-          {isLoading && !data && (
-            <div className="p-12 rounded-card bg-white border border-[#DCE4E8] shadow-card flex flex-col items-center justify-center space-y-3">
-              <Spinner size="lg" />
-              <p className="text-xs text-slate-500 font-medium">Computing scenario demand model...</p>
-            </div>
-          )}
+            {isLoading && !data && (
+              <div className="p-12 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col items-center justify-center space-y-3">
+                <Spinner size="lg" />
+                <p className="text-xs text-slate-500 font-medium">Computing scenario demand model...</p>
+              </div>
+            )}
 
-          {data && (
-            <>
-              {/* Primary Metric Cards */}
-              <SimulatorResultsCards data={data} />
+            {data && (
+              <>
+                {/* Primary Metric Cards */}
+                <SimulatorResultsCards data={data} />
 
-              {/* Demand Flow / Waterfall Chart */}
-              <SimulatorWaterfallChart data={data} />
+                {/* Demand Flow / Waterfall Chart */}
+                <SimulatorWaterfallChart data={data} />
 
-              {/* Multi-scenario Sensitivity Matrix (Defect 3.6) */}
-              <SimulatorSensitivityTable
-                catchmentDemand={inputs.catchment_demand_kg_per_day}
-                accessibilityDemand={inputs.accessibility_demand_kg_per_day}
-                currentCapture={inputs.capture_proportion}
-                currentDiversion={inputs.diversion_proportion}
-                onSelectScenario={(cap, div) => {
-                  const updated = {
-                    ...inputs,
-                    capture_proportion: cap,
-                    diversion_proportion: div,
-                  };
-                  setInputs(updated);
-                  runSimulation(updated);
-                }}
-              />
-            </>
-          )}
+                {/* Multi-scenario Sensitivity Matrix (Defect 3.6) */}
+                <SimulatorSensitivityTable
+                  catchmentDemand={inputs.catchment_demand_kg_per_day}
+                  accessibilityDemand={inputs.accessibility_demand_kg_per_day}
+                  currentCapture={inputs.capture_proportion}
+                  currentDiversion={inputs.diversion_proportion}
+                  onSelectScenario={(cap, div) => {
+                    const updated = {
+                      ...inputs,
+                      capture_proportion: cap,
+                      diversion_proportion: div,
+                    };
+                    setInputs(updated);
+                    runSimulation(updated);
+                  }}
+                />
 
-          {!isLoading && !data && !error && (
-            <div className="p-8 rounded-card bg-white border border-[#DCE4E8] text-center text-xs text-slate-500">
-              <Sliders className="w-6 h-6 mx-auto mb-2 text-slate-400" />
-              Adjust inputs and click &ldquo;Calculate Network Impact Scenario&rdquo; to view results.
-            </div>
-          )}
+                {/* Google Maps Road Accessibility & Detour Ratio Analysis */}
+                <SimulatorRoadAccessibility
+                  proposedLat={inputs.proposed_latitude}
+                  proposedLng={inputs.proposed_longitude}
+                  onApplyRecommendation={(recAcc, recCap) => {
+                    const updated = {
+                      ...inputs,
+                      accessibility_demand_kg_per_day: recAcc,
+                      capture_proportion: recCap,
+                    };
+                    handleInputChange(updated);
+                    runSimulation(updated);
+                  }}
+                />
+              </>
+            )}
+
+            {!isLoading && !data && !error && (
+              <div className="p-8 rounded-2xl bg-white border border-slate-200 text-center text-xs text-slate-500">
+                <Sliders className="w-6 h-6 mx-auto mb-2 text-slate-500/60" />
+                Adjust inputs and click &ldquo;Calculate Network Impact Scenario&rdquo; to view results.
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-
-      {/* Spatial Disclosure & Uncertainty Boundaries */}
-      {data && <SimulatorGeographicDisclosure data={data} />}
+      </MotionSection>
     </div>
   );
 };

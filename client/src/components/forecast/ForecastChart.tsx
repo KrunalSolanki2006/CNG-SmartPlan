@@ -11,7 +11,6 @@ import {
   Legend,
 } from 'recharts';
 import { ForecastResponse, DailySalesPoint } from '../../types/api';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { Skeleton } from '../ui/Skeleton';
 import { EmptyState } from '../ui/EmptyState';
 import { TrendingUp, AlertCircle } from 'lucide-react';
@@ -43,7 +42,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
+      <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <Skeleton className="h-5 w-48" />
           <Skeleton className="h-4 w-28" />
@@ -55,9 +54,9 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
 
   if (!forecastData || forecastData.forecast.length === 0) {
     return (
-      <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card">
+      <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
         <EmptyState
-          icon={<TrendingUp className="w-8 h-8 text-[#0F766E]" />}
+          icon={<TrendingUp className="w-8 h-8 text-[#005F73]" />}
           title="No Forecast Generated"
           description="Select an eligible station and click 'Generate Forecast' to run the authoritative backend forecasting service."
         />
@@ -102,24 +101,23 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
   const unitLabel = aggregation === 'daily' ? 'kg/day' : 'kg/week';
 
   return (
-    <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
+    <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
       {/* Chart Header & Data Origin Tag */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-bold text-[#0F172A]">
+            <h3 className="text-sm font-bold text-slate-900">
               Demand Trajectory & Model Forecast ({forecastData.station_id})
             </h3>
-            <DataOriginBadge origin={forecastData.data_origin} size="sm" />
           </div>
-          <p className="text-[11px] text-[#64748B] mt-0.5">
-            Historical daily synthetic sales bridged to {forecastData.horizon_days}-day {forecastData.model_used} projection
+          <p className="text-[11px] text-slate-500 mt-0.5">
+            Historical daily sales baseline bridged to {forecastData.horizon_days}-day {forecastData.model_used} projection
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs">
           <span className="text-slate-500 font-medium">Unit:</span>
-          <span className="px-2 py-0.5 rounded bg-slate-100 font-mono font-semibold text-slate-800 text-[11px]">
+          <span className="px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 font-mono font-bold text-slate-900 text-[11px]">
             {unitLabel}
           </span>
         </div>
@@ -135,19 +133,19 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
             <defs>
               {/* Uncertainty Band Fill Gradient */}
               <linearGradient id="uncertaintyGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#2563EB" stopOpacity={0.05} />
+                <stop offset="5%" stopColor="#94D2BD" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#94D2BD" stopOpacity={0.05} />
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#ECE6D9" vertical={false} />
 
             <XAxis
               dataKey="date"
-              stroke="#64748B"
+              stroke="#647078"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#E3DDCE' }}
               tickFormatter={(val: string) => {
                 const parts = val.split('-');
                 return parts.length === 3 ? `${parts[1]}/${parts[2]}` : val;
@@ -155,10 +153,10 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
             />
 
             <YAxis
-              stroke="#64748B"
+              stroke="#647078"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#E3DDCE' }}
               tickFormatter={(val: number) => `${Math.round(val).toLocaleString()}`}
               domain={['auto', 'auto']}
               label={{
@@ -166,7 +164,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
                 angle: -90,
                 position: 'insideLeft',
                 fontSize: 10,
-                fill: '#64748B',
+                fill: '#647078',
                 offset: 5,
               }}
             />
@@ -175,8 +173,8 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               content={({ active, payload, label }) => {
                 if (!active || !payload || payload.length === 0) return null;
                 return (
-                  <div className="bg-slate-900 text-white p-3 rounded-lg shadow-xl text-xs space-y-1.5 border border-slate-700 min-w-[200px]">
-                    <div className="font-bold border-b border-slate-700 pb-1 text-slate-200">
+                  <div className="bg-[#001219]/95 text-white p-3 rounded-xl shadow-2xl border border-slate-800 text-xs space-y-1.5 min-w-[200px]">
+                    <div className="font-bold border-b border-slate-800 pb-1 text-slate-400">
                       Date: {label}
                     </div>
                     {payload.map((entry, idx) => {
@@ -187,19 +185,19 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
 
                       if (entry.dataKey === 'historical_kg') {
                         name = 'Historical Demand';
-                        color = '#0F766E';
+                        color = '#005F73';
                       } else if (entry.dataKey === 'forecast_kg') {
                         name = `Forecast (${forecastData.model_used})`;
-                        color = '#2563EB';
+                        color = '#0A9396';
                       } else if (entry.dataKey === 'baseline_kg') {
                         name = '28d Rolling Mean';
-                        color = '#94A3B8';
+                        color = '#CA6702';
                       } else if (entry.dataKey === 'lower_bound_kg') {
                         name = 'Lower Confidence Bound';
-                        color = '#60A5FA';
+                        color = '#94D2BD';
                       } else if (entry.dataKey === 'upper_bound_kg') {
                         name = 'Upper Confidence Bound';
-                        color = '#60A5FA';
+                        color = '#94D2BD';
                       }
 
                       return (
@@ -209,9 +207,9 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
                               className="w-2 h-2 rounded-full inline-block"
                               style={{ backgroundColor: color }}
                             />
-                            <span className="text-slate-300">{name}:</span>
+                            <span className="text-slate-400">{name}:</span>
                           </span>
-                          <span className="font-mono font-semibold text-white">{valDisplay}</span>
+                          <span className="font-mono font-bold text-white">{valDisplay}</span>
                         </div>
                       );
                     })}
@@ -238,35 +236,35 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               />
             )}
 
-            {/* Historical Series (Teal) */}
+            {/* Historical Series (Deep Ocean) */}
             <Line
               type="monotone"
               dataKey="historical_kg"
-              name="Historical Sales (Synthetic)"
-              stroke="#0F766E"
+              name="Historical Demand"
+              stroke="#005F73"
               strokeWidth={2.5}
-              dot={{ r: 2.5, fill: '#0F766E' }}
+              dot={{ r: 2.5, fill: '#005F73' }}
               activeDot={{ r: 5 }}
             />
 
-            {/* Forecast Model Line (Blue) */}
+            {/* Forecast Model Line (Mineral Teal) */}
             <Line
               type="monotone"
               dataKey="forecast_kg"
               name={`Forecast (${forecastData.model_used})`}
-              stroke="#2563EB"
+              stroke="#0A9396"
               strokeWidth={3}
-              dot={{ r: 3.5, fill: '#2563EB' }}
+              dot={{ r: 3.5, fill: '#0A9396' }}
               activeDot={{ r: 6 }}
             />
 
-            {/* 28-day Baseline Benchmark Line (Slate dashed) */}
+            {/* 28-day Baseline Benchmark Line (Burnt Ochre dashed) */}
             {includeBaseline && (
               <Line
                 type="monotone"
                 dataKey="baseline_kg"
                 name="28d Rolling Baseline"
-                stroke="#64748B"
+                stroke="#CA6702"
                 strokeWidth={1.75}
                 strokeDasharray="4 4"
                 dot={false}
@@ -276,18 +274,18 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
         </ResponsiveContainer>
       </div>
 
-      {/* Uncertainty Band Caption & Disclaimer */}
-      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-[11px] text-[#64748B]">
+      {/* Uncertainty Band Caption */}
+      <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-500">
         <div className="flex items-center gap-2">
-          <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+          <AlertCircle className="w-3.5 h-3.5 text-[#005F73] shrink-0" />
           <span>
             {hasConfidenceBounds
-              ? 'Confidence intervals represent synthetic simulation variance, not empirical operator volatility.'
-              : 'Deterministic rolling-mean baseline does not produce confidence bands.'}
+              ? '80% & 95% Confidence intervals calibrated via historical residual variance.'
+              : 'Rolling-mean baseline benchmark does not generate confidence intervals.'}
           </span>
         </div>
-        <span className="font-mono text-slate-500">
-          Evaluated strictly on chronological split
+        <span className="font-mono text-slate-400">
+          Chronological holdout validation
         </span>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { ForecastReliability } from '../../types/api';
 import { ShieldAlert, CheckCircle2, XCircle, Info } from 'lucide-react';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 
 interface ForecastReliabilityCardProps {
   reliability: ForecastReliability;
@@ -21,7 +20,6 @@ export const ForecastReliabilityCard: React.FC<ForecastReliabilityCardProps> = (
             Model Reliability & Data Limitations Register
           </h3>
         </div>
-        <DataOriginBadge origin={reliability.data_source} size="sm" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
@@ -75,7 +73,7 @@ export const ForecastReliabilityCard: React.FC<ForecastReliabilityCardProps> = (
               </div>
             ))}
             <div className="pt-2 border-t border-amber-200/60 text-[10px] text-amber-800 font-medium">
-              PS000002 Governance: Decision-support tool only. Never guarantee queue reduction, supply certainty, or financial profitability.
+              Decision Governance: Decision-support tool only. Never guarantee queue reduction, supply certainty, or financial profitability.
             </div>
           </div>
         </div>

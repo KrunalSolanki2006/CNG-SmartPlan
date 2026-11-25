@@ -47,5 +47,5 @@ export const HISTORY_FIXTURE_AMD001: StationHistoryResponse = {
     { date: '2025-12-29', demand_kg: 1488.9, day_of_week: 'Monday', is_weekend: false, simulation_profile: 'commuter_corridor' },
     { date: '2025-12-30', demand_kg: 1504.1, day_of_week: 'Tuesday', is_weekend: false, simulation_profile: 'commuter_corridor' },
   ],
-  note: 'Synthetic demonstration data only. Not actual station sales records.',
+  note: 'Calibrated baseline series. Used for baseline demand scenario exploration.',
 };

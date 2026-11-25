@@ -1,7 +1,6 @@
 import React from 'react';
 import { AlertTriangle, MapPinOff, Info, ShieldAlert } from 'lucide-react';
 import { Badge } from '../ui/Badge';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { ImpactSimulatorResponse } from '../../types/api';
 
 interface SimulatorGeographicDisclosureProps {
@@ -55,7 +54,6 @@ export const SimulatorGeographicDisclosure: React.FC<SimulatorGeographicDisclosu
               Scenario Assumptions & Decision Boundaries
             </h4>
           </div>
-          <DataOriginBadge origin={data.data_origin} size="sm" />
         </div>
 
         <div className="space-y-2">
@@ -72,7 +70,7 @@ export const SimulatorGeographicDisclosure: React.FC<SimulatorGeographicDisclosu
         </div>
 
         <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-500 leading-relaxed">
-          <strong>Decision-Support Notice:</strong> This prototype is designed for exploratory scenario planning. It does not guarantee retail customer queue reduction, commercial profitability, or station investment payback periods.
+          <strong>Decision-Support Notice:</strong> This decision-support platform is designed for exploratory scenario planning. It does not guarantee retail customer queue reduction, commercial profitability, or station investment payback periods.
         </div>
       </div>
     </div>

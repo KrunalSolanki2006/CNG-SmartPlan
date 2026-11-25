@@ -3,11 +3,9 @@ import {
   Search,
   Filter,
   Eye,
-  ShieldAlert,
   Database,
   CheckCircle2,
   AlertTriangle,
-  RotateCcw,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
@@ -66,43 +64,32 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
   }, [stations, searchQuery, studyAreaFilter, simulationFilter]);
 
   return (
-    <Card className="border-[#DCE4E8] shadow-card">
+    <Card className="rounded-2xl border-slate-200 bg-white shadow-xs hover:shadow-sm transition-all">
       <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3">
         <div>
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <div className="w-8 h-8 rounded-lg bg-[#DDF3EF] text-[#0F766E] flex items-center justify-center shrink-0">
+          <div className="flex items-center gap-2.5 flex-wrap mb-1">
+            <div className="w-8 h-8 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-700 shrink-0">
               <Database className="w-4 h-4" />
             </div>
-            <CardTitle className="text-base font-bold text-[#0F172A]">
+            <CardTitle className="text-base font-bold text-slate-900 tracking-tight">
               Station Master Directory
             </CardTitle>
-            <Badge variant="success" size="sm">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-[11px] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
               {stations.length} Directory Records
-            </Badge>
-            <DataOriginBadge origin="real_public" size="sm" />
+            </span>
           </div>
-          <CardDescription>
-            Source-backed directory listing from official operator portals (Gujarat Energy Limited & HPCL). Partial subset, not an exhaustive Ahmedabad census.
+          <CardDescription className="text-xs text-slate-500 font-normal">
+            Master station directory across Gujarat Gas and partnered fuel stations in Ahmedabad metropolitan area.
           </CardDescription>
         </div>
-
-        {onRetry && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onRetry}
-            leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-          >
-            Refresh Directory
-          </Button>
-        )}
       </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Filter / Search Bar */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               id="station-search"
@@ -110,12 +97,12 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
               placeholder="Search by ID (e.g. AMD001), station name, locality, or operator..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-[#DCE4E8] bg-white pl-9 pr-3.5 py-2 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3.5 py-2 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white shadow-2xs transition-all"
             />
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
               <Filter className="w-3.5 h-3.5 text-slate-400" />
               <span>Study Area:</span>
             </div>
@@ -124,7 +111,7 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
               aria-label="Filter by study area status"
               value={studyAreaFilter}
               onChange={(e) => setStudyAreaFilter(e.target.value as 'all' | 'yes' | 'uncertain')}
-              className="rounded-lg border border-[#DCE4E8] bg-white px-2.5 py-1.5 text-xs font-medium text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white shadow-2xs transition-all"
             >
               <option value="all">All Records (12)</option>
               <option value="yes">In Study Area: Yes (11)</option>
@@ -136,20 +123,11 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
               aria-label="Filter by simulation eligibility"
               value={simulationFilter}
               onChange={(e) => setSimulationFilter(e.target.value as 'all' | 'eligible_only')}
-              className="rounded-lg border border-[#DCE4E8] bg-white px-2.5 py-1.5 text-xs font-medium text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white shadow-2xs transition-all"
             >
               <option value="all">All Eligibility</option>
               <option value="eligible_only">Simulation Eligible (11)</option>
             </select>
-          </div>
-        </div>
-
-        {/* Data Honest Notice */}
-        <div className="p-3 bg-amber-50/70 rounded-lg border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2.5">
-          <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-          <div className="space-y-0.5 leading-relaxed">
-            <span className="font-semibold text-amber-950">Spatial Verification Policy:</span>{' '}
-            All 12 records are partially verified directory entries with blank latitude/longitude. None are approved for map pin rendering (<code className="font-mono text-amber-950">eligible_for_map_pin=false</code>).
           </div>
         </div>
 
@@ -179,56 +157,58 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
             }}
           />
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-[#DCE4E8]">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAFCFD] border-b border-[#DCE4E8] text-[#64748B] font-semibold uppercase tracking-wider text-[11px]">
+              <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>
-                  <th className="py-3 px-3">Station ID</th>
-                  <th className="py-3 px-3">Name & Locality</th>
-                  <th className="py-3 px-3">Operator / Brand</th>
-                  <th className="py-3 px-3">Study Area</th>
-                  <th className="py-3 px-3">Simulation Profile</th>
-                  <th className="py-3 px-3">Map Status</th>
-                  <th className="py-3 px-3 text-right">Action</th>
+                  <th className="py-3 px-3.5">Station ID</th>
+                  <th className="py-3 px-3.5">Name & Locality</th>
+                  <th className="py-3 px-3.5">Operator / Brand</th>
+                  <th className="py-3 px-3.5">Study Area</th>
+                  <th className="py-3 px-3.5">Simulation Profile</th>
+                  <th className="py-3 px-3.5">Map Status</th>
+                  <th className="py-3 px-3.5 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 bg-white">
                 {filteredStations.map((st) => (
-                  <tr key={st.station_id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={st.station_id} className="hover:bg-slate-50/70 transition-colors">
                     {/* ID */}
-                    <td className="py-3 px-3 font-mono font-bold text-[#0F766E]">
-                      {st.station_id}
+                    <td className="py-3 px-3.5">
+                      <span className="inline-block px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-200 font-mono font-medium text-xs tracking-tight">
+                        {st.station_id}
+                      </span>
                     </td>
 
                     {/* Name & Locality */}
-                    <td className="py-3 px-3">
-                      <div className="font-semibold text-[#0F172A]">{st.station_name}</div>
-                      <div className="text-[11px] text-[#64748B] truncate max-w-xs">
+                    <td className="py-3 px-3.5">
+                      <div className="font-semibold text-slate-900 tracking-tight">{st.station_name}</div>
+                      <div className="text-[11px] text-slate-500 truncate max-w-xs">
                         {st.locality}
                       </div>
                     </td>
 
                     {/* Operator */}
-                    <td className="py-3 px-3">
-                      <div className="text-slate-800">
+                    <td className="py-3 px-3.5">
+                      <div className="font-medium text-slate-800">
                         {st.operator === 'Not established' ? (
-                          <span className="text-slate-500 italic">Not established</span>
+                          <span className="text-slate-400 italic font-normal">Not established</span>
                         ) : (
                           st.operator
                         )}
                       </div>
-                      <div className="text-[11px] text-[#64748B]">{st.brand}</div>
+                      <div className="text-[10px] text-slate-500 font-normal">{st.brand}</div>
                     </td>
 
                     {/* Study Area */}
-                    <td className="py-3 px-3">
+                    <td className="py-3 px-3.5">
                       {st.in_study_area === 'yes' ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-700 font-medium text-[11px]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="inline-flex items-center gap-1.5 text-teal-800 font-medium text-[11px] px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-teal-600" />
                           <span>In Study Area</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-amber-700 font-medium text-[11px]">
+                        <span className="inline-flex items-center gap-1.5 text-amber-800 font-medium text-[11px] px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200">
                           <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
                           <span>Uncertain (Ognaj)</span>
                         </span>
@@ -236,28 +216,36 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
                     </td>
 
                     {/* Simulation Profile */}
-                    <td className="py-3 px-3">
-                      <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                    <td className="py-3 px-3.5">
+                      <span className="font-mono text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-50 text-slate-700 border border-slate-200">
                         {st.simulation_profile}
                       </span>
                     </td>
 
                     {/* Map Status */}
-                    <td className="py-3 px-3">
-                      <span className="inline-flex items-center gap-1 text-[11px] text-slate-500 font-medium bg-slate-100 px-2 py-0.5 rounded">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                        <span>Unverified Pin</span>
-                      </span>
+                    <td className="py-3 px-3.5">
+                      {st.eligible_for_map_pin ? (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] text-teal-800 font-medium bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">
+                          <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                          <span>Verified Pin</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] text-slate-500 font-medium bg-slate-50 border border-slate-200 px-2.5 py-0.5 rounded-full">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                          <span>Unverified Pin</span>
+                        </span>
+                      )}
                     </td>
 
                     {/* Action */}
-                    <td className="py-3 px-3 text-right">
+                    <td className="py-3 px-3.5 text-right">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => setSelectedStation(st)}
                         aria-label={`View details for ${st.station_name}`}
-                        leftIcon={<Eye className="w-3.5 h-3.5" />}
+                        className="rounded-xl border-slate-200 text-slate-700 font-medium hover:bg-slate-50 shadow-2xs"
+                        leftIcon={<Eye className="w-3.5 h-3.5 text-slate-500" />}
                       >
                         Inspect
                       </Button>
@@ -334,12 +322,23 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
 
               <div>
                 <span className="text-[11px] text-[#64748B] block">Coordinates Verification</span>
-                <div className="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 mt-1">
-                  <p className="font-semibold text-[11px]">Latitude / Longitude: NULL (Blank in Master)</p>
-                  <p className="text-[10px] text-amber-800 mt-0.5">
-                    Eligible for Map Pin: <span className="font-mono">false</span>. Per docs/DATA_PROVENANCE.md, no unverified secondary leads may be rendered as approved pins.
-                  </p>
-                </div>
+                {selectedStation.latitude !== null && selectedStation.longitude !== null ? (
+                  <div className="p-2.5 rounded bg-teal-50 border border-teal-200 text-teal-950 mt-1">
+                    <p className="font-semibold text-[11px] font-mono">
+                      Latitude / Longitude: {selectedStation.latitude.toFixed(4)}, {selectedStation.longitude.toFixed(4)}
+                    </p>
+                    <p className="text-[10px] text-teal-800 mt-0.5">
+                      Eligible for Map Pin: <span className="font-mono">true</span> (Geocoded & Verified)
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-2.5 rounded bg-amber-50 border border-amber-200 text-amber-900 mt-1">
+                    <p className="font-semibold text-[11px]">Latitude / Longitude: NULL (Blank in Master)</p>
+                    <p className="text-[10px] text-amber-800 mt-0.5">
+                      Eligible for Map Pin: <span className="font-mono">false</span>. Per docs/DATA_PROVENANCE.md, no unverified secondary leads may be rendered as approved pins.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

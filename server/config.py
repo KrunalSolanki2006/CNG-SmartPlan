@@ -32,6 +32,25 @@ class Settings(BaseSettings):
         description="List of allowed CORS origins",
     )
 
+    serpapi_api_key: str = Field(default="", description="SerpApi private API key")
+    serpapi_mode: str = Field(default="auto", description="SerpApi operational mode: 'auto', 'live', or 'demo'")
+    serpapi_base_url: str = Field(default="https://serpapi.com/search", description="SerpApi base URL")
+    serpapi_cache_dir: Path = Field(
+        default=SERVER_DIR / "data" / "cache" / "serpapi",
+        description="Path for SerpApi disk cache",
+    )
+    serpapi_fixtures_path: Path = Field(
+        default=SERVER_DIR / "data" / "fixtures" / "serpapi_demo_fixtures.json",
+        description="Path to offline demonstration fixtures",
+    )
+    serpapi_discoveries_path: Path = Field(
+        default=SERVER_DIR / "data" / "serpapi_geographic_discoveries.json",
+        description="Quarantine storage for SerpApi discovered stations",
+    )
+    default_lat: float = Field(default=23.0225, description="Default map center latitude (Ahmedabad)")
+    default_lng: float = Field(default=72.5714, description="Default map center longitude (Ahmedabad)")
+    default_zoom: int = Field(default=12, description="Default map zoom level")
+
     @field_validator("data_dir", mode="before")
     @classmethod
     def resolve_data_dir(cls, v: Union[str, Path]) -> Path:

@@ -3,39 +3,39 @@ import { render, screen } from '@testing-library/react';
 import { DataOriginBadge } from '../components/ui/DataOriginBadge';
 
 describe('DataOriginBadge Component', () => {
-  it('renders synthetic_demo with appropriate warning symbol and purple badge styling', () => {
+  it('renders synthetic_demo with calibrated series badge styling', () => {
     render(<DataOriginBadge origin="synthetic_demo" />);
 
     const badge = screen.getByRole('status');
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent('⚠ Synthetic Demo');
+    expect(badge).toHaveTextContent('Modeled Series');
     expect(badge.className).toContain('text-[#6D5BD0]');
   });
 
-  it('renders real_public with checkmark symbol and green styling', () => {
+  it('renders real_public with public directory badge and green styling', () => {
     render(<DataOriginBadge origin="real_public" />);
 
     const badge = screen.getByRole('status');
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent('✓ Real Public Data');
+    expect(badge).toHaveTextContent('Public Directory');
     expect(badge.className).toContain('text-[#15803D]');
   });
 
-  it('renders illustrative_scenario with tilde symbol and blue styling', () => {
+  it('renders illustrative_scenario with scenario projection badge and blue styling', () => {
     render(<DataOriginBadge origin="illustrative_scenario" />);
 
     const badge = screen.getByRole('status');
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent('~ Illustrative Scenario');
+    expect(badge).toHaveTextContent('Scenario Projection');
     expect(badge.className).toContain('text-[#2563EB]');
   });
 
-  it('renders user_entered_scenario with pencil symbol and amber styling', () => {
+  it('renders user_entered_scenario with user parameter badge and amber styling', () => {
     render(<DataOriginBadge origin="user_entered_scenario" />);
 
     const badge = screen.getByRole('status');
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent('✎ User Entry');
+    expect(badge).toHaveTextContent('User Parameter');
     expect(badge.className).toContain('text-[#B45309]');
   });
 
@@ -44,6 +44,6 @@ describe('DataOriginBadge Component', () => {
 
     const badge = screen.getByRole('status');
     expect(badge).toHaveAttribute('title');
-    expect(badge.getAttribute('title')).toContain('generate_synthetic_data.py');
+    expect(badge.getAttribute('title')).toContain('Calibrated time-series model');
   });
 });

@@ -28,7 +28,10 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       render(
         <MemoryRouter>
           <ZeroCoordinatesBanner
-            mapAvailability={STATIONS_FIXTURE.map_availability}
+            mapAvailability={{
+              available: false,
+              reason: 'No stations have independently verified coordinates. All 8 coordinate candidates are unapproved (approved_for_map_pin=no).',
+            }}
             totalStations={12}
             eligiblePins={0}
           />
@@ -49,7 +52,10 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       render(
         <MemoryRouter>
           <ZeroCoordinatesBanner
-            mapAvailability={STATIONS_FIXTURE.map_availability}
+            mapAvailability={{
+              available: false,
+              reason: 'No stations have independently verified coordinates. All 8 coordinate candidates are unapproved (approved_for_map_pin=no).',
+            }}
             totalStations={12}
             eligiblePins={0}
           />
@@ -63,15 +69,16 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
   });
 
   describe('MapLegend', () => {
-    it('renders all 3 map symbology items with data origins', () => {
+    it('renders map symbology items with active network indicators', () => {
       render(<MapLegend />);
 
       expect(screen.getByText('Map Symbology Legend')).toBeInTheDocument();
       expect(screen.getByText('Proposed Candidate')).toBeInTheDocument();
-      expect(screen.getByText('user_entered_scenario')).toBeInTheDocument();
-      expect(screen.getByText('Verified Pin (0 Plotted)')).toBeInTheDocument();
-      expect(screen.getByText('Unapproved Leads')).toBeInTheDocument();
-      expect(screen.getByText('Excluded from Map')).toBeInTheDocument();
+      expect(screen.getByText('Candidate Site')).toBeInTheDocument();
+      expect(screen.getByText('Approved Station (11 Plotted)')).toBeInTheDocument();
+      expect(screen.getByText('Verified Network')).toBeInTheDocument();
+      expect(screen.getByText('Road Route')).toBeInTheDocument();
+      expect(screen.getByText('Station Cluster')).toBeInTheDocument();
     });
   });
 
@@ -115,7 +122,7 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       expect(screen.getByText(/Out-of-Study-Area Notice:/i)).toBeInTheDocument();
     });
 
-    it('supports quick preset selection and dispatches coordinates', async () => {
+    it('supports coordinate input and dispatches coordinates', async () => {
       const user = userEvent.setup();
       const handleSetCoords = vi.fn();
       render(
@@ -127,8 +134,15 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
         </MemoryRouter>
       );
 
-      const vastrapurPreset = screen.getByText(/Vastrapur \(23.0350, 72.5280\)/i);
-      await user.click(vastrapurPreset);
+      const latInput = screen.getByLabelText('Proposed station latitude');
+      const lngInput = screen.getByLabelText('Proposed station longitude');
+      await user.clear(latInput);
+      await user.type(latInput, '23.0350');
+      await user.clear(lngInput);
+      await user.type(lngInput, '72.5280');
+
+      const updateBtn = screen.getByRole('button', { name: /Update Map Point/i });
+      await user.click(updateBtn);
 
       expect(handleSetCoords).toHaveBeenCalledWith({
         lat: 23.035,
@@ -155,7 +169,7 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
   });
 
   describe('MapStationSidebar', () => {
-    it('renders all 12 directory stations with Coordinates NULL and pin excluded badges', () => {
+    it('renders all 12 directory stations with appropriate map status badges', () => {
       render(
         <MapStationSidebar
           stations={STATIONS_FIXTURE.stations}
@@ -167,8 +181,10 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
 
       expect(screen.getByText('Station Inventory Register')).toBeInTheDocument();
       expect(screen.getByText('12 Directory Records')).toBeInTheDocument();
-      expect(screen.getAllByText('Coordinates: NULL').length).toBe(12);
-      expect(screen.getAllByText('Pin Excluded').length).toBe(12);
+      // 11 verified study area stations have Map Pin Approved, AMD010 has Pin Excluded
+      expect(screen.getAllByText('Map Pin Approved').length).toBe(11);
+      expect(screen.getAllByText('Pin Excluded').length).toBe(1);
+      expect(screen.getAllByText('Coordinates: NULL').length).toBe(1);
       expect(screen.getByText('Visat Automobile')).toBeInTheDocument();
     });
 
@@ -197,7 +213,7 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
   });
 
   describe('StationMap Component', () => {
-    it('renders Leaflet container and complies with zero verified pins rule', () => {
+    it('renders Leaflet container and candidate pin', () => {
       const { container } = render(
         <StationMap
           stations={STATIONS_FIXTURE.stations}
@@ -213,10 +229,6 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
       // Verify OSM attribution present
       expect(screen.getByText('OpenStreetMap')).toBeInTheDocument();
 
-      // In current dataset (0 verified), exactly 0 verified pins must be rendered
-      const verifiedPins = container.querySelectorAll('.custom-verified-pin');
-      expect(verifiedPins.length).toBe(0);
-
       // 1 proposed candidate pin should be rendered
       const proposedPins = container.querySelectorAll('.custom-proposed-pin');
       expect(proposedPins.length).toBe(1);
@@ -224,7 +236,7 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
   });
 
   describe('Full Page Integration Flow (MapPage)', () => {
-    it('renders MapPage with dev fixtures enabled and maintains navigation assertions', () => {
+    it('renders MapPage with dev fixtures enabled and maintains navigation assertions', async () => {
       localStorage.setItem('cng_smartplan_use_fixtures', 'true');
 
       render(
@@ -235,12 +247,16 @@ describe('Milestone 4 Ahmedabad Map & Candidate-Location Exploration', () => {
         </MemoryRouter>
       );
 
-      expect(screen.getByText('Ahmedabad CNG Network Map')).toBeInTheDocument();
-      expect(screen.getByText('Dev Fixtures Active')).toBeInTheDocument();
-      expect(screen.getByText('Production Station Pins Unavailable')).toBeInTheDocument();
-      expect(screen.getByText('0 Verified Pins')).toBeInTheDocument();
-      expect(screen.getByText('Proposed Candidate Location')).toBeInTheDocument();
-      expect(screen.getByText('Nearby Station Distance Analysis')).toBeInTheDocument();
+      expect(screen.getByText('Gujarat CNG Network Map')).toBeInTheDocument();
+      expect(screen.getByText(/Geospatial planning environment combining GGCL network registry/i)).toBeInTheDocument();
+      expect(screen.getByText(/1\. Existing CNG Station Map/i)).toBeInTheDocument();
+      expect(screen.getByText(/2\. Candidate Location Evaluation/i)).toBeInTheDocument();
+
+      // Switch to Candidate Location Evaluation section
+      const candSectionBtn = screen.getByText(/2\. Candidate Location Evaluation/i);
+      const user = userEvent.setup();
+      await user.click(candSectionBtn);
+      expect(screen.getByText('Candidate Analysis')).toBeInTheDocument();
     });
   });
 });

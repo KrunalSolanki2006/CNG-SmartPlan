@@ -11,24 +11,25 @@ import {
   Legend,
 } from 'recharts';
 import { SupplyComparisonPoint } from '../../types/api';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { Skeleton } from '../ui/Skeleton';
-import { AlertCircle, ShieldAlert } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 interface SupplyAlertChartProps {
   comparison: SupplyComparisonPoint[];
   isLoading: boolean;
   stationId: string;
+  onApplyPresetSupply?: (targetKg: number) => void;
 }
 
 export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
   comparison,
   isLoading,
   stationId,
+  onApplyPresetSupply,
 }) => {
   if (isLoading) {
     return (
-      <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
+      <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
         <Skeleton className="h-6 w-48" />
         <Skeleton className="h-[340px] w-full" />
       </div>
@@ -37,7 +38,7 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
 
   if (comparison.length === 0) {
     return (
-      <div className="rounded-card bg-white p-8 border border-[#DCE4E8] shadow-card text-center text-xs text-slate-500">
+      <div className="rounded-2xl bg-white p-8 border border-slate-200 shadow-xs text-center text-xs text-slate-500">
         No supply comparison points available for {stationId}. Run a supply check above.
       </div>
     );
@@ -46,36 +47,55 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
   const missingSupplyCount = comparison.filter((c) => c.planned_supply_kg === null).length;
 
   return (
-    <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
+    <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
       {/* Header & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-bold text-[#0F172A]">
+            <h3 className="text-sm font-bold text-slate-900">
               Forecast Demand vs. Planned Available Supply ({stationId})
             </h3>
-            <DataOriginBadge origin="synthetic_demo" size="sm" />
           </div>
-          <p className="text-[11px] text-[#64748B] mt-0.5">
+          <p className="text-[11px] text-slate-500 mt-0.5">
             Same-date evaluation: Shortfall occurs when forecast demand exceeds planned supply
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs">
           <span className="text-slate-500 font-medium">Unit:</span>
-          <span className="px-2 py-0.5 rounded bg-slate-100 font-mono font-semibold text-slate-800 text-[11px]">
+          <span className="px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 font-mono font-bold text-slate-900 text-[11px]">
             kg / day
           </span>
         </div>
       </div>
 
-      {/* Post-2025 Missing Supply Warning */}
+      {/* Planned Supply Schedule Notice */}
       {missingSupplyCount > 0 && (
-        <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-2.5 text-xs text-amber-900 leading-snug">
-          <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-          <div>
-            <strong className="font-semibold">Future Supply Notice:</strong> {missingSupplyCount} date(s) in this horizon lack synthetic planned supply (which terminates on 2025-12-31). Use the <em>Supply Override Form</em> below to input user-entered supply targets.
+        <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-900 leading-snug">
+          <div className="flex items-start gap-2.5">
+            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <strong className="font-bold text-slate-900">Future Supply Notice:</strong> {missingSupplyCount} date(s) in this horizon lack allocated supply schedules (schedule terminates on 2025-12-31). Use the <em>Supply Override Form</em> below or simulate a scenario:
+            </div>
           </div>
+          {onApplyPresetSupply && (
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => onApplyPresetSupply(1700)}
+                className="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-medium text-xs shadow-xs transition-all cursor-pointer"
+              >
+                Standard (1,700 kg)
+              </button>
+              <button
+                type="button"
+                onClick={() => onApplyPresetSupply(1300)}
+                className="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium text-xs shadow-xs transition-all cursor-pointer"
+              >
+                Stress Test (1,300 kg)
+              </button>
+            </div>
+          )}
         </div>
       )}
 
@@ -86,14 +106,14 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
             data={comparison}
             margin={{ top: 12, right: 16, bottom: 20, left: 10 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#ECE6D9" vertical={false} />
 
             <XAxis
               dataKey="date"
-              stroke="#64748B"
+              stroke="#647078"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#E3DDCE' }}
               tickFormatter={(val: string) => {
                 const parts = val.split('-');
                 return parts.length === 3 ? `${parts[1]}/${parts[2]}` : val;
@@ -101,10 +121,10 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
             />
 
             <YAxis
-              stroke="#64748B"
+              stroke="#647078"
               fontSize={11}
               tickLine={false}
-              axisLine={{ stroke: '#CBD5E1' }}
+              axisLine={{ stroke: '#E3DDCE' }}
               tickFormatter={(val: number) => `${Math.round(val).toLocaleString()}`}
               domain={[0, 'auto']}
               label={{
@@ -112,7 +132,7 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
                 angle: -90,
                 position: 'insideLeft',
                 fontSize: 10,
-                fill: '#64748B',
+                fill: '#647078',
                 offset: 5,
               }}
             />
@@ -122,30 +142,30 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
                 if (!active || !payload || payload.length === 0) return null;
                 const point = payload[0].payload as SupplyComparisonPoint;
                 return (
-                  <div className="bg-slate-900 text-white p-3 rounded-lg shadow-xl text-xs space-y-1.5 border border-slate-700 min-w-[220px]">
-                    <div className="font-bold border-b border-slate-700 pb-1 text-slate-200 flex justify-between items-center">
+                  <div className="bg-[#001219]/95 text-white p-3 rounded-xl shadow-2xl border border-slate-800 text-xs space-y-1.5 min-w-[220px]">
+                    <div className="font-bold border-b border-slate-800 pb-1 text-slate-400 flex justify-between items-center">
                       <span>Date: {label}</span>
-                      <span className="text-[10px] text-slate-400 capitalize">
+                      <span className="text-[10px] text-[#94D2BD] capitalize">
                         {point.supply_data_origin.replace('_', ' ')}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="flex items-center gap-1.5 text-blue-400">
-                        <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
+                      <span className="flex items-center gap-1.5 text-[#94D2BD]">
+                        <span className="w-2 h-2 rounded-full bg-[#0A9396] inline-block" />
                         Forecast Demand:
                       </span>
-                      <span className="font-mono font-bold">
+                      <span className="font-mono font-bold text-white">
                         {point.forecast_demand_kg.toLocaleString()} kg/day
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="flex items-center gap-1.5 text-teal-400">
-                        <span className="w-2 h-2 rounded-full bg-[#0F766E] inline-block" />
+                      <span className="flex items-center gap-1.5 text-slate-400">
+                        <span className="w-2 h-2 rounded-full bg-[#005F73] inline-block" />
                         Planned Supply:
                       </span>
-                      <span className="font-mono font-bold">
+                      <span className="font-mono font-bold text-white">
                         {point.planned_supply_kg !== null
                           ? `${point.planned_supply_kg.toLocaleString()} kg/day`
                           : 'Unavailable (Post-2025)'}
@@ -153,11 +173,11 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
                     </div>
 
                     <div className="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800">
-                      <span className="flex items-center gap-1.5 text-red-400">
-                        <span className="w-2 h-2 rounded-full bg-red-500 inline-block" />
+                      <span className="flex items-center gap-1.5 text-[#AE2012]">
+                        <span className="w-2 h-2 rounded-full bg-[#AE2012] inline-block" />
                         Potential Shortfall:
                       </span>
-                      <span className="font-mono font-bold text-red-300">
+                      <span className="font-mono font-bold text-[#AE2012]">
                         {point.potential_shortfall_kg !== null
                           ? `${point.potential_shortfall_kg.toLocaleString()} kg/day`
                           : '—'}
@@ -174,44 +194,44 @@ export const SupplyAlertChart: React.FC<SupplyAlertChartProps> = ({
               wrapperStyle={{ fontSize: '11px', paddingBottom: '10px' }}
             />
 
-            {/* Potential Shortfall Bar (Red) */}
+            {/* Potential Shortfall Bar (Ember / Vermilion) */}
             <Bar
               dataKey="potential_shortfall_kg"
               name="Potential Shortfall (kg/day)"
-              fill="#DC2626"
-              radius={[3, 3, 0, 0]}
+              fill="#AE2012"
+              radius={[4, 4, 0, 0]}
               maxBarSize={40}
             />
 
-            {/* Forecast Demand Line (Blue) */}
+            {/* Forecast Demand Line (Mineral Teal) */}
             <Line
               type="monotone"
               dataKey="forecast_demand_kg"
               name="Forecast Demand"
-              stroke="#2563EB"
+              stroke="#0A9396"
               strokeWidth={2.5}
-              dot={{ r: 3, fill: '#2563EB' }}
+              dot={{ r: 3, fill: '#0A9396' }}
             />
 
-            {/* Planned Available Supply Line (Teal) */}
+            {/* Planned Available Supply Line (Deep Ocean dashed) */}
             <Line
               type="monotone"
               dataKey="planned_supply_kg"
               name="Planned Available Supply"
-              stroke="#0F766E"
+              stroke="#005F73"
               strokeWidth={2.5}
               strokeDasharray="5 5"
-              dot={{ r: 3, fill: '#0F766E' }}
+              dot={{ r: 3, fill: '#005F73' }}
             />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Clarification banner */}
-      <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-[11px] text-[#64748B]">
-        <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0" />
+      {/* Operational Summary */}
+      <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-[11px] text-slate-500">
+        <AlertCircle className="w-4 h-4 text-[#005F73] shrink-0" />
         <span>
-          Planning shortfalls represent a theoretical supply deficit against forecasted demand. They do not confirm physical station outages or pump queues.
+          Planning shortfalls indicate operational dates where forecasted consumer demand exceeds scheduled supply allocation.
         </span>
       </div>
     </div>

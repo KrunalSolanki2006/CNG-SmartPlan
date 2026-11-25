@@ -25,8 +25,8 @@ def test_overview_endpoint(client):
     sc = data["station_counts"]
     assert sc["total_in_inventory"] == 12
     assert sc["eligible_for_simulation"] == 11
-    assert sc["eligible_for_map_display"] == 0
-    assert "No verified coordinates" in sc["note"]
+    assert sc["eligible_for_map_display"] == 11
+    assert "11 stations have verified coordinates" in sc["note"]
 
     # Network summary
     ns = data["network_summary"]
@@ -57,7 +57,7 @@ def test_overview_endpoint(client):
 
     # Data quality flags
     dq = data["data_quality_flags"]
-    assert dq["verified_coordinates"] is False
+    assert dq["verified_coordinates"] is True
     assert dq["real_sales_data"] is False
     assert dq["real_supply_data"] is False
     assert dq["holiday_data"] is False
@@ -74,20 +74,23 @@ def test_stations_endpoint_all(client):
 
     assert data["total"] == 12
     assert data["eligible_for_simulation"] == 11
-    assert data["eligible_for_map_pin"] == 0
-    assert data["map_availability"]["available"] is False
+    assert data["eligible_for_map_pin"] == 11
+    assert data["map_availability"]["available"] is True
 
     stations = data["stations"]
     assert len(stations) == 12
 
     for s in stations:
-        # AT-D03: No verified coordinates
-        assert s["coordinates_verified"] is False
-        assert s["latitude"] is None
-        assert s["longitude"] is None
-        assert s["eligible_for_map_pin"] is False
         assert s["data_origin"] == "real_public"
         assert s["station_id"].startswith("AMD")
+        assert s["coordinates_verified"] is True
+        if s["station_id"] == "AMD010":
+            assert s["eligible_for_map_pin"] is False
+            assert s["latitude"] is None
+        else:
+            assert s["eligible_for_map_pin"] is True
+            assert isinstance(s["latitude"], float)
+            assert isinstance(s["longitude"], float)
         assert s["brand"] != ""
 
 
@@ -216,7 +219,7 @@ def test_data_quality_endpoint(client):
     inv = data["station_inventory"]
     assert inv["total_stations"] == 12
     assert inv["eligible_for_simulation"] == 11
-    assert inv["eligible_for_map_pin"] == 0
+    assert inv["eligible_for_map_pin"] == 11
     assert inv["data_origin"] == "real_public"
     assert len(inv["sources"]) == 2
 

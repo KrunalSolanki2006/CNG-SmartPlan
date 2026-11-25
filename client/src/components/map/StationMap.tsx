@@ -4,6 +4,7 @@ import {
   TileLayer,
   Marker,
   Popup,
+  Polyline,
   useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
@@ -16,6 +17,9 @@ export interface StationMapProps {
   proposedCoords: { lat: number; lng: number } | null;
   onSelectProposedLocation: (coords: { lat: number; lng: number }) => void;
   selectedStation: Station | null;
+  onSelectStation?: (station: Station | null) => void;
+  onCalculateRoute?: (dest: { lat: number; lng: number; label: string }) => void;
+  activePolyline?: [number, number][] | null;
 }
 
 // Center coordinates for Ahmedabad study area
@@ -64,6 +68,7 @@ export const StationMap: React.FC<StationMapProps> = ({
   stations,
   proposedCoords,
   onSelectProposedLocation,
+  activePolyline,
 }) => {
   // STRICT DATA GOVERNANCE RULE:
   // Render ONLY stations that are approved for map pin AND have non-null coordinates.
@@ -124,6 +129,15 @@ export const StationMap: React.FC<StationMapProps> = ({
               </div>
             </Popup>
           </Marker>
+        )}
+        {/* 3. Road Directions Active Polyline */}
+        {activePolyline && (
+          <Polyline
+            positions={activePolyline}
+            color="#0A9396"
+            weight={4}
+            dashArray="6, 8"
+          />
         )}
       </MapContainer>
 

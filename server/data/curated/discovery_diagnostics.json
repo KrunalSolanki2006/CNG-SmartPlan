@@ -1,0 +1,101 @@
+{
+  "account_email": "krunalsolanki7139@gmail.com",
+  "last_discovery_time": "2026-11-24T18:43:58.858290+00:00",
+  "cities_searched": [
+    "Ahmedabad",
+    "Surat",
+    "Vadodara",
+    "Rajkot",
+    "Bhavnagar",
+    "Jamnagar",
+    "Anand",
+    "Bharuch",
+    "Vapi",
+    "Navsari",
+    "Mehsana",
+    "Gandhidham"
+  ],
+  "api_requests_total": 12,
+  "api_requests_successful": 12,
+  "api_requests_cached": 0,
+  "api_requests_failed": 0,
+  "results_discovered": 228,
+  "new_records_added": 227,
+  "duplicate_records": 1,
+  "manual_verification_required": 227,
+  "mode": "LIVE API RESULTS",
+  "city_breakdown": {
+    "Ahmedabad": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Surat": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Vadodara": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Rajkot": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Bhavnagar": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Jamnagar": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Anand": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Bharuch": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Vapi": {
+      "status": "success",
+      "raw_results": 8,
+      "new_stations_added": 8,
+      "cached": false
+    },
+    "Navsari": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 19,
+      "cached": false
+    },
+    "Mehsana": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    },
+    "Gandhidham": {
+      "status": "success",
+      "raw_results": 20,
+      "new_stations_added": 20,
+      "cached": false
+    }
+  }
+}

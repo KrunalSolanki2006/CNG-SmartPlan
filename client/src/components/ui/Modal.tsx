@@ -58,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
       aria-modal="true"
       aria-labelledby="modal-title"
       aria-describedby={description ? 'modal-description' : undefined}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6"
     >
       {/* Backdrop */}
       <div

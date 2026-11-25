@@ -10,7 +10,7 @@ export const NotFoundPage: React.FC = () => {
     <div className="py-12">
       <EmptyState
         title="Page Not Found"
-        description="The requested route does not exist in the CNG SmartPlan navigation structure."
+        description="The requested route does not exist in the FUELCAST navigation structure."
         actionLabel="Back to Dashboard"
         onAction={() => navigate('/')}
         icon={<Home className="w-6 h-6 text-[#0F766E]" />}

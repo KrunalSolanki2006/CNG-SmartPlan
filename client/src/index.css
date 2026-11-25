@@ -4,35 +4,50 @@
 @tailwind utilities;
 
 :root {
-  --color-navy-sidebar: #142B3A;
-  --color-navy-hover: #1B384B;
-  --color-navy-dark: #0D1C26;
-  --color-primary-teal: #0F766E;
-  --color-soft-teal: #DDF3EF;
-  --color-canvas-bg: #F5F7FA;
+  /* Premium Petroleum-to-Ember Brand Palette */
+  --color-midnight-petrol: #001219;
+  --color-deep-ocean: #005F73;
+  --color-mineral-teal: #0A9396;
+  --color-seafoam: #94D2BD;
+  --color-sandstone: #E9D8A6;
+  --color-solar-amber: #EE9B00;
+  --color-burnt-ochre: #CA6702;
+  --color-rust: #BB3E03;
+  --color-deep-vermilion: #AE2012;
+  --color-ember-red: #9B2226;
+
+  /* Supporting Interface Colors - Clean, Natural Enterprise Canvas */
+  --color-canvas-bg: #F8FAFC;
   --color-canvas-surface: #FFFFFF;
   --color-text-main: #0F172A;
-  --color-text-muted: #64748B;
-  --color-border-light: #DCE4E8;
-  --color-info-blue: #2563EB;
-  --color-success-green: #15803D;
-  --color-warning-amber: #D97706;
-  --color-critical-red: #DC2626;
+  --color-text-muted: #475569;
+  --color-border-light: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
+
+  /* Compatibility Aliases */
+  --color-primary-teal: #0A9396;
+  --color-soft-teal: #F0FDFA;
+  --color-navy-sidebar: #0B1320;
+  --color-navy-hover: #1E293B;
+  --color-navy-dark: #0B1320;
   --color-synthetic-purple: #6D5BD0;
 }
 
 @layer base {
   html {
     color-scheme: light;
+    scroll-behavior: smooth;
   }
   body {
     background-color: var(--color-canvas-bg);
     color: var(--color-text-main);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-/* Custom scrollbars for clean dashboards */
+/* Custom scrollbars matching clean enterprise theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -51,8 +66,11 @@
   background: #94A3B8;
 }
 
-/* Reduced motion preference */
+/* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
   *,
   ::before,
   ::after {
@@ -61,4 +79,255 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Print Styles for Executive Scenario Reports */
+@media print {
+  aside,
+  header,
+  nav,
+  .no-print,
+  button {
+    display: none !important;
+  }
+  body, main {
+    background: #FFFFFF !important;
+    color: #263237 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .rounded-card {
+    border: 1px solid #D8D0C0 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* ==========================================================================
+   Petroleum-to-Ember Icon Box Containers
+   ========================================================================== */
+.icon-box-petrol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: #001219;
+  color: #94D2BD;
+  border: 1px solid rgba(148, 210, 189, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 18, 25, 0.2);
+  padding: 0.55rem;
+}
+
+.icon-box-ocean {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #E0F2F5 0%, #C3E5EB 100%);
+  color: #005F73;
+  border: 1px solid rgba(0, 95, 115, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 95, 115, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-teal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #EAF6F2 0%, #D0EDE4 100%);
+  color: #005F73;
+  border: 1px solid rgba(10, 147, 150, 0.3);
+  box-shadow: 0 1px 2px rgba(10, 147, 150, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-seafoam {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #F0FAF7 0%, #E2F4EE 100%);
+  color: #0A9396;
+  border: 1px solid rgba(148, 210, 189, 0.5);
+  box-shadow: 0 1px 2px rgba(10, 147, 150, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-amber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #FDF7EB 0%, #FCEFD5 100%);
+  color: #CA6702;
+  border: 1px solid rgba(238, 155, 0, 0.35);
+  box-shadow: 0 1px 2px rgba(202, 103, 2, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-rust {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #FDF0EB 0%, #FCE0D4 100%);
+  color: #BB3E03;
+  border: 1px solid rgba(187, 62, 3, 0.35);
+  box-shadow: 0 1px 2px rgba(187, 62, 3, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-ember {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #FDF0F1 0%, #FCE2E4 100%);
+  color: #9B2226;
+  border: 1px solid rgba(155, 34, 38, 0.35);
+  box-shadow: 0 1px 2px rgba(155, 34, 38, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #E0F2F5 0%, #C3E5EB 100%);
+  color: #005F73;
+  border: 1px solid rgba(0, 95, 115, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 95, 115, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-emerald {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #EAF6F2 0%, #D0EDE4 100%);
+  color: #0A9396;
+  border: 1px solid rgba(10, 147, 150, 0.3);
+  box-shadow: 0 1px 2px rgba(10, 147, 150, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-rose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #FDF0F1 0%, #FCE2E4 100%);
+  color: #AE2012;
+  border: 1px solid rgba(174, 32, 18, 0.3);
+  box-shadow: 0 1px 2px rgba(174, 32, 18, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-purple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #F2EFFC 0%, #E3DCF8 100%);
+  color: #6D5BD0;
+  border: 1px solid rgba(109, 91, 208, 0.3);
+  box-shadow: 0 1px 2px rgba(109, 91, 208, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.icon-box-slate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #F4F0E6 0%, #ECE6D9 100%);
+  color: #647078;
+  border: 1px solid rgba(227, 221, 206, 0.7);
+  box-shadow: 0 1px 2px rgba(38, 50, 55, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 0.55rem;
+}
+
+.card-interactive {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -3px rgba(38, 50, 55, 0.09), 0 3px 6px -2px rgba(38, 50, 55, 0.04);
+}
+
+/* ==========================================================================
+   Professional Leaflet Map & Popup Upgrades
+   ========================================================================== */
+.leaflet-container {
+  font-family: inherit !important;
+  background-color: #ECE6D9 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 28px -4px rgba(0, 18, 25, 0.25), 0 8px 10px -6px rgba(0, 18, 25, 0.12) !important;
+  border: 1px solid #E3DDCE !important;
+  background: #FFFEFA !important;
+  overflow: hidden !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 8px !important;
+  right: 8px !important;
+  color: #647078 !important;
+  padding: 4px !important;
+  border-radius: 6px !important;
+  background: rgba(255, 254, 250, 0.9) !important;
+  border: 1px solid rgba(227, 221, 206, 0.8) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: #263237 !important;
+  background: #FFFEFA !important;
+}
+
+.leaflet-popup-tip {
+  background: #FFFEFA !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 18, 25, 0.1) !important;
+}
+
+/* Custom Marker Hover and Animation Effects */
+.custom-verified-pin,
+.custom-discovered-pin,
+.custom-proposed-pin,
+.custom-cluster-pin {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-verified-pin:hover,
+.custom-discovered-pin:hover,
+.custom-cluster-pin:hover {
+  transform: scale(1.12);
+  z-index: 9999 !important;
+}
+
+.custom-proposed-pin:hover {
+  transform: scale(1.08);
+  z-index: 10000 !important;
+}
+
+.pin-selected {
+  transform: scale(1.15) !important;
+  z-index: 10000 !important;
 }

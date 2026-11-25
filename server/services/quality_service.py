@@ -40,15 +40,19 @@ class QualityService:
 
         now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        # Station inventory metadata
+        map_count = len(store.map_eligible_stations)
         inventory_quality = StationInventoryQuality(
             total_stations=len(store.stations),
             eligible_for_simulation=len(store.eligible_stations),
-            eligible_for_map_pin=len(store.map_eligible_stations),
+            eligible_for_map_pin=map_count,
             data_origin="real_public",
             sources=["Gujarat Energy Limited directory", "HPCL CNG outlet directory"],
             access_date="2026-10-29",
-            coordinate_status="No verified coordinates; 8 secondary-source candidates remain unapproved",
+            coordinate_status=(
+                f"{map_count} verified station coordinates approved for map display; 8 secondary-source candidates tracked"
+                if map_count > 0
+                else "No verified coordinates; 8 secondary-source candidates remain unapproved"
+            ),
         )
 
         # Synthetic time-series statistics

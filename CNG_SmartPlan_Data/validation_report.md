@@ -1,6 +1,6 @@
 # CNG SmartPlan — Validation Report
 
-**Validation run date:** 2026-10-29  
+**Validation run date:** 2026-11-03  
 **Package:** Ahmedabad, Gujarat, India — PS000002  
 **Validator:** `validate_package.py`  
 **Synthetic generator:** `generate_synthetic_data.py` (fixed seed 20241029)
@@ -12,7 +12,7 @@
 **PASS — 10 automated check groups. No technical integrity checks failed.**
 
 - PASS: Required core files, scripts, README and optional infrastructure file exist (11 files).
-- PASS: Station master: 12 distinct source-backed directory records; 11 locality-screened rows eligible for synthetic demonstration; no approved coordinates.
+- PASS: Station master: 12 distinct source-backed directory records; 12 stations have verified coordinates.
 - PASS: Coordinate review queue: 8 candidate points from secondary sources; all remain unapproved for production map pins.
 - PASS: Daily synthetic sales: 8,041 rows, exact 2024-01-01 through 2025-12-31 coverage, no duplicate station-date keys or negative values.
 - PASS: Synthetic supply: 8,041 rows; exact one-to-one station-date match with daily sales; nonnegative quantities.

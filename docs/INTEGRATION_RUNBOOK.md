@@ -137,3 +137,4 @@ For isolated UI development or hackathon demonstration when the backend is offli
 | `'vite' is not recognized as an internal command` | `node_modules` not installed | Run `npm install` inside `client/` |
 | `Permission denied: .git/index.lock` | Windows file locking on `.git` | Ensure test commands do not run concurrently with git write operations |
 | `Validation run date mismatch in validation_report.md` | `validate_package.py` rewrites report timestamp | Run `git checkout -- CNG_SmartPlan_Data/validation_report.md` to restore exact immutable source hash |
+

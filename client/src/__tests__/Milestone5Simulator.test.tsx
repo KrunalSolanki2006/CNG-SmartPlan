@@ -255,14 +255,12 @@ describe('Milestone 5 - New-Station Impact Simulator Acceptance Tests', () => {
       await user.click(simLinks[0]);
 
       expect(screen.getAllByText('New-Station Impact Simulator').length).toBeGreaterThan(0);
-      expect(screen.getByText('Signature Feature E')).toBeInTheDocument();
-      expect(screen.getByText('Canonical Simulation Formulas')).toBeInTheDocument();
+      expect(screen.getByText(/Transparent decision-support scenario model/i)).toBeInTheDocument();
 
       // Wait for fixture calculation to populate
       await waitFor(() => {
         expect(screen.getByText('Network Demand Impact Results')).toBeInTheDocument();
         expect(screen.getByText('Demand Flow & Cannibalization Breakdown')).toBeInTheDocument();
-        expect(screen.getByText('Nearby Station Spatial Allocation')).toBeInTheDocument();
       });
     });
   });

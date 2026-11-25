@@ -61,3 +61,23 @@
 ### 5.1 Illustrative Decision-Support Model
 - **Nature of Model:** The New-Station Impact Simulator is a transparent decision-support tool driven by user-supplied scenario inputs (catchment radius, market demand, capture rate, diversion rate, and accessibility demand).
 - **Not an Econometric Prediction:** Simulation outputs represent mathematical projections under the assumed inputs, not guaranteed future commercial volumes or proven capital expenditure justifications.
+
+
+
+---
+
+## 6. SerpApi Google Maps Integration & Candidate Discovery Limitations
+
+### 6.1 Candidate Station Quarantine
+- **Quarantine Policy:** All stations discovered via SerpApi Google Maps Search or Autocomplete are tagged `unverified_candidate` and stored separately in `server/data/serpapi_geographic_discoveries.json`.
+- **Directory Protection:** Candidate stations are never merged into the official 12-station master registry (`cng_stations.csv`). They must progress through the formal review queue (`pending_review` &rarr; `verified_project_record` or `rejected`).
+- **Proximity Alerts:** Candidate locations within 250 meters of an existing station trigger a duplicate proximity flag to prevent redundant network entries.
+
+### 6.2 Offline Demo Fixtures & Mode Control
+- **Genuine Cached Data:** When running in offline or demo mode (`mode: demo`), the application uses 109KB of authentic cached SerpApi responses for Ahmedabad (`server/data/fixtures/serpapi_demo_fixtures.json`).
+- **Zero Hallucination:** Fixtures represent real-world locations (e.g. Visat Gandhinagar Highway, Bodakdev SG Highway) captured from genuine Google Maps queries. No synthetic mock stations are invented.
+- **Transparency:** Responses served from fixtures carry `is_fixture: true` to prevent misrepresenting cached demonstration data as live API transactions.
+
+### 6.3 Road Routing & Detour Friction
+- **Euclidean vs Road Discrepancy:** Straight-line catchment radii (Haversine distance) underestimate actual driving distances by 15% to 45% due to Ahmedabad's railway crossings, BRTS corridors, and ring-road grade separations.
+- **Detour Calibration:** The simulator provides road distance and detour ratio analysis ($\text{Road Distance} / \text{Straight-Line Distance}$) to guide planners in damping capture rate assumptions for high-circuity corridors.
