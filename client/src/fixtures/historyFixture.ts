@@ -11,8 +11,8 @@ export const HISTORY_FIXTURE_AMD001: StationHistoryResponse = {
   data_origin: 'synthetic_demo',
   aggregation: 'daily',
   date_range_start: '2025-12-01',
-  date_range_end: '2025-12-30',
-  total_records: 30,
+  date_range_end: '2025-12-31',
+  total_records: 31,
   missing_records: 0,
   missing_holiday_data: true,
   series: [
@@ -46,6 +46,7 @@ export const HISTORY_FIXTURE_AMD001: StationHistoryResponse = {
     { date: '2025-12-28', demand_kg: 1140.2, day_of_week: 'Sunday', is_weekend: true, simulation_profile: 'commuter_corridor' },
     { date: '2025-12-29', demand_kg: 1488.9, day_of_week: 'Monday', is_weekend: false, simulation_profile: 'commuter_corridor' },
     { date: '2025-12-30', demand_kg: 1504.1, day_of_week: 'Tuesday', is_weekend: false, simulation_profile: 'commuter_corridor' },
+    { date: '2025-12-31', demand_kg: 1516.8, day_of_week: 'Wednesday', is_weekend: false, simulation_profile: 'commuter_corridor' },
   ],
-  note: 'Calibrated baseline series. Used for baseline demand scenario exploration.',
+  note: 'Synthetic demonstration data only. Not actual station sales records.',
 };

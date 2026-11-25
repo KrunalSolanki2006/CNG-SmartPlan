@@ -70,7 +70,7 @@ export const ForecastSummaryCard: React.FC<ForecastSummaryCardProps> = ({ summar
         </div>
 
         <p className="text-xs text-slate-600 leading-relaxed font-normal">
-          Multi-horizon seasonal forecasting across active network stations.
+          {summary.note || 'Multi-horizon seasonal forecasting across active network stations.'}
         </p>
       </CardContent>
 

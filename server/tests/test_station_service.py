@@ -5,28 +5,22 @@ from services.station_service import StationService
 
 
 def test_get_all_stations():
-    """Verify get_all_stations returns all 12 stations with verified coordinates and appropriate flags."""
+    """Verify get_all_stations returns all 151 verified Gujarat stations with verified coordinates."""
     stations = StationService.get_all_stations()
-    assert len(stations) == 12
+    assert len(stations) == 151
 
     for s in stations:
         assert s["data_origin"] == "real_public"
-        assert s["station_id"].startswith("AMD")
         assert s["coordinates_verified"] is True
-        if s["station_id"] == "AMD010":
-            assert s["eligible_for_map_pin"] is False
-            assert s["latitude"] is None
-            assert s["longitude"] is None
-        else:
-            assert s["eligible_for_map_pin"] is True
-            assert isinstance(s["latitude"], float)
-            assert isinstance(s["longitude"], float)
+        assert s["eligible_for_map_pin"] is True
+        assert isinstance(s["latitude"], float)
+        assert isinstance(s["longitude"], float)
 
 
 def test_get_eligible_stations():
-    """Verify eligible stations query returns exactly 11 in_study_area='yes' stations."""
+    """Verify eligible stations query returns all 151 verified Gujarat stations."""
     eligible = StationService.get_eligible_stations()
-    assert len(eligible) == 11
+    assert len(eligible) == 151
 
     station_ids = [s["station_id"] for s in eligible]
     assert "AMD010" not in station_ids
@@ -41,7 +35,7 @@ def test_get_station_by_id_found_and_not_found():
     assert station is not None
     assert station["station_id"] == "AMD001"
     assert station["station_name"] == "Visat Automobile"
-    assert station["simulation_profile"] == "commuter_corridor"
+    assert station["simulation_profile"] == "highway"
 
     missing = StationService.get_station_by_id("AMD999")
     assert missing is None

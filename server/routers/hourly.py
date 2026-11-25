@@ -1,4 +1,4 @@
-"""Hourly demand router implementing GET /api/v1/hourly-demand per docs/API_CONTRACT.md."""
+"""Hourly demand router implementing GET /api/v1/hourly-demand."""
 
 from typing import Optional
 from fastapi import APIRouter, Query
@@ -12,13 +12,12 @@ router = APIRouter(tags=["Hourly Demand"])
 def get_hourly_demand(
     station_id: Optional[str] = Query(
         default=None,
-        description="Filter to single station: AMD001, AMD004, or AMD008",
+        description="Filter to single station (any of the 151 eligible Gujarat stations)",
     ),
     date: Optional[str] = Query(
         default=None,
-        description="Filter to single date in 2025-12-02 to 2025-12-31",
+        description="Filter to single date within the available 30-day hourly period",
     ),
 ) -> HourlyResponse:
-    """Retrieve synthetic hourly demand records and profile curves."""
+    """Retrieve synthetic hourly demand records and diurnal profile curves."""
     return HourlyService.get_hourly_demand(station_id=station_id, date=date)
-

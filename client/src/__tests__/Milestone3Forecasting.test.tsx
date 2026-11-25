@@ -1,12 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { StationSelector } from '../components/forecast/StationSelector';
+import { ForecastChart } from '../components/forecast/ForecastChart';
 import { ForecastControlPanel } from '../components/forecast/ForecastControlPanel';
 import { ForecastMetricsPanel } from '../components/forecast/ForecastMetricsPanel';
 import { ForecastReliabilityCard } from '../components/forecast/ForecastReliabilityCard';
 import { ForecastDataTable } from '../components/forecast/ForecastDataTable';
+import { ForecastStatusBanner } from '../components/forecast/ForecastStatusBanner';
+import { ForecastSummaryMetrics } from '../components/forecast/ForecastSummaryMetrics';
+import { NetworkForecastSummaryCard } from '../components/forecast/NetworkForecastSummaryCard';
 import { HourlyProfileChart } from '../components/hourly/HourlyProfileChart';
 import { SupplyAlertChart } from '../components/alerts/SupplyAlertChart';
 import { SupplySummaryCards } from '../components/alerts/SupplySummaryCards';
@@ -16,7 +20,7 @@ import { ForecastPage } from '../pages/ForecastPage';
 import { AlertsPage } from '../pages/AlertsPage';
 import { FixtureProvider } from '../context/FixtureContext';
 import { STATIONS_FIXTURE } from '../fixtures/stationsFixture';
-import { FORECAST_FIXTURE_AMD001_7D } from '../fixtures/forecastFixture';
+import { FORECAST_FIXTURE_AMD001_7D, NETWORK_FORECAST_SUMMARY_FIXTURE } from '../fixtures/forecastFixture';
 import { SUPPLY_CHECK_FIXTURE_AMD001_7D } from '../fixtures/supplyFixture';
 import { HOURLY_FIXTURE_AMD001 } from '../fixtures/hourlyFixture';
 
@@ -65,12 +69,11 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
   });
 
   describe('ForecastControlPanel', () => {
-    it('supports horizon presets, custom numeric input (1-30), model selection, and baseline toggle', async () => {
+    it('supports 7, 14, 30 day horizon presets, model selection, and baseline toggle', async () => {
       const user = userEvent.setup();
       const handleChangeHorizon = vi.fn();
       const handleChangeModel = vi.fn();
       const handleToggleBaseline = vi.fn();
-      const handleChangeAgg = vi.fn();
       const handleRun = vi.fn();
 
       render(
@@ -81,24 +84,17 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
           onChangeModel={handleChangeModel}
           includeBaseline={true}
           onToggleBaseline={handleToggleBaseline}
-          aggregation="daily"
-          onChangeAggregation={handleChangeAgg}
           isLoading={false}
           onRunForecast={handleRun}
         />
       );
 
       // Test 14d and 30d buttons
-      await user.click(screen.getByText('14d'));
+      await user.click(screen.getByText('14 Days'));
       expect(handleChangeHorizon).toHaveBeenCalledWith(14);
 
-      await user.click(screen.getByText('30d'));
+      await user.click(screen.getByText('30 Days'));
       expect(handleChangeHorizon).toHaveBeenCalledWith(30);
-
-      // Test custom input
-      const customInput = screen.getByLabelText('Custom forecast horizon in days');
-      fireEvent.change(customInput, { target: { value: '21' } });
-      expect(handleChangeHorizon).toHaveBeenCalledWith(21);
 
       // Test model dropdown
       const modelSelect = screen.getByLabelText('Select forecast model');
@@ -116,44 +112,105 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
     });
   });
 
+  describe('ForecastStatusBanner & ForecastSummaryMetrics', () => {
+    it('renders simulated status with 2026-11-24 cutoff and 2026-11-25 forecast period', () => {
+      render(<ForecastStatusBanner forecastData={FORECAST_FIXTURE_AMD001_7D} isLoading={false} />);
+
+      expect(screen.getByText('SIMULATED DATA — DEMONSTRATION ONLY')).toBeInTheDocument();
+      expect(screen.getByText(/Historical Cutoff:/i)).toBeInTheDocument();
+      expect(screen.getByText('2026-11-24')).toBeInTheDocument();
+      expect(screen.getByText(/2026-11-25 to 2026-12-01/i)).toBeInTheDocument();
+    });
+
+    it('renders insufficient_data warning and avoids claiming forecast availability', () => {
+      const insufficientData = {
+        ...FORECAST_FIXTURE_AMD001_7D,
+        forecast_status: 'insufficient_data' as const,
+        target_start_date: null,
+        target_end_date: null,
+        forecast: [],
+        baseline_forecast: [],
+        forecast_avg_demand_kg: null,
+        demand_trend: 'unavailable' as const,
+        trend_change_pct: null,
+        key_insight: 'Insufficient historical data (15 valid days available, minimum 35 required).',
+      };
+
+      render(<ForecastStatusBanner forecastData={insufficientData} isLoading={false} />);
+      expect(screen.getByText('Insufficient Data')).toBeInTheDocument();
+      expect(screen.getByText('Withheld')).toBeInTheDocument();
+
+      render(<ForecastChart forecastData={insufficientData} isLoading={false} includeBaseline={true} />);
+      expect(screen.getByText('Insufficient Historical Data')).toBeInTheDocument();
+    });
+
+    it('renders all 4 KPIs from API response', () => {
+      render(<ForecastSummaryMetrics forecastData={FORECAST_FIXTURE_AMD001_7D} isLoading={false} />);
+
+      expect(screen.getByText('Historical Avg Demand')).toBeInTheDocument();
+      expect(screen.getByText('Forecast Avg Demand')).toBeInTheDocument();
+      expect(screen.getByText('Expected Demand Trend')).toBeInTheDocument();
+      expect(screen.getByText('Forecast Period')).toBeInTheDocument();
+    });
+
+    it('renders NetworkForecastSummaryCard with 151 eligible stations and simulated caveat', () => {
+      render(
+        <NetworkForecastSummaryCard
+          summary={NETWORK_FORECAST_SUMMARY_FIXTURE}
+          isLoading={false}
+          error={null}
+          onRetry={vi.fn()}
+        />
+      );
+
+      expect(screen.getByText(/Network-Level Simulated Forecast Summary/i)).toBeInTheDocument();
+      expect(screen.getAllByText('151').length).toBeGreaterThanOrEqual(2);
+      expect(screen.getByText(/2,?82,?927\.8 kg\/day/i)).toBeInTheDocument();
+      expect(screen.getByText(/not a real Gujarat-wide CNG demand measurement/i)).toBeInTheDocument();
+    });
+  });
+
   describe('ForecastMetricsPanel & ReliabilityCard', () => {
-    it('renders chronological train/test dates, baseline error metrics, and synthetic qualifier', () => {
+    it('renders forecast details, 3-way chronological split dates, station error metrics, and synthetic qualifier', () => {
       render(
         <ForecastMetricsPanel
           evaluation={FORECAST_FIXTURE_AMD001_7D.evaluation}
           trainPeriod={FORECAST_FIXTURE_AMD001_7D.train_period}
           testPeriod={FORECAST_FIXTURE_AMD001_7D.test_period}
           modelUsed="holt_winters"
+          forecastData={FORECAST_FIXTURE_AMD001_7D}
         />
       );
 
-      // Chronological split
-      expect(screen.getByText('2024-01-01 to 2025-10-02')).toBeInTheDocument();
-      expect(screen.getByText('2025-10-03 to 2025-12-31')).toBeInTheDocument();
-      expect(screen.getByText('90 days')).toBeInTheDocument();
+      expect(screen.getByText('Forecast Details')).toBeInTheDocument();
+      expect(screen.getByText(/2024-01-01 to 2025-12-31/i)).toBeInTheDocument();
+      expect(screen.getByText(/2026-01-01 to 2026-03-31/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/2026-04-01 to 2026-11-24/i).length).toBeGreaterThan(0);
+      expect(screen.getByText('238 days')).toBeInTheDocument();
 
-      // Error metrics
+      // Station error metrics (AMD001)
       expect(screen.getByText(/138.42 kg\/day/i)).toBeInTheDocument();
       expect(screen.getByText(/172.10 kg\/day/i)).toBeInTheDocument();
-      expect(screen.getByText(/10.25%/i)).toBeInTheDocument();
+      expect(screen.getByText(/8.15%/i)).toBeInTheDocument();
 
-      // Synthetic qualifier
       expect(
-        screen.getByText(/Metrics computed from synthetic data only\. Do not claim real-world accuracy\./i)
+        screen.getByText(/Do not claim real-world accuracy\./i)
       ).toBeInTheDocument();
     });
 
-    it('renders data limitations register including blank holidays', () => {
+    it('renders dynamic station data audit checklist and limitations', () => {
       render(
         <ForecastReliabilityCard
           reliability={FORECAST_FIXTURE_AMD001_7D.reliability}
           limitations={FORECAST_FIXTURE_AMD001_7D.limitations}
+          dataAudit={FORECAST_FIXTURE_AMD001_7D.data_audit}
+          modelInfo={FORECAST_FIXTURE_AMD001_7D.model_info}
         />
       );
 
-      expect(screen.getByText(/731 Days \(2024–2025\)/i)).toBeInTheDocument();
-      expect(screen.getByText(/Missing \(Blank in all 8,041 rows\)/i)).toBeInTheDocument();
-      expect(screen.getByText(/All training data is synthetic/i)).toBeInTheDocument();
+      expect(screen.getByText(/1059 Days \(2024-01-01 to 2026-11-24\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/All historical demand\/sales records are synthetic/i)).toBeInTheDocument();
+      expect(screen.queryByText(/85%–115%/i)).not.toBeInTheDocument();
     });
   });
 
@@ -168,7 +225,7 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
       );
 
       expect(screen.getByText('Tabular Forecast Ledger (AMD001)')).toBeInTheDocument();
-      expect(screen.getByText('2026-01-01')).toBeInTheDocument();
+      expect(screen.getByText('2026-11-25')).toBeInTheDocument();
       expect(screen.getAllByText(/kg\/day/i).length).toBeGreaterThan(0);
     });
   });
@@ -315,11 +372,12 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
       );
 
       expect(screen.getByText('Station-Level Demand Forecasting')).toBeInTheDocument();
-      expect(screen.getByText(/Multi-horizon seasonal forecasting/i)).toBeInTheDocument();
+      expect(screen.getByText(/Station-level CNG demand forecasting/i)).toBeInTheDocument();
 
       // Wait for fixture resolution
-      expect(await screen.findByText(/Demand Trajectory & Model Forecast/i)).toBeInTheDocument();
-      expect(screen.getByText('Chronological Train/Test Split')).toBeInTheDocument();
+      expect(await screen.findByText(/Historical vs\. Forecasted Demand/i)).toBeInTheDocument();
+      expect(screen.getAllByText('SIMULATED DATA — DEMONSTRATION ONLY').length).toBeGreaterThan(0);
+      expect(screen.getByText('Historical Avg Demand')).toBeInTheDocument();
     });
 
     it('renders AlertsPage with dev fixtures enabled', async () => {

@@ -5,7 +5,7 @@ import { FileSpreadsheet } from 'lucide-react';
 
 interface ForecastDataTableProps {
   forecastPoints: ForecastPoint[];
-  baselinePoints: ForecastPoint[];
+  baselinePoints: ForecastPoint[] | null;
   stationId: string;
 }
 
@@ -18,6 +18,10 @@ export const ForecastDataTable: React.FC<ForecastDataTableProps> = ({
     const d = new Date(dateStr + 'T00:00:00');
     return d.toLocaleDateString('en-US', { weekday: 'short' });
   };
+
+  if (!forecastPoints || forecastPoints.length === 0) {
+    return null;
+  }
 
   return (
     <div className="rounded-card bg-white p-5 border border-[#DCE4E8] shadow-card space-y-4">
@@ -40,15 +44,15 @@ export const ForecastDataTable: React.FC<ForecastDataTableProps> = ({
               <th className="py-2.5 px-3">Target Date</th>
               <th className="py-2.5 px-3">Day</th>
               <th className="py-2.5 px-3 text-right">Forecast Demand</th>
-              <th className="py-2.5 px-3 text-right">Lower Bound</th>
-              <th className="py-2.5 px-3 text-right">Upper Bound</th>
+              <th className="py-2.5 px-3 text-right">95% Lower Bound</th>
+              <th className="py-2.5 px-3 text-right">95% Upper Bound</th>
               <th className="py-2.5 px-3 text-right">28d Baseline</th>
               <th className="py-2.5 px-3 text-center">Model</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {forecastPoints.map((point) => {
-              const baseline = baselinePoints.find((b) => b.date === point.date);
+              const baseline = (baselinePoints || []).find((b) => b.date === point.date);
               const day = getDayName(point.date);
               const isWeekend = day === 'Sun' || day === 'Sat';
 
@@ -66,7 +70,7 @@ export const ForecastDataTable: React.FC<ForecastDataTableProps> = ({
                       {day}
                     </span>
                   </td>
-                  <td className="py-2 px-3 text-right font-mono font-bold text-[#2563EB]">
+                  <td className="py-2 px-3 text-right font-mono font-bold text-[#005F73]">
                     {point.forecast_demand_kg.toLocaleString()} kg/day
                   </td>
                   <td className="py-2 px-3 text-right font-mono text-slate-600">

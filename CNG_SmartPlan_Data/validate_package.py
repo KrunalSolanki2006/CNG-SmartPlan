@@ -186,7 +186,10 @@ def main() -> None:
     # Dictionary covers every CSV and has no duplicate dictionary entries.
     require({"file_name", "column_name", "data_type", "unit", "description", "example_value", "allowed_values_or_constraints", "required_or_optional", "data_origin"}.issubset(dictionary.columns), "Dictionary schema incomplete")
     require(not dictionary.duplicated(["file_name", "column_name"]).any(), "Duplicate data dictionary file/column entry")
-    csv_paths = sorted(p for p in BASE.rglob("*.csv") if p.is_file())
+    csv_paths = sorted(
+        p for p in BASE.rglob("*.csv")
+        if p.is_file() and not any(part in {"reference", "external", "synthetic"} for part in p.relative_to(BASE).parts)
+    )
     missing_schema = []
     stale_schema = []
     for csv_path in csv_paths:

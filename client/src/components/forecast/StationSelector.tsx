@@ -1,10 +1,16 @@
 import React from 'react';
-import { Station } from '../../types/api';
+import { ForecastStationSummaryItem, Station } from '../../types/api';
 import { Fuel, CheckCircle, HelpCircle } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
+type SelectableStation = (Station | ForecastStationSummaryItem) & {
+  district?: string;
+  locality?: string;
+  address?: string;
+};
+
 interface StationSelectorProps {
-  stations: Station[];
+  stations: SelectableStation[];
   selectedStationId: string;
   onSelectStation: (stationId: string) => void;
   isLoading?: boolean;
@@ -16,9 +22,8 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
   onSelectStation,
   isLoading = false,
 }) => {
-  // Only eligible stations (in_study_area === 'yes') can be forecasted
   const eligibleStations = stations.filter(
-    (s) => s.eligible_for_simulation || s.in_study_area === 'yes'
+    (s) => s.eligible_for_simulation || ('in_study_area' in s && s.in_study_area === 'yes')
   );
 
   const selectedStation = eligibleStations.find((s) => s.station_id === selectedStationId);
@@ -34,7 +39,7 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
           <span>Select Forecast Station ({eligibleStations.length} Eligible)</span>
         </label>
         <span className="text-[11px] text-[#64748B]">
-          Only locality-screened study-area stations are eligible
+          Verified operating CNG stations
         </span>
       </div>
 
@@ -47,23 +52,29 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
           onChange={(e) => onSelectStation(e.target.value)}
           className="w-full px-3.5 py-2.5 bg-white border border-[#DCE4E8] rounded-input text-xs font-medium text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#0F766E] focus:border-transparent transition-all shadow-sm cursor-pointer disabled:bg-slate-50 disabled:cursor-not-allowed"
         >
-          {eligibleStations.map((station) => (
-            <option key={station.station_id} value={station.station_id}>
-              {station.station_id} — {station.station_name} ({station.locality})
-            </option>
-          ))}
+          {eligibleStations.map((station) => {
+            const loc = station.district || station.locality || '';
+            return (
+              <option key={station.station_id} value={station.station_id}>
+                {station.station_id} — {station.station_name}
+                {loc ? ` (${loc})` : ''}
+              </option>
+            );
+          })}
         </select>
       </div>
 
       {selectedStation && (
         <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
           <div className="space-y-0.5">
-            <div className="font-semibold text-[#0F172A] flex items-center gap-1.5">
+            <div className="font-semibold text-[#0F172A] flex items-center gap-1.5 flex-wrap">
               <span>{selectedStation.station_name}</span>
               <span className="text-slate-400 font-mono text-[11px]">({selectedStation.station_id})</span>
             </div>
             <p className="text-[11px] text-slate-500">
-              {selectedStation.address || selectedStation.locality}
+              {selectedStation.district
+                ? `District: ${selectedStation.district}`
+                : selectedStation.address || selectedStation.locality}
             </p>
           </div>
 

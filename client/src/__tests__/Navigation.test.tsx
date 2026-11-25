@@ -16,7 +16,7 @@ describe('Navigation Flow', () => {
     await user.click(forecastLink);
 
     expect(screen.getAllByText('Station-Level Demand Forecasting').length).toBeGreaterThan(0);
-    expect(screen.getByText('Chronological Train/Test Split')).toBeInTheDocument();
+    expect(await screen.findByText('Historical Avg Demand')).toBeInTheDocument();
   });
 
   it('navigates to Supply Alerts page and verifies formula description', async () => {

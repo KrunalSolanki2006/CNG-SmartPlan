@@ -38,6 +38,18 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
 
   const stations = data?.stations || [];
 
+  const counts = useMemo(() => {
+    const yesCount = stations.filter((s) => s.in_study_area === 'yes').length;
+    const uncertainCount = stations.filter((s) => s.in_study_area === 'uncertain').length;
+    const eligibleCount = stations.filter((s) => s.eligible_for_simulation).length;
+    return {
+      total: stations.length,
+      yes: yesCount,
+      uncertain: uncertainCount,
+      eligible: eligibleCount,
+    };
+  }, [stations]);
+
   const filteredStations = useMemo(() => {
     return stations.filter((st) => {
       // Search matching
@@ -80,7 +92,7 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
             </span>
           </div>
           <CardDescription className="text-xs text-slate-500 font-normal">
-            Master station directory across Gujarat Gas and partnered fuel stations in Ahmedabad metropolitan area.
+            Master station directory across Gujarat Gas and partnered fuel stations across Gujarat.
           </CardDescription>
         </div>
       </CardHeader>
@@ -113,9 +125,9 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
               onChange={(e) => setStudyAreaFilter(e.target.value as 'all' | 'yes' | 'uncertain')}
               className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white shadow-2xs transition-all"
             >
-              <option value="all">All Records (12)</option>
-              <option value="yes">In Study Area: Yes (11)</option>
-              <option value="uncertain">In Study Area: Uncertain (1)</option>
+              <option value="all">All Records ({counts.total})</option>
+              <option value="yes">In Study Area: Yes ({counts.yes})</option>
+              <option value="uncertain">In Study Area: Uncertain ({counts.uncertain})</option>
             </select>
 
             <select
@@ -126,7 +138,7 @@ export const StationInventoryTable: React.FC<StationInventoryTableProps> = ({
               className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white shadow-2xs transition-all"
             >
               <option value="all">All Eligibility</option>
-              <option value="eligible_only">Simulation Eligible (11)</option>
+              <option value="eligible_only">Simulation Eligible ({counts.eligible})</option>
             </select>
           </div>
         </div>

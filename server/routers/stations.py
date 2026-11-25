@@ -33,11 +33,20 @@ def list_stations(
     )
     stations_list = [Station(**s) for s in raw_stations]
 
-    map_pins_count = len(store.map_eligible_stations)
+    if store.verified_gujarat_stations is not None and not store.verified_gujarat_stations.empty:
+        vdf = store.verified_gujarat_stations
+        total_count = len(vdf)
+        eligible_sim_count = int(vdf["eligible_for_simulation"].astype(bool).sum())
+        map_pins_count = int((vdf["latitude"].notna() & vdf["longitude"].notna()).sum())
+    else:
+        total_count = len(store.stations)
+        eligible_sim_count = len(store.eligible_stations)
+        map_pins_count = len(store.map_eligible_stations)
+
     return StationsListResponse(
         stations=stations_list,
-        total=len(store.stations),
-        eligible_for_simulation=len(store.eligible_stations),
+        total=total_count,
+        eligible_for_simulation=eligible_sim_count,
         eligible_for_map_pin=map_pins_count,
         map_availability=MapAvailability(
             available=map_pins_count > 0,
@@ -54,12 +63,12 @@ def list_stations(
 def get_station_history(
     station_id: str,
     start_date: Optional[str] = Query(
-        default="2024-01-01",
-        description="Start date in YYYY-MM-DD format",
+        default=None,
+        description="Start date in YYYY-MM-DD format (defaults to station's earliest available date)",
     ),
     end_date: Optional[str] = Query(
-        default="2025-12-31",
-        description="End date in YYYY-MM-DD format",
+        default=None,
+        description="End date in YYYY-MM-DD format (defaults to station's latest available date)",
     ),
     aggregation: Optional[str] = Query(
         default="daily",

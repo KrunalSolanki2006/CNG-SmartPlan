@@ -9,22 +9,23 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ReferenceLine,
 } from 'recharts';
-import { ForecastResponse, DailySalesPoint } from '../../types/api';
+import { ForecastResponse, HistoricalContextPoint } from '../../types/api';
 import { Skeleton } from '../ui/Skeleton';
 import { EmptyState } from '../ui/EmptyState';
 import { TrendingUp, AlertCircle } from 'lucide-react';
 
 interface ForecastChartProps {
   forecastData: ForecastResponse | null;
-  historyPoints: DailySalesPoint[];
+  historyPoints?: HistoricalContextPoint[];
   isLoading: boolean;
-  aggregation: 'daily' | 'weekly';
   includeBaseline: boolean;
 }
 
 interface CombinedChartPoint {
   date: string;
+  period: 'historical' | 'forecast';
   historical_kg?: number;
   forecast_kg?: number;
   lower_bound_kg?: number | null;
@@ -37,7 +38,6 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
   forecastData,
   historyPoints,
   isLoading,
-  aggregation,
   includeBaseline,
 }) => {
   if (isLoading) {
@@ -53,44 +53,60 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
   }
 
   if (!forecastData || forecastData.forecast.length === 0) {
+    const isInsufficient = forecastData?.forecast_status === 'insufficient_data';
     return (
       <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
         <EmptyState
           icon={<TrendingUp className="w-8 h-8 text-[#005F73]" />}
-          title="No Forecast Generated"
-          description="Select an eligible station and click 'Generate Forecast' to run the authoritative backend forecasting service."
+          title={isInsufficient ? 'Insufficient Historical Data' : 'No Forecast Available'}
+          description={
+            forecastData?.key_insight ||
+            'Select an eligible station with sufficient historical sales records to generate a forecast.'
+          }
         />
       </div>
     );
   }
 
-  // Combine recent history (e.g. last 14 days) and forecast points into continuous series
-  const recentHistory = historyPoints.slice(-14);
+  // Strictly chronological history ending at data_through_date, followed by forecast starting > data_through_date
+  const rawHistory =
+    historyPoints && historyPoints.length > 0
+      ? historyPoints
+      : forecastData.historical_context || [];
+
+  const cutoffDate = forecastData.data_through_date;
+  const filteredHistory = rawHistory
+    .filter((h) => !cutoffDate || h.date <= cutoffDate)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(-30);
+
   const chartData: CombinedChartPoint[] = [];
 
-  recentHistory.forEach((h) => {
+  filteredHistory.forEach((h) => {
     chartData.push({
       date: h.date,
+      period: 'historical',
       historical_kg: h.demand_kg,
     });
   });
 
-  // Connect last historical point to first forecast point for visual continuity if available
-  const lastHist = recentHistory[recentHistory.length - 1];
+  const baselineLookup = new Map(
+    (forecastData.baseline_forecast || []).map((b) => [b.date, b.forecast_demand_kg])
+  );
 
-  forecastData.forecast.forEach((f, idx) => {
-    const baseline = forecastData.baseline_forecast.find((b) => b.date === f.date);
+  // Never place historical values on forecast dates, and never place forecast values on historical dates
+  forecastData.forecast.forEach((f) => {
     const hasBounds = f.lower_bound_kg !== null && f.upper_bound_kg !== null;
+    const baselineVal = baselineLookup.get(f.date);
 
     chartData.push({
       date: f.date,
-      // bridge visually at first point
-      historical_kg: idx === 0 && lastHist ? lastHist.demand_kg : undefined,
+      period: 'forecast',
       forecast_kg: f.forecast_demand_kg,
       lower_bound_kg: f.lower_bound_kg,
       upper_bound_kg: f.upper_bound_kg,
       uncertainty_band: hasBounds ? [f.lower_bound_kg!, f.upper_bound_kg!] : undefined,
-      baseline_kg: includeBaseline && baseline ? baseline.forecast_demand_kg : undefined,
+      baseline_kg: includeBaseline && baselineVal !== undefined ? baselineVal : undefined,
     });
   });
 
@@ -98,20 +114,21 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
     (f) => f.lower_bound_kg !== null && f.upper_bound_kg !== null
   );
 
-  const unitLabel = aggregation === 'daily' ? 'kg/day' : 'kg/week';
+  const unitLabel = 'kg/day';
+  const boundaryDate = forecastData.target_start_date;
 
   return (
     <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
-      {/* Chart Header & Data Origin Tag */}
+      {/* Chart Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
         <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-bold text-slate-900">
-              Demand Trajectory & Model Forecast ({forecastData.station_id})
-            </h3>
-          </div>
+          <h3 className="text-sm font-bold text-slate-900">
+            Historical vs. Forecasted Demand ({forecastData.station_name} — {forecastData.station_id})
+          </h3>
           <p className="text-[11px] text-slate-500 mt-0.5">
-            Historical daily sales baseline bridged to {forecastData.horizon_days}-day {forecastData.model_used} projection
+            Trailing {filteredHistory.length} historical days (ending {cutoffDate}) followed by{' '}
+            {forecastData.horizon_days}-day {forecastData.model_used} forecast (
+            {forecastData.target_start_date} to {forecastData.target_end_date})
           </p>
         </div>
 
@@ -128,13 +145,12 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={chartData}
-            margin={{ top: 12, right: 16, bottom: 20, left: 10 }}
+            margin={{ top: 18, right: 16, bottom: 20, left: 10 }}
           >
             <defs>
-              {/* Uncertainty Band Fill Gradient */}
               <linearGradient id="uncertaintyGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#94D2BD" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#94D2BD" stopOpacity={0.05} />
+                <stop offset="5%" stopColor="#0A9396" stopOpacity={0.22} />
+                <stop offset="95%" stopColor="#94D2BD" stopOpacity={0.12} />
               </linearGradient>
             </defs>
 
@@ -146,6 +162,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               fontSize={11}
               tickLine={false}
               axisLine={{ stroke: '#E3DDCE' }}
+              minTickGap={18}
               tickFormatter={(val: string) => {
                 const parts = val.split('-');
                 return parts.length === 3 ? `${parts[1]}/${parts[2]}` : val;
@@ -169,50 +186,94 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               }}
             />
 
+            {boundaryDate && (
+              <ReferenceLine
+                x={boundaryDate}
+                stroke="#475569"
+                strokeDasharray="4 4"
+                strokeWidth={1.5}
+                label={{
+                  value: `Forecast Start (${boundaryDate})`,
+                  position: 'top',
+                  fill: '#475569',
+                  fontSize: 10,
+                  fontWeight: 600,
+                }}
+              />
+            )}
+
             <Tooltip
               content={({ active, payload, label }) => {
                 if (!active || !payload || payload.length === 0) return null;
+                const point = payload[0]?.payload as CombinedChartPoint | undefined;
+                if (!point) return null;
+
                 return (
-                  <div className="bg-[#001219]/95 text-white p-3 rounded-xl shadow-2xl border border-slate-800 text-xs space-y-1.5 min-w-[200px]">
-                    <div className="font-bold border-b border-slate-800 pb-1 text-slate-400">
-                      Date: {label}
+                  <div className="bg-[#001219]/95 text-white p-3 rounded-xl shadow-2xl border border-slate-800 text-xs space-y-1.5 min-w-[220px]">
+                    <div className="font-bold border-b border-slate-800 pb-1 flex items-center justify-between gap-2">
+                      <span className="text-slate-200">{label}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.5 rounded ${
+                          point.period === 'historical'
+                            ? 'bg-slate-800 text-slate-300'
+                            : 'bg-teal-900/70 text-teal-300'
+                        }`}
+                      >
+                        {point.period === 'historical' ? 'Historical' : 'Forecast'}
+                      </span>
                     </div>
-                    {payload.map((entry, idx) => {
-                      if (entry.value === undefined || entry.value === null) return null;
-                      let name = entry.name;
-                      let color = entry.color;
-                      let valDisplay = `${Number(entry.value).toLocaleString()} ${unitLabel}`;
 
-                      if (entry.dataKey === 'historical_kg') {
-                        name = 'Historical Demand';
-                        color = '#005F73';
-                      } else if (entry.dataKey === 'forecast_kg') {
-                        name = `Forecast (${forecastData.model_used})`;
-                        color = '#0A9396';
-                      } else if (entry.dataKey === 'baseline_kg') {
-                        name = '28d Rolling Mean';
-                        color = '#CA6702';
-                      } else if (entry.dataKey === 'lower_bound_kg') {
-                        name = 'Lower Confidence Bound';
-                        color = '#94D2BD';
-                      } else if (entry.dataKey === 'upper_bound_kg') {
-                        name = 'Upper Confidence Bound';
-                        color = '#94D2BD';
-                      }
+                    {point.historical_kg !== undefined && (
+                      <div className="flex items-center justify-between gap-3 text-[11px]">
+                        <span className="flex items-center gap-1.5 text-slate-300">
+                          <span className="w-2 h-2 rounded-full bg-[#005F73] inline-block" />
+                          Historical Demand:
+                        </span>
+                        <span className="font-mono font-bold text-white">
+                          {point.historical_kg.toLocaleString()} {unitLabel}
+                        </span>
+                      </div>
+                    )}
 
-                      return (
-                        <div key={idx} className="flex items-center justify-between gap-3 text-[11px]">
-                          <span className="flex items-center gap-1.5">
-                            <span
-                              className="w-2 h-2 rounded-full inline-block"
-                              style={{ backgroundColor: color }}
-                            />
-                            <span className="text-slate-400">{name}:</span>
+                    {point.forecast_kg !== undefined && (
+                      <div className="flex items-center justify-between gap-3 text-[11px]">
+                        <span className="flex items-center gap-1.5 text-slate-300">
+                          <span className="w-2 h-2 rounded-full bg-[#0A9396] inline-block" />
+                          Forecast ({forecastData.model_used}):
+                        </span>
+                        <span className="font-mono font-bold text-white">
+                          {point.forecast_kg.toLocaleString()} {unitLabel}
+                        </span>
+                      </div>
+                    )}
+
+                    {point.lower_bound_kg !== null &&
+                      point.lower_bound_kg !== undefined &&
+                      point.upper_bound_kg !== null &&
+                      point.upper_bound_kg !== undefined && (
+                        <div className="flex items-center justify-between gap-3 text-[11px]">
+                          <span className="flex items-center gap-1.5 text-slate-300">
+                            <span className="w-2 h-2 rounded-full bg-[#94D2BD] inline-block" />
+                            95% Prediction Interval:
                           </span>
-                          <span className="font-mono font-bold text-white">{valDisplay}</span>
+                          <span className="font-mono font-semibold text-teal-200">
+                            {point.lower_bound_kg.toLocaleString()} –{' '}
+                            {point.upper_bound_kg.toLocaleString()} {unitLabel}
+                          </span>
                         </div>
-                      );
-                    })}
+                      )}
+
+                    {point.baseline_kg !== undefined && (
+                      <div className="flex items-center justify-between gap-3 text-[11px]">
+                        <span className="flex items-center gap-1.5 text-slate-300">
+                          <span className="w-2 h-2 rounded-full bg-[#CA6702] inline-block" />
+                          28d Rolling Baseline:
+                        </span>
+                        <span className="font-mono font-bold text-amber-300">
+                          {point.baseline_kg.toLocaleString()} {unitLabel}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               }}
@@ -224,14 +285,16 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               wrapperStyle={{ fontSize: '11px', paddingBottom: '10px' }}
             />
 
-            {/* Uncertainty Interval Area (Lower to Upper bounds) */}
+            {/* Range Confidence Interval Band [lower, upper] */}
             {hasConfidenceBounds && (
               <Area
                 type="monotone"
-                dataKey="upper_bound_kg"
-                stroke="none"
+                dataKey="uncertainty_band"
+                stroke="#94D2BD"
+                strokeWidth={1}
+                strokeDasharray="3 3"
                 fill="url(#uncertaintyGradient)"
-                name="Calibrated Prediction Interval (95% Empirical Residuals)"
+                name="95% Residual Prediction Interval"
                 isAnimationActive={false}
               />
             )}
@@ -245,6 +308,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               strokeWidth={2.5}
               dot={{ r: 2.5, fill: '#005F73' }}
               activeDot={{ r: 5 }}
+              connectNulls={false}
             />
 
             {/* Forecast Model Line (Mineral Teal) */}
@@ -256,6 +320,7 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
               strokeWidth={3}
               dot={{ r: 3.5, fill: '#0A9396' }}
               activeDot={{ r: 6 }}
+              connectNulls={false}
             />
 
             {/* 28-day Baseline Benchmark Line (Burnt Ochre dashed) */}
@@ -268,24 +333,25 @@ export const ForecastChart: React.FC<ForecastChartProps> = ({
                 strokeWidth={1.75}
                 strokeDasharray="4 4"
                 dot={false}
+                connectNulls={false}
               />
             )}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Uncertainty Band Caption */}
+      {/* Statistical Interval Caveat Caption */}
       <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-500">
         <div className="flex items-center gap-2">
           <AlertCircle className="w-3.5 h-3.5 text-[#005F73] shrink-0" />
           <span>
             {hasConfidenceBounds
-              ? '80% & 95% Confidence intervals calibrated via historical residual variance.'
-              : 'Rolling-mean baseline benchmark does not generate confidence intervals.'}
+              ? '95% prediction interval reflects historical residual variance under stationarity — not a guaranteed demand range.'
+              : 'Rolling-mean baseline benchmark does not generate prediction intervals.'}
           </span>
         </div>
         <span className="font-mono text-slate-400">
-          Chronological holdout validation
+          Cutoff: {cutoffDate} &bull; Horizon: {forecastData.horizon_days}d
         </span>
       </div>
     </div>

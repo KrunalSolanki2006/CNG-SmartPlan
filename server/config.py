@@ -1,7 +1,7 @@
 """Centralized configuration and path resolution for CNG SmartPlan backend."""
 
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional, Union
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -50,6 +50,14 @@ class Settings(BaseSettings):
     default_lat: float = Field(default=23.0225, description="Default map center latitude (Ahmedabad)")
     default_lng: float = Field(default=72.5714, description="Default map center longitude (Ahmedabad)")
     default_zoom: int = Field(default=12, description="Default map zoom level")
+    forecast_simulation_cutoff: Optional[str] = Field(
+        default=None,
+        description="Optional simulation cutoff date (YYYY-MM-DD). Defaults to each station's latest valid date.",
+    )
+    forecast_reference_date: Optional[str] = Field(
+        default=None,
+        description="Optional reference current date override (YYYY-MM-DD). Defaults to current IST date.",
+    )
 
     @field_validator("data_dir", mode="before")
     @classmethod

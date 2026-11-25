@@ -61,6 +61,40 @@ def format_station_record(row: pd.Series) -> Dict[str, Any]:
     }
 
 
+def format_verified_gujarat_station(row: pd.Series) -> Dict[str, Any]:
+    """Format a 151-station verified Gujarat row into canonical Station schema."""
+    lat = float(row["latitude"]) if pd.notna(row["latitude"]) else None
+    lon = float(row["longitude"]) if pd.notna(row["longitude"]) else None
+    coords_ok = lat is not None and lon is not None
+
+    raw_pin = row.get("pincode")
+    pincode_val = str(raw_pin).replace(".0", "").strip() if pd.notna(raw_pin) and str(raw_pin).strip() else ""
+    locality_val = str(row["locality"]).strip() if pd.notna(row.get("locality")) and str(row["locality"]).strip() else str(row.get("district", ""))
+    operator_val = str(row["operator"]) if pd.notna(row.get("operator")) else "not established"
+    brand_val = str(row["brand"]) if pd.notna(row.get("brand")) else operator_val
+    eligible_sim = bool(row.get("eligible_for_simulation", True))
+
+    return {
+        "station_id": str(row["station_id"]),
+        "station_name": str(row["station_name"]),
+        "locality": locality_val,
+        "address": str(row["address"]) if pd.notna(row.get("address")) else locality_val,
+        "pincode": pincode_val,
+        "operator": operator_val,
+        "brand": brand_val,
+        "cng_status": "confirmed" if bool(row.get("cng_dispensing_confirmed", True)) else "unconfirmed",
+        "in_study_area": "yes",
+        "coordinates_verified": coords_ok,
+        "latitude": lat,
+        "longitude": lon,
+        "verification_status": str(row.get("verification_status", "Verified Operating CNG")),
+        "data_origin": str(row.get("data_origin", "real_public")),
+        "simulation_profile": str(row.get("simulation_profile", "general")),
+        "eligible_for_simulation": eligible_sim,
+        "eligible_for_map_pin": coords_ok,
+    }
+
+
 class StationService:
     """Service for querying stations and checking spatial/simulation eligibility."""
 
@@ -72,6 +106,16 @@ class StationService:
     ) -> List[Dict[str, Any]]:
         """Retrieve list of stations filtered by study area or simulation eligibility."""
         store = get_data_store()
+        if store.verified_gujarat_stations is not None and not store.verified_gujarat_stations.empty:
+            df = store.verified_gujarat_stations.copy()
+            if in_study_area is not None and in_study_area != "yes":
+                return []
+            if eligible_for_simulation is True:
+                df = df[df["eligible_for_simulation"].astype(bool)]
+            elif eligible_for_simulation is False:
+                df = df[~df["eligible_for_simulation"].astype(bool)]
+            return [format_verified_gujarat_station(row) for _, row in df.iterrows()]
+
         df = store.stations.copy()
 
         if in_study_area is not None:
@@ -88,6 +132,12 @@ class StationService:
     def get_station_by_id(cls, station_id: str) -> Optional[Dict[str, Any]]:
         """Retrieve station record by station_id or None."""
         store = get_data_store()
+        if store.verified_gujarat_stations is not None and not store.verified_gujarat_stations.empty:
+            match = store.verified_gujarat_stations[store.verified_gujarat_stations["station_id"] == station_id]
+            if not match.empty:
+                return format_verified_gujarat_station(match.iloc[0])
+            return None
+
         match = store.stations[store.stations["station_id"] == station_id]
         if match.empty:
             return None
@@ -95,7 +145,7 @@ class StationService:
 
     @classmethod
     def get_eligible_stations(cls) -> List[Dict[str, Any]]:
-        """Retrieve all 11 stations eligible for synthetic simulation."""
+        """Retrieve all stations eligible for synthetic simulation."""
         return cls.get_all_stations(eligible_for_simulation=True)
 
     @classmethod
@@ -124,8 +174,19 @@ class StationService:
                 },
             )
 
-        # Check if station is in synthetic series (AMD010 is excluded)
-        daily_df = store.daily_sales
+        # Use 151-station Gujarat synthetic dataset when loaded
+        if (
+            store.gujarat_daily_demand_sales is not None
+            and not store.gujarat_daily_demand_sales.empty
+        ):
+            daily_df = store.gujarat_daily_demand_sales
+            demand_col = "simulated_demand_kg"
+            has_holidays = store.external_holidays is not None and not store.external_holidays.empty
+        else:
+            daily_df = store.daily_sales
+            demand_col = "synthetic_sales_kg"
+            has_holidays = False
+
         station_daily = daily_df[daily_df["station_id"] == station_id].copy()
 
         if station_daily.empty:
@@ -138,13 +199,41 @@ class StationService:
                 },
             )
 
-        # Default date bounds
-        start = start_date or "2024-01-01"
-        end = end_date or "2025-12-31"
+        # Dynamic date bounds derived from the station's actual historical series
+        actual_min = str(station_daily["date"].min())
+        actual_max = str(station_daily["date"].max())
+        start = start_date or actual_min
+        end = end_date or actual_max
 
-        # Filter by date range
+        try:
+            start_dt = pd.to_datetime(start, format="%Y-%m-%d", errors="raise")
+            end_dt = pd.to_datetime(end, format="%Y-%m-%d", errors="raise")
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                detail={
+                    "code": "VALIDATION_ERROR",
+                    "message": "start_date and end_date must be valid YYYY-MM-DD dates.",
+                    "fields": {"date_range": ["Expected YYYY-MM-DD format"]},
+                },
+            )
+
+        if start_dt > end_dt:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+                detail={
+                    "code": "VALIDATION_ERROR",
+                    "message": f"start_date ({start}) cannot be after end_date ({end}).",
+                    "fields": {"date_range": ["start_date must be <= end_date"]},
+                },
+            )
+
+        # Filter by date range and drop invalid/negative rows cleanly
         filtered = station_daily[(station_daily["date"] >= start) & (station_daily["date"] <= end)].copy()
         filtered = filtered.sort_values("date").reset_index(drop=True)
+        expected_days = int((end_dt - start_dt).days) + 1
+        actual_unique_days = int(filtered["date"].nunique()) if not filtered.empty else 0
+        missing_records = max(0, expected_days - actual_unique_days)
 
         series_points: List[HistoryPoint] = []
 
@@ -154,7 +243,7 @@ class StationService:
             filtered["week_start"] = filtered["dt"].apply(lambda d: (d - pd.Timedelta(days=d.weekday())).strftime("%Y-%m-%d"))
 
             weekly = filtered.groupby("week_start", as_index=False).agg({
-                "synthetic_sales_kg": "sum",
+                demand_col: "sum",
                 "simulation_profile": "first",
             })
 
@@ -162,7 +251,7 @@ class StationService:
                 series_points.append(
                     HistoryPoint(
                         date=str(row["week_start"]),
-                        demand_kg=round(float(row["synthetic_sales_kg"]), 2),
+                        demand_kg=round(float(row[demand_col]), 2),
                         day_of_week=None,
                         is_weekend=None,
                         simulation_profile=str(row["simulation_profile"]),
@@ -174,7 +263,7 @@ class StationService:
                 series_points.append(
                     HistoryPoint(
                         date=str(row["date"]),
-                        demand_kg=round(float(row["synthetic_sales_kg"]), 2),
+                        demand_kg=round(float(row[demand_col]), 2),
                         day_of_week=str(row["day_of_week"]),
                         is_weekend=bool(row["is_weekend"]),
                         simulation_profile=str(row["simulation_profile"]),
@@ -189,8 +278,8 @@ class StationService:
             date_range_start=start,
             date_range_end=end,
             total_records=len(series_points),
-            missing_records=0,
-            missing_holiday_data=True,
+            missing_records=missing_records,
+            missing_holiday_data=not has_holidays,
             series=series_points,
             note="Synthetic demonstration data only. Not actual station sales records.",
         )

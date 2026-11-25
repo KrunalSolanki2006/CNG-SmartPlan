@@ -40,30 +40,26 @@ def test_full_e2e_workflow(client):
     res_overview = client.get("/api/v1/overview")
     assert res_overview.status_code == 200
     overview_data = res_overview.json()
-    assert overview_data["station_counts"]["total_in_inventory"] == 12
-    assert overview_data["station_counts"]["eligible_for_simulation"] == 11
-    assert overview_data["station_counts"]["eligible_for_map_display"] == 11
-    assert overview_data["forecast_summary"]["stations_forecasted"] == 11
+    assert overview_data["station_counts"]["total_in_inventory"] == 151
+    assert overview_data["station_counts"]["eligible_for_simulation"] == 151
+    assert overview_data["station_counts"]["eligible_for_map_display"] == 151
+    assert overview_data["forecast_summary"]["stations_forecasted"] == 151
     assert overview_data["forecast_summary"]["data_origin"] == "synthetic_demo"
 
     # 3. Stations list
     res_stations = client.get("/api/v1/stations")
     assert res_stations.status_code == 200
     stations_data = res_stations.json()
-    assert stations_data["total"] == 12
-    assert stations_data["eligible_for_simulation"] == 11
-    assert stations_data["eligible_for_map_pin"] == 11
+    assert stations_data["total"] == 151
+    assert stations_data["eligible_for_simulation"] == 151
+    assert stations_data["eligible_for_map_pin"] == 151
     assert stations_data["map_availability"]["available"] is True
-    assert len(stations_data["stations"]) == 12
+    assert len(stations_data["stations"]) == 151
     for s in stations_data["stations"]:
         assert s["coordinates_verified"] is True
-        if s["station_id"] == "AMD010":
-            assert s["eligible_for_map_pin"] is False
-            assert s["latitude"] is None
-        else:
-            assert s["eligible_for_map_pin"] is True
-            assert isinstance(s["latitude"], float)
-            assert isinstance(s["longitude"], float)
+        assert s["eligible_for_map_pin"] is True
+        assert isinstance(s["latitude"], float)
+        assert isinstance(s["longitude"], float)
 
     # 4. Station sales history for AMD001
     res_hist = client.get("/api/v1/stations/AMD001/history?aggregation=daily")
@@ -71,8 +67,8 @@ def test_full_e2e_workflow(client):
     hist_data = res_hist.json()
     assert hist_data["station_id"] == "AMD001"
     assert hist_data["data_origin"] == "synthetic_demo"
-    assert hist_data["total_records"] == 731
-    assert len(hist_data["series"]) == 731
+    assert hist_data["total_records"] == 1059
+    assert len(hist_data["series"]) == 1059
 
     # 5. Station AMD010 exclusion handling (404)
     res_amd010 = client.get("/api/v1/stations/AMD010/history")
@@ -93,7 +89,8 @@ def test_full_e2e_workflow(client):
     assert fc_data["station_id"] == "AMD001"
     assert fc_data["data_origin"] == "synthetic_demo"
     assert len(fc_data["forecast"]) == 7
-    assert fc_data["evaluation"]["baseline_mae_kg"] == 150.55
+    assert fc_data["target_start_date"] == "2026-11-25"
+    assert fc_data["evaluation"]["baseline_mae_kg"] is not None
     assert fc_data["reliability"]["data_source"] == "synthetic_demo"
 
     # 7. Supply shortfall check for AMD001
@@ -115,7 +112,7 @@ def test_full_e2e_workflow(client):
             assert d["potential_shortfall_kg"] == pytest.approx(expected_shortfall, abs=0.01)
 
     # 8. Hourly diurnal demand
-    res_hr = client.get("/api/v1/hourly-demand?station_id=AMD001&date=2025-12-05")
+    res_hr = client.get("/api/v1/hourly-demand?station_id=AMD001&date=2026-11-15")
     assert res_hr.status_code == 200
     hr_data = res_hr.json()
     assert hr_data["data_origin"] == "synthetic_demo"

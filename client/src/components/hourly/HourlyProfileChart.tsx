@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from 'recharts';
-import { HourlyResponse } from '../../types/api';
+import { ForecastStationSummaryItem, HourlyResponse } from '../../types/api';
 import { Badge } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
 import { Clock, CheckCircle } from 'lucide-react';
@@ -20,6 +20,7 @@ interface HourlyProfileChartProps {
   onSelectStation: (stationId: string) => void;
   selectedDate: string;
   onSelectDate: (date: string) => void;
+  stations?: ForecastStationSummaryItem[];
 }
 
 export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
@@ -29,8 +30,21 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
   onSelectStation,
   selectedDate,
   onSelectDate,
+  stations,
 }) => {
-  const allowedStations = ['AMD001', 'AMD004', 'AMD008'];
+  const stationOptions =
+    stations && stations.length > 0
+      ? stations.map((s) => ({
+          id: s.station_id,
+          label: `${s.station_id} — ${s.station_name}${s.district ? ` (${s.district})` : ''}`,
+        }))
+      : (data?.available_stations || ['AMD001', 'AMD004', 'AMD008']).map((id) => ({
+          id,
+          label: id,
+        }));
+
+  const periodStart = data?.period_start || '2026-10-26';
+  const periodEnd = data?.period_end || '2026-11-24';
 
   // Calculate daily sum and peak hour from returned records
   const records = data?.records || [];
@@ -57,7 +71,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
             <Badge variant="teal" size="sm">{simulationProfile.replace('_', ' ')}</Badge>
           </div>
           <p className="text-[11px] text-slate-500 mt-0.5">
-            Calibrated hourly distribution reconciling to daily demand. Profiles across 2025-12-02 to 2025-12-31.
+            Calibrated hourly distribution reconciling to daily demand. Profiles across {periodStart} to {periodEnd}.
           </p>
         </div>
 
@@ -69,11 +83,11 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               aria-label="Select station for hourly profile"
               value={selectedStationId}
               onChange={(e) => onSelectStation(e.target.value)}
-              className="py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A9396]"
+              className="py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A9396] max-w-[260px]"
             >
-              {allowedStations.map((id) => (
-                <option key={id} value={id}>
-                  {id}
+              {stationOptions.map((st) => (
+                <option key={st.id} value={st.id}>
+                  {st.label}
                 </option>
               ))}
             </select>
@@ -84,8 +98,8 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
             <input
               type="date"
               aria-label="Select date for hourly profile"
-              min="2025-12-02"
-              max="2025-12-31"
+              min={periodStart}
+              max={periodEnd}
               value={selectedDate}
               onChange={(e) => onSelectDate(e.target.value)}
               className="py-1 px-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-medium text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A9396]"
@@ -121,7 +135,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
           <span className="text-slate-500 block text-[11px] font-medium">Temporal Coverage:</span>
           <span className="font-mono font-bold text-slate-900 text-sm">30 Days</span>
           <span className="text-[10px] text-slate-500 block mt-0.5">
-            2025-12-02 to 2025-12-31 (2,160 rows)
+            {periodStart} to {periodEnd} ({stationOptions.length} stations)
           </span>
         </div>
       </div>

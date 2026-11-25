@@ -1,0 +1,61 @@
+{
+  "generation_version": "2.0.0",
+  "random_seed": 20261125,
+  "start_date": "2024-01-01",
+  "end_date": "2026-11-24",
+  "generation_method": "gujarat_multi_profile_ar1_weather_holiday_simulation_v2",
+  "profiles": {
+    "urban": {
+      "base_kg_range": [1250.0, 2100.0],
+      "weekday_multipliers": [1.03, 1.04, 1.05, 1.04, 1.08, 0.95, 0.81],
+      "annual_growth_rate": 0.045,
+      "holiday_multiplier": 0.90,
+      "festival_multiplier": 1.08,
+      "rain_sensitivity": -0.0025,
+      "heat_sensitivity": 0.003
+    },
+    "highway": {
+      "base_kg_range": [1400.0, 2600.0],
+      "weekday_multipliers": [0.98, 0.99, 1.00, 1.02, 1.06, 1.04, 0.91],
+      "annual_growth_rate": 0.055,
+      "holiday_multiplier": 1.07,
+      "festival_multiplier": 1.15,
+      "rain_sensitivity": -0.0015,
+      "heat_sensitivity": 0.002
+    },
+    "industrial": {
+      "base_kg_range": [1350.0, 2400.0],
+      "weekday_multipliers": [1.06, 1.07, 1.07, 1.06, 1.05, 0.96, 0.73],
+      "annual_growth_rate": 0.04,
+      "holiday_multiplier": 0.84,
+      "festival_multiplier": 0.92,
+      "rain_sensitivity": -0.002,
+      "heat_sensitivity": 0.0015
+    },
+    "suburban": {
+      "base_kg_range": [800.0, 1450.0],
+      "weekday_multipliers": [1.01, 1.02, 1.02, 1.01, 1.05, 0.99, 0.90],
+      "annual_growth_rate": 0.05,
+      "holiday_multiplier": 0.96,
+      "festival_multiplier": 1.10,
+      "rain_sensitivity": -0.003,
+      "heat_sensitivity": 0.0025
+    },
+    "general": {
+      "base_kg_range": [1000.0, 1800.0],
+      "weekday_multipliers": [1.02, 1.03, 1.04, 1.03, 1.06, 0.96, 0.86],
+      "annual_growth_rate": 0.045,
+      "holiday_multiplier": 0.93,
+      "festival_multiplier": 1.06,
+      "rain_sensitivity": -0.0022,
+      "heat_sensitivity": 0.0022
+    }
+  },
+  "supply_and_outage": {
+    "nominal_supply_buffer_range": [1.06, 1.24],
+    "constrained_supply_prob": 0.10,
+    "constrained_supply_range": [0.78, 0.96],
+    "compressor_outage_prob": 0.015,
+    "outage_capacity_factor_range": [0.40, 0.75]
+  }
+}

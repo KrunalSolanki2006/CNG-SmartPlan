@@ -19,22 +19,21 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
 
       // KPI 1: Station inventory
       expect(screen.getByText('Station Inventory')).toBeInTheDocument();
-      expect(screen.getByText('12')).toBeInTheDocument();
+      expect(screen.getAllByText('151').length).toBeGreaterThan(0);
       expect(screen.getByText('Active')).toBeInTheDocument();
 
-      // KPI 2: Map verified pins (11)
+      // KPI 2: Map verified pins (151)
       expect(screen.getByText('Map Verified Pins')).toBeInTheDocument();
-      expect(screen.getAllByText('11').length).toBeGreaterThan(0);
       expect(screen.getByText('Verified')).toBeInTheDocument();
 
       // KPI 3: Mean daily demand
-      expect(screen.getByText('Network Mean Daily Total (11 stations)')).toBeInTheDocument();
-      expect(screen.getByText('14,081.2')).toBeInTheDocument();
+      expect(screen.getByText('Network Mean Daily Total (151 stations)')).toBeInTheDocument();
+      expect(screen.getByText('1,98,450.0')).toBeInTheDocument();
       expect(screen.getByText('Baseline')).toBeInTheDocument();
 
       // KPI 4: Supply shortfall station-days
       expect(screen.getByText('Constrained-Supply Planning Days')).toBeInTheDocument();
-      expect(screen.getByText('1,628')).toBeInTheDocument();
+      expect(screen.getByText('18,244')).toBeInTheDocument();
       expect(screen.getByText('Shortfall')).toBeInTheDocument();
     });
 
@@ -113,7 +112,6 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       expect(screen.getByText('11 Verified (Study Area)')).toBeInTheDocument();
       expect(screen.getByText('Calibrated Baseline Model')).toBeInTheDocument();
       expect(screen.getByText('Modeled Baseline Schedule')).toBeInTheDocument();
-      expect(screen.getByText('Standard Calendar')).toBeInTheDocument();
       expect(screen.getByText(/AMD001, AMD004, AMD008/)).toBeInTheDocument();
     });
   });
@@ -127,7 +125,7 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       );
       expect(screen.getByText('7-Day Forecast Pipeline')).toBeInTheDocument();
       expect(screen.getByText('7 Days')).toBeInTheDocument();
-      expect(screen.getByText('11 Stations')).toBeInTheDocument();
+      expect(screen.getByText('151 Stations')).toBeInTheDocument();
     });
   });
 

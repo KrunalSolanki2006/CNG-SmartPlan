@@ -1,0 +1,101 @@
+station_id,station_name,district,cng_classification,verification_status,exclusion_reason,source_dataset
+DISC_RAJ_001,Nayara Energy CNG Retail Outlet Kuvadva,Rajkot,POTENTIAL_CNG,Potential CNG,Non-verified classification: POTENTIAL_CNG,server/data/curated/gujarat_network_stations.json
+DISC_AHM_012,Indian petroleum CNG pump,Ahmedabad,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_SUR_028,Abrama CNG Pump,Surat,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_SUR_030,Swastik Online CNG Station,Surat,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_SUR_035,CNG Pump,Surat,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAD_043,Vadodara Gas Limited CNG Station,Vadodara,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAD_044,Vadodara gas ltd cng station- Reva Petroleum,Vadodara,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAD_045,Vadodara Gas limited CNG PUMP,Vadodara,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAD_048,Vadodara Gas Limited CNG Station,Vadodara,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAD_056,Bharat Petroleum Corporation Limited,Vadodara,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_065,GSPC CNG Pump,Rajkot,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_068,TILALA CNG ONLINE GUJRAT ENRGY,Rajkot,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_070,JoYa CNG Pump,Rajkot,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_073,Ratanpar Fuels CNG Pump,Rajkot,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_075,Hindustan Petroleum Corporation Limited,Rajkot,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_079,Hindustan Petroleum Corporation Limited,Rajkot,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_RAJ_080,National Petro Chem Authorize Dealer BPCL,Rajkot,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_081,Bharat Petroleum CNG Gas Station,Bhavnagar,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_087,IndianOil,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_088,Bharat Petroleum Corporation Limited,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_089,IndianOil,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_091,Hindustan Petroleum Corporation Limited,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_092,Hindustan Petroleum Corporation Limited,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_093,M K Auto Gas,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_094,Shree Raj momai petroleum and CNG pump,Bhavnagar,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_095,IndianOil,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_096,Shell Petrol Pump,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_097,Hindustan Petroleum Corporation Limited,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_098,IndianOil,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_099,A1 GAS CONSULTANT,Bhavnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_102,New Bhanu Petroleum & Online cng Station,Jamnagar,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_108,Star auto CNG,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_109,Nayara Energy,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_110,Bio-CNG,Jamnagar,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_111,Hindustan Petroleum Corporation Limited,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_113,Bharat Petroleum Corporation Limited,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_114,Uno Petroleum Bharat Petroleum,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_115,Kirti Petroleum,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_116,National CNG AutoGas,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_117,Hindustan Petroleum Corporation Limited,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_118,S.M CNG HIYDRO TESTING,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_JAM_120,Chandramauli Bharat Petroleum,Jamnagar,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_122,Mahadev Gas Station (CNG Gas Pump),Anand,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_125,CNG pump,Anand,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_129,Gujarat auto gas Anand - Cng Gas kit - Cng Fitting Center - Cng Conversion Kit Dealers in Anand,Anand,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_134,Hindustan Petroleum Corporation Limited,Anand,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_138,VEER CNG GAS PUMP,Anand,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_139,SHIVANSH AUTO GAS,Anand,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_ANA_140,Ahemdabad CNG RETESTING ( ORIGINAL FUEL SYSTEM ),Anand,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_145,CNG Gas Online pump,Bharuch,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_148,Jenil CNG Auto Gas,Bharuch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_152,CNG Pump,Bharuch,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_153,CNG Pump,Bharuch,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_155,CNG Pump,Bharuch,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_156,IndianOil,Bharuch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_BHA_158,IndianOil,Bharuch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAP_164,CNG Pump,Valsad,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAP_167,Shree Siddhivinayak cng retesting centre vapi,Valsad,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_VAP_168,Bharat Shri Sai Petroleum,Valsad,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_170,"Online CNG Station, HP Petrol, Diesel, Navsari",Navsari,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_171,IndianOil,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_172,"Hare Krishna Petroleum | Petrol, Diesel, CNG Pump in Navsari",Navsari,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_173,Khodiyar Motors - CNG - LPG Fittings & Service,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_174,CNG PUMP SURAT TU MUMBAI,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_175,Navsari Sangh Petrol Pump,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_176,SHREE JALARAM CNG TESTING HOUSE,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_178,IndianOil,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_179,Adhuria CNG,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_180,Hindustan Petroleum Corporation Limited,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_181,Bharat Petroleum Corporation Limited,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_182,Bharat Petroleum Corporation Limited,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_183,IndianOil,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_NAV_185,IndianOil,Navsari,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_189,"Online CNG Station, Petrol, Diesel",Mehsana,POTENTIAL_CNG,Potential CNG,Excluded from verified master (POTENTIAL_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_191,Sabarmati Gas CNG Station,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_197,Jio-bp,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_200,SABARMATI GAS CYLINDER TESTING PLANT,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_201,R R Petroleum - Bharat Petroleum,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_202,Raj Petroleum Services,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_205,Nayara Energy,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_MEH_207,IndianOil,Mehsana,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_208,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_209,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_210,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_211,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_212,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_213,Nayara Energy,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_214,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_215,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_216,Jio-bp,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_218,Jio-bp,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_219,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_220,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_222,Nayara Energy,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_223,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_224,Hindustan Petroleum Corporation Limited,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_225,"Bharat Petroleum, Petrol Pump -Janta Petroleum Co.",Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_226,IndianOil,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+DISC_GAN_227,Ktcc pump,Kutch,NOT_CNG,Rejected,Excluded from verified master (NOT_CNG),server/data/curated/discovered_cng_stations_gujarat.json
+AMD010,Kanha Petroleum,Ahmedabad,UNCERTAIN_STUDY_AREA,verified,in_study_area=uncertain in baseline cng_stations.csv,CNG_SmartPlan_Data/cng_stations.csv

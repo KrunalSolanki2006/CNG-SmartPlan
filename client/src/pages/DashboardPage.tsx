@@ -49,7 +49,9 @@ export const DashboardPage: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
                   CGD Intelligent Network
                 </span>
-                <span className="text-xs text-slate-500 font-medium">Gujarat Gas Company Ltd. • Ahmedabad</span>
+                <span className="text-xs text-slate-500 font-medium">
+                  Gujarat Gas Company Ltd. • Gujarat ({stationsData?.total ?? overviewData?.station_counts.total_in_inventory ?? 151} Stations)
+                </span>
               </div>
               <h2 className="text-xl font-bold text-slate-900 tracking-tight">
                 Network Operations & Demand Intelligence

@@ -19,7 +19,7 @@
     "google_maps_url": "https://maps.google.com/?cid=123456789",
     "operating_status": "OPERATIONAL",
     "is_within_study_area": true,
-    "discovered_at": "2026-11-25T09:19:18.684018+00:00",
+    "discovered_at": "2026-11-25T11:06:56.490621+00:00",
     "is_fixture": false,
     "reviewed_at": null,
     "reviewer_notes": null,
@@ -46,7 +46,7 @@
     "google_maps_url": null,
     "operating_status": "OPERATIONAL",
     "is_within_study_area": false,
-    "discovered_at": "2026-11-25T09:19:18.684018+00:00",
+    "discovered_at": "2026-11-25T11:06:56.490621+00:00",
     "is_fixture": false,
     "reviewed_at": null,
     "reviewer_notes": null,
@@ -73,7 +73,7 @@
     "google_maps_url": null,
     "operating_status": "OPERATIONAL",
     "is_within_study_area": true,
-    "discovered_at": "2026-11-25T09:19:18.732074+00:00",
+    "discovered_at": "2026-11-25T11:06:56.503707+00:00",
     "is_fixture": false,
     "reviewed_at": null,
     "reviewer_notes": null,
@@ -642,17 +642,17 @@
     "is_within_study_area": true,
     "discovered_at": "2026-11-03T00:00:00Z",
     "is_fixture": false,
-    "reviewed_at": "2026-11-25T09:19:15.174013+00:00",
+    "reviewed_at": "2026-11-25T11:06:52.134073+00:00",
     "reviewer_notes": "Rejected due to road corridor zoning restriction",
     "review_history": [
       {
-        "timestamp": "2026-11-25T09:19:15.150806+00:00",
+        "timestamp": "2026-11-25T11:06:52.109343+00:00",
         "previous_status": "unverified_candidate",
         "new_status": "pending_review",
         "notes": "Promoted by planner for municipal verification"
       },
       {
-        "timestamp": "2026-11-25T09:19:15.174013+00:00",
+        "timestamp": "2026-11-25T11:06:52.134073+00:00",
         "previous_status": "pending_review",
         "new_status": "rejected",
         "notes": "Rejected due to road corridor zoning restriction"

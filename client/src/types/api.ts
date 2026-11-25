@@ -147,6 +147,17 @@ export interface StationHistoryResponse {
 }
 
 /* 5. Forecast */
+export type ForecastStatus =
+  | 'current'
+  | 'stale'
+  | 'simulated'
+  | 'insufficient_data'
+  | 'unavailable';
+
+export type DataFreshness = 'current' | 'stale' | 'unavailable';
+
+export type DemandTrend = 'increasing' | 'decreasing' | 'stable' | 'unavailable';
+
 export interface ForecastRequest {
   station_id: string;
   horizon_days?: number;
@@ -162,11 +173,19 @@ export interface ForecastPoint {
   model: string;
 }
 
+export interface HistoricalContextPoint {
+  date: string;
+  demand_kg: number;
+  day_of_week: string;
+  is_weekend: boolean;
+  data_type: string;
+}
+
 export interface ForecastEvaluation {
   baseline_model: string;
-  baseline_mae_kg: number;
-  baseline_rmse_kg: number;
-  baseline_smape_pct: number;
+  baseline_mae_kg: number | null;
+  baseline_rmse_kg: number | null;
+  baseline_smape_pct: number | null;
   model_mae_kg: number | null;
   model_rmse_kg: number | null;
   model_smape_pct: number | null;
@@ -174,7 +193,7 @@ export interface ForecastEvaluation {
 }
 
 export interface ForecastReliability {
-  data_source: DataOrigin;
+  data_source: DataOrigin | string;
   history_days: number;
   missing_values: number;
   missing_holiday_data: boolean;
@@ -182,30 +201,181 @@ export interface ForecastReliability {
   evaluation_note: string;
 }
 
+export interface ExclusionRecord {
+  reason: string;
+  count: number;
+}
+
+export interface DataAuditSummary {
+  earliest_date: string | null;
+  latest_date: string | null;
+  total_raw_records: number;
+  valid_records: number;
+  excluded_records: number;
+  duplicate_records: number;
+  invalid_or_negative_records: number;
+  missing_dates_in_range: number;
+  provenance_counts: Record<string, number>;
+  exclusion_reasons: ExclusionRecord[];
+}
+
+export interface FreshnessPolicy {
+  max_age_days_for_current: number;
+  data_age_days: number | null;
+  is_stale: boolean;
+  is_simulated: boolean;
+  policy_note: string;
+}
+
+export interface ModelInfo {
+  model_id: string;
+  model_name: string;
+  model_version?: string;
+  seasonal_period_days: number | null;
+  confidence_interval_method: string | null;
+  parameters_note: string;
+}
+
+export interface ValidationPeriod {
+  start: string | null;
+  end: string | null;
+  n_records: number;
+}
+
+export interface ForecastStationSummaryItem {
+  station_id: string;
+  station_name: string;
+  district: string;
+  city: string;
+  operator: string;
+  simulation_profile: string;
+  eligible_for_simulation: boolean;
+  history_records: number;
+  earliest_date: string | null;
+  latest_date: string | null;
+  data_origin: string;
+}
+
+export interface ForecastStationsListResponse {
+  total_eligible_stations: number;
+  stations: ForecastStationSummaryItem[];
+  data_origin: string;
+  generated_at: string;
+}
+
+export interface NetworkStationForecastSummary {
+  station_id: string;
+  station_name: string;
+  district: string;
+  simulation_profile: string;
+  forecast_status: string;
+  historical_recent_avg_kg: number | null;
+  forecast_avg_demand_kg: number | null;
+  demand_trend: string;
+  model_mae_kg: number | null;
+  baseline_mae_kg: number | null;
+  model_smape_pct: number | null;
+  baseline_smape_pct: number | null;
+}
+
+export interface NetworkEvaluationSummary {
+  stations_evaluated: number;
+  mean_hw_mae_kg: number | null;
+  mean_hw_rmse_kg: number | null;
+  mean_hw_smape_pct: number | null;
+  mean_baseline_mae_kg: number | null;
+  mean_baseline_rmse_kg: number | null;
+  mean_baseline_smape_pct: number | null;
+  holt_winters_outperforms_baseline_count: number;
+  note: string;
+}
+
+export interface NetworkForecastSummaryResponse {
+  horizon_days: number;
+  model_used: string;
+  model_version: string;
+  data_origin: string;
+  forecast_status: ForecastStatus;
+  data_freshness: DataFreshness;
+  data_through_date: string | null;
+  target_start_date: string | null;
+  target_end_date: string | null;
+  forecast_generated_at: string;
+  eligible_stations: number;
+  successfully_forecasted_stations: number;
+  insufficient_data_stations: number;
+  failed_stations: number;
+  failed_or_insufficient_station_ids: string[];
+  simulated_network_demand_kg_per_day: number;
+  historical_network_recent_avg_kg_per_day: number;
+  network_demand_trend: DemandTrend;
+  network_trend_change_pct: number | null;
+  network_evaluation: NetworkEvaluationSummary;
+  station_summaries: NetworkStationForecastSummary[];
+  note: string;
+}
+
+export interface ForecastDataStatusResponse {
+  data_origin: string;
+  current_date: string;
+  data_through_date: string | null;
+  data_age_days: number | null;
+  data_freshness: DataFreshness;
+  forecast_status: ForecastStatus;
+  eligible_stations: number;
+  stations_with_data: number;
+  total_historical_records: number;
+  cache_entries: number;
+  model_version: string;
+  freshness_policy: FreshnessPolicy;
+  external_datasets_loaded: Record<string, number>;
+  limitations: string[];
+  checked_at: string;
+}
+
 export interface ForecastResponse {
   station_id: string;
   station_name: string;
   model_used: string;
-  data_origin: DataOrigin;
+  model_version?: string;
+  data_origin: DataOrigin | string;
   horizon_days: number;
-  forecast_origin_date?: string;
-  data_through_date?: string;
-  target_start_date?: string;
-  is_historical_replay?: boolean;
-  historical_demo_notice?: string;
+  forecast_generated_at: string;
+  current_date: string;
+  data_age_days: number | null;
+  forecast_status: ForecastStatus;
+  data_freshness: DataFreshness;
+  forecast_origin_date: string | null;
+  data_through_date: string | null;
+  target_start_date: string | null;
+  target_end_date: string | null;
+  is_historical_replay: boolean;
+  historical_demo_notice: string;
+  historical_avg_demand_kg: number | null;
+  historical_recent_avg_kg: number | null;
+  forecast_avg_demand_kg: number | null;
+  demand_trend: DemandTrend;
+  trend_change_pct: number | null;
+  key_insight: string;
   train_period: {
-    start: string;
-    end: string;
+    start: string | null;
+    end: string | null;
     n_records: number;
   };
+  validation_period?: ValidationPeriod | null;
   test_period: {
-    start: string;
-    end: string;
+    start: string | null;
+    end: string | null;
     n_records: number;
   };
+  validation_evaluation?: ForecastEvaluation | null;
   evaluation: ForecastEvaluation;
+  model_info: ModelInfo;
+  freshness_policy: FreshnessPolicy;
+  data_audit: DataAuditSummary;
+  historical_context: HistoricalContextPoint[];
   forecast: ForecastPoint[];
-  baseline_forecast: ForecastPoint[];
+  baseline_forecast: ForecastPoint[] | null;
   reliability: ForecastReliability;
   limitations: string[];
 }

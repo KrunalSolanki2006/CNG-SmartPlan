@@ -1,9 +1,22 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ForecastRequest, ForecastResponse } from '../types/api';
-import { generateForecast } from '../api/forecast';
+import {
+  ForecastRequest,
+  ForecastResponse,
+  ForecastStationsListResponse,
+  NetworkForecastSummaryResponse,
+} from '../types/api';
+import {
+  fetchForecastStations,
+  fetchNetworkForecastSummary,
+  generateForecast,
+} from '../api/forecast';
 import { ApiError } from '../api/client';
 import { useFixtureMode } from '../context/FixtureContext';
-import { createForecastFixture } from '../fixtures/forecastFixture';
+import {
+  createForecastFixture,
+  FORECAST_STATIONS_FIXTURE,
+  NETWORK_FORECAST_SUMMARY_FIXTURE,
+} from '../fixtures/forecastFixture';
 
 export interface UseForecastResult {
   data: ForecastResponse | null;
@@ -60,7 +73,8 @@ export function useForecast(request: ForecastRequest | null): UseForecastResult 
             request.station_id,
             request.station_id === 'AMD001' ? 'Visat Automobile' : `Station ${request.station_id}`,
             horizon,
-            request.model || 'holt_winters'
+            request.model || 'holt_winters',
+            request.include_baseline ?? true
           )
         );
         setIsLoading(false);
@@ -107,4 +121,101 @@ export function useForecast(request: ForecastRequest | null): UseForecastResult 
     refetch: loadData,
     isFixtureData: useFixtures,
   };
+}
+
+export function useForecastStations() {
+  const { useFixtures } = useFixtureMode();
+  const [data, setData] = useState<ForecastStationsListResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<ApiError | null>(null);
+
+  const loadStations = useCallback(() => {
+    setIsLoading(true);
+    setError(null);
+
+    if (useFixtures) {
+      const timer = setTimeout(() => {
+        setData(FORECAST_STATIONS_FIXTURE);
+        setIsLoading(false);
+      }, 60);
+      return () => clearTimeout(timer);
+    }
+
+    const controller = new AbortController();
+    fetchForecastStations(controller.signal)
+      .then((res) => {
+        setData(res);
+        setIsLoading(false);
+      })
+      .catch((err: ApiError) => {
+        if (err.name !== 'AbortError') {
+          setError(err);
+          setIsLoading(false);
+        }
+      });
+    return () => controller.abort();
+  }, [useFixtures]);
+
+  useEffect(() => {
+    const cleanup = loadStations();
+    return () => {
+      if (cleanup) cleanup();
+    };
+  }, [loadStations]);
+
+  return { data, isLoading, error, refetch: loadStations };
+}
+
+export function useNetworkForecastSummary(
+  horizonDays: number,
+  model: 'holt_winters' | 'rolling_mean_baseline',
+  enabled: boolean = true
+) {
+  const { useFixtures } = useFixtureMode();
+  const [data, setData] = useState<NetworkForecastSummaryResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<ApiError | null>(null);
+
+  const loadSummary = useCallback(() => {
+    if (!enabled) {
+      return;
+    }
+    setIsLoading(true);
+    setError(null);
+
+    if (useFixtures) {
+      const timer = setTimeout(() => {
+        setData({
+          ...NETWORK_FORECAST_SUMMARY_FIXTURE,
+          horizon_days: horizonDays,
+          model_used: model,
+        });
+        setIsLoading(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+
+    const controller = new AbortController();
+    fetchNetworkForecastSummary(horizonDays, model, controller.signal)
+      .then((res) => {
+        setData(res);
+        setIsLoading(false);
+      })
+      .catch((err: ApiError) => {
+        if (err.name !== 'AbortError') {
+          setError(err);
+          setIsLoading(false);
+        }
+      });
+    return () => controller.abort();
+  }, [horizonDays, model, enabled, useFixtures]);
+
+  useEffect(() => {
+    const cleanup = loadSummary();
+    return () => {
+      if (cleanup) cleanup();
+    };
+  }, [loadSummary]);
+
+  return { data, isLoading, error, refetch: loadSummary };
 }

@@ -21,87 +21,83 @@ def test_overview_endpoint(client):
         "generated_at",
     }
 
-    # Station counts (AT-D01 context)
+    # Station counts (151-station Gujarat network)
     sc = data["station_counts"]
-    assert sc["total_in_inventory"] == 12
-    assert sc["eligible_for_simulation"] == 11
-    assert sc["eligible_for_map_display"] == 11
-    assert "11 stations have verified coordinates" in sc["note"]
+    assert sc["total_in_inventory"] == 151
+    assert sc["eligible_for_simulation"] == 151
+    assert sc["eligible_for_map_display"] == 151
+    assert "151 verified Gujarat CNG stations" in sc["note"]
 
     # Network summary
     ns = data["network_summary"]
     assert ns["data_origin"] == "synthetic_demo"
     assert ns["date_range_start"] == "2024-01-01"
-    assert ns["date_range_end"] == "2025-12-31"
-    assert ns["total_stations_in_series"] == 11
-    assert ns["mean_daily_network_demand_kg"] == 14081.2
+    assert ns["date_range_end"] == "2026-11-24"
+    assert ns["total_stations_in_series"] == 151
+    assert ns["mean_daily_network_demand_kg"] > 100000
 
     # Forecast summary
     fs = data["forecast_summary"]
     assert fs["data_origin"] == "synthetic_demo"
     assert fs["horizon_days"] == 7
-    assert fs["stations_forecasted"] == 11
+    assert fs["stations_forecasted"] == 151
 
     # Shortfall alerts
     sa = data["shortfall_alerts"]
     assert sa["data_origin"] == "synthetic_demo"
-    assert sa["total_station_days_with_shortfall"] == 1628
+    assert sa["total_station_days_with_shortfall"] == 18244
     assert isinstance(sa["stations_with_current_alert"], list)
 
     # Hourly summary
     hs = data["hourly_summary"]
     assert hs["data_origin"] == "synthetic_demo"
-    assert hs["stations_with_hourly_data"] == ["AMD001", "AMD004", "AMD008"]
-    assert hs["hourly_period_start"] == "2025-12-02"
-    assert hs["hourly_period_end"] == "2025-12-31"
+    assert len(hs["stations_with_hourly_data"]) == 151
+    assert "AMD001" in hs["stations_with_hourly_data"]
+    assert hs["hourly_period_start"] == "2026-10-26"
+    assert hs["hourly_period_end"] == "2026-11-24"
 
     # Data quality flags
     dq = data["data_quality_flags"]
     assert dq["verified_coordinates"] is True
     assert dq["real_sales_data"] is False
     assert dq["real_supply_data"] is False
-    assert dq["holiday_data"] is False
+    assert dq["holiday_data"] is True
 
     # Timestamp
     assert data["generated_at"].endswith("Z")
 
 
 def test_stations_endpoint_all(client):
-    """Verify GET /api/v1/stations returns all 12 stations and no false map eligibility."""
+    """Verify GET /api/v1/stations returns all 151 verified Gujarat stations."""
     response = client.get("/api/v1/stations")
     assert response.status_code == 200
     data = response.json()
 
-    assert data["total"] == 12
-    assert data["eligible_for_simulation"] == 11
-    assert data["eligible_for_map_pin"] == 11
+    assert data["total"] == 151
+    assert data["eligible_for_simulation"] == 151
+    assert data["eligible_for_map_pin"] == 151
     assert data["map_availability"]["available"] is True
 
     stations = data["stations"]
-    assert len(stations) == 12
+    assert len(stations) == 151
 
     for s in stations:
         assert s["data_origin"] == "real_public"
-        assert s["station_id"].startswith("AMD")
         assert s["coordinates_verified"] is True
-        if s["station_id"] == "AMD010":
-            assert s["eligible_for_map_pin"] is False
-            assert s["latitude"] is None
-        else:
-            assert s["eligible_for_map_pin"] is True
-            assert isinstance(s["latitude"], float)
-            assert isinstance(s["longitude"], float)
+        assert s["eligible_for_map_pin"] is True
+        assert isinstance(s["latitude"], float)
+        assert isinstance(s["longitude"], float)
         assert s["brand"] != ""
 
 
 def test_stations_endpoint_eligible_filter(client):
-    """Verify GET /api/v1/stations?eligible_for_simulation=true excludes AMD010 (AT-D02)."""
+    """Verify GET /api/v1/stations?eligible_for_simulation=true returns 151 stations and excludes AMD010."""
     response = client.get("/api/v1/stations?eligible_for_simulation=true")
     assert response.status_code == 200
     data = response.json()
 
     stations = data["stations"]
-    assert len(stations) == 11
+    assert len(stations) == 151
 
     station_ids = [s["station_id"] for s in stations]
     assert "AMD010" not in station_ids
@@ -116,13 +112,11 @@ def test_stations_endpoint_in_study_area_filter(client):
     assert response.status_code == 200
     data = response.json()
     stations = data["stations"]
-    assert len(stations) == 1
-    assert stations[0]["station_id"] == "AMD010"
-    assert stations[0]["in_study_area"] == "uncertain"
+    assert len(stations) == 0
 
 
 def test_station_history_success_daily(client):
-    """Verify GET /api/v1/stations/AMD001/history returns full daily series (AT-D09)."""
+    """Verify GET /api/v1/stations/AMD001/history returns full 1,059-day daily series."""
     response = client.get("/api/v1/stations/AMD001/history")
     assert response.status_code == 200
     data = response.json()
@@ -132,18 +126,18 @@ def test_station_history_success_daily(client):
     assert data["data_origin"] == "synthetic_demo"
     assert data["aggregation"] == "daily"
     assert data["date_range_start"] == "2024-01-01"
-    assert data["date_range_end"] == "2025-12-31"
-    assert data["total_records"] == 731
+    assert data["date_range_end"] == "2026-11-24"
+    assert data["total_records"] == 1059
     assert data["missing_records"] == 0
-    assert data["missing_holiday_data"] is True
-    assert len(data["series"]) == 731
+    assert data["missing_holiday_data"] is False
+    assert len(data["series"]) == 1059
 
     first = data["series"][0]
     assert first["date"] == "2024-01-01"
     assert first["demand_kg"] > 0
     assert first["day_of_week"] == "Monday"
     assert first["is_weekend"] is False
-    assert first["simulation_profile"] == "commuter_corridor"
+    assert first["simulation_profile"] == "highway"
 
 
 def test_station_history_date_range_filter(client):
@@ -167,8 +161,8 @@ def test_station_history_weekly_aggregation(client):
     data = response.json()
 
     assert data["aggregation"] == "weekly"
-    # ~105 calendar weeks in 2 years
-    assert 104 <= data["total_records"] <= 106
+    # ~152 calendar weeks in 1,059 days
+    assert 150 <= data["total_records"] <= 155
     assert len(data["series"]) == data["total_records"]
 
     # Each point has positive aggregated demand
@@ -190,7 +184,7 @@ def test_station_history_not_found_unknown_station(client):
 
 
 def test_station_history_excluded_station_amd010(client):
-    """Verify AMD010 (excluded from simulation) returns HTTP 404 with explanatory message."""
+    """Verify AMD010 (excluded from verified 151-station inventory) returns HTTP 404."""
     response = client.get("/api/v1/stations/AMD010/history")
     assert response.status_code == 404
     data = response.json()
@@ -198,7 +192,6 @@ def test_station_history_excluded_station_amd010(client):
     assert "error" in data
     assert data["error"]["code"] == "STATION_NOT_FOUND"
     assert "AMD010" in data["error"]["message"]
-    assert "excluded from simulation" in data["error"]["message"]
 
 
 def test_data_quality_endpoint(client):

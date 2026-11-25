@@ -280,3 +280,61 @@ def test_validation_failure_on_approved_coordinate_candidate(tmp_path):
         loader.load_and_validate()
     assert "Unapproved coordinate candidates marked as approved" in str(exc_info.value)
 
+
+def test_flexible_dataloader_supports_variable_counts_dates_and_mixed_provenance(tmp_path):
+    """Verify DataLoader supports variable row counts, custom date ranges, missing dates, and real+synthetic provenance."""
+    data_dir = settings.data_dir
+    for f in data_dir.glob("*.csv"):
+        shutil.copy(f, tmp_path / f.name)
+    (tmp_path / "optional").mkdir()
+    shutil.copy(data_dir / "optional" / "cng_infrastructure.csv", tmp_path / "optional")
+
+    # Subset daily_sales to 2 stations, 10 days (with a missing date gap and mixed real/synthetic provenance)
+    daily = pd.read_csv(tmp_path / "synthetic_daily_sales.csv")
+    sub = daily[(daily["station_id"].isin(["AMD001", "AMD002"])) & (daily["date"] <= "2024-01-10")].copy()
+    sub = sub[sub["date"] != "2024-01-05"]  # introduce missing date gap
+    sub.loc[sub["station_id"] == "AMD001", "data_type"] = "real"
+    sub.to_csv(tmp_path / "synthetic_daily_sales.csv", index=False)
+
+    loader = DataLoader(data_dir=tmp_path)
+    store = loader.load_and_validate()
+
+    assert len(store.daily_sales) == 18  # 2 stations * 9 days (not 8041)
+    assert set(store.daily_sales["data_type"].unique()) == {"real", "synthetic"}
+    assert store.validation_report.all_passed is True
+
+
+def test_gujarat_151_foundation_loaded_and_reproducible(tmp_path):
+    """Verify 151 verified stations, 159,909 synthetic rows, supply constraints, and seed reproducibility."""
+    store = get_data_store()
+    stations = store.verified_gujarat_stations
+    sales = store.gujarat_daily_demand_sales
+    supply = store.gujarat_supply_outages
+    weather = store.external_weather
+    holidays = store.external_holidays
+
+    assert stations is not None and len(stations) == 151
+    assert stations["station_id"].is_unique
+    assert weather is not None and len(weather) == 12 * 1059
+    assert holidays is not None and len(holidays) >= 60
+
+    assert sales is not None and len(sales) == 151 * 1059
+    assert supply is not None and len(supply) == 151 * 1059
+    assert sales["date"].min() == "2024-01-01"
+    assert sales["date"].max() == "2026-11-24"
+    assert (sales["simulated_demand_kg"] >= 0).all()
+    assert (sales["simulated_sales_kg"] >= 0).all()
+    assert (sales["simulated_sales_kg"] <= sales["effective_supply_kg"] + 1e-6).all()
+    assert (sales["data_type"] == "synthetic").all()
+    assert not sales.duplicated(subset=["station_id", "date"]).any()
+
+    # Reproducibility check with fixed seed
+    from CNG_SmartPlan_Data.synthetic.generate_gujarat_synthetic import generate_dataset
+    df1, _ = generate_dataset(output_dir=tmp_path / "run1")
+    df2, _ = generate_dataset(output_dir=tmp_path / "run2")
+    pd.testing.assert_frame_equal(
+        df1.drop(columns=["generated_at"]),
+        df2.drop(columns=["generated_at"]),
+    )
+
+

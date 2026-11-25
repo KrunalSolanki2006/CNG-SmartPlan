@@ -95,7 +95,7 @@ export const OverviewKPIs: React.FC<OverviewKPIsProps> = ({ data, isLoading }) =
                 </Badge>
               </div>
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
-                Network Mean Daily Total (11 stations)
+                Network Mean Daily Total ({network_summary.total_stations_in_series} stations)
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight font-mono">

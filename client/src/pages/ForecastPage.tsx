@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useStations } from '../hooks/useStations';
-import { useForecast } from '../hooks/useForecast';
-import { useHistory } from '../hooks/useHistory';
+import {
+  useForecast,
+  useForecastStations,
+} from '../hooks/useForecast';
 import { useHourlyDemand } from '../hooks/useHourlyDemand';
 import { useFixtureMode } from '../context/FixtureContext';
 import { ForecastRequest } from '../types/api';
 import { ErrorState } from '../components/ui/ErrorState';
 import { StationSelector } from '../components/forecast/StationSelector';
 import { ForecastControlPanel } from '../components/forecast/ForecastControlPanel';
+import { ForecastSummaryMetrics } from '../components/forecast/ForecastSummaryMetrics';
 import { ForecastChart } from '../components/forecast/ForecastChart';
-import { ForecastMetricsPanel } from '../components/forecast/ForecastMetricsPanel';
-import { ForecastReliabilityCard } from '../components/forecast/ForecastReliabilityCard';
 import { ForecastDataTable } from '../components/forecast/ForecastDataTable';
-import { ForecastScenariosPanel, DemoScenarioId, ForecastScenarioConfig } from '../components/forecast/ForecastScenariosPanel';
 import { HourlyProfileChart } from '../components/hourly/HourlyProfileChart';
 import { MotionSection } from '../components/ui/MotionContainer';
-import { TrendingUp, Clock } from 'lucide-react';
+import { TrendingUp, Clock, FlaskConical } from 'lucide-react';
 
 export const ForecastPage: React.FC = () => {
   const { useFixtures } = useFixtureMode();
@@ -23,22 +22,17 @@ export const ForecastPage: React.FC = () => {
   // Tab State: Main Multi-Horizon Forecast vs. Diurnal Hourly Explorer
   const [activeTab, setActiveTab] = useState<'forecast' | 'hourly'>('forecast');
 
-  // 1. Fetch eligible stations inventory
+  // 1. Fetch all 151 eligible verified Gujarat stations from backend
   const {
     data: stationsData,
     isLoading: isStationsLoading,
     error: stationsError,
     refetch: refetchStations,
-  } = useStations({ eligible_for_simulation: true });
+  } = useForecastStations();
 
-  const eligibleStations =
-    stationsData?.stations.filter(
-      (s) => s.eligible_for_simulation || s.in_study_area === 'yes'
-    ) || [];
-
+  const eligibleStations = stationsData?.stations || [];
   const [selectedStationId, setSelectedStationId] = useState<string>('AMD001');
 
-  // Sync station when eligible list loads
   useEffect(() => {
     if (
       eligibleStations.length > 0 &&
@@ -48,39 +42,16 @@ export const ForecastPage: React.FC = () => {
     }
   }, [eligibleStations, selectedStationId]);
 
-  // 2. Control panel parameters
+  // 2. Forecast parameters (7d, 14d, 30d horizons)
   const [horizonDays, setHorizonDays] = useState<number>(7);
   const [model, setModel] = useState<'holt_winters' | 'rolling_mean_baseline'>('holt_winters');
   const [includeBaseline, setIncludeBaseline] = useState<boolean>(true);
-  const [aggregation, setAggregation] = useState<'daily' | 'weekly'>('daily');
 
-  // 3. Planning scenario preset state
-  const [activeScenarioId, setActiveScenarioId] = useState<DemoScenarioId | null>(null);
-
-  const handleSelectScenario = (scenario: ForecastScenarioConfig) => {
-    setActiveScenarioId(scenario.id);
-    setHorizonDays(scenario.horizonDays);
-    setModel(scenario.model);
-  };
-
-  const handleClearScenario = () => {
-    setActiveScenarioId(null);
-  };
-
-  // 4. Hourly profile station state
+  // 3. Hourly profile state (synced to trailing 30-day period 2026-10-26 to 2026-11-24)
   const [hourlyStationId, setHourlyStationId] = useState<string>('AMD001');
-  const [hourlyDate, setHourlyDate] = useState<string>('2025-12-15');
+  const [hourlyDate, setHourlyDate] = useState<string>('2026-11-15');
 
-  // 4. Historical Demand Query (for actual series overlay)
-  const {
-    data: historyData,
-    isLoading: isHistoryLoading,
-  } = useHistory(selectedStationId, {
-    start_date: '2025-08-01',
-    end_date: '2025-10-02',
-  });
-
-  // 5. Forecast Query
+  // 4. Station Forecast Query
   const forecastRequest: ForecastRequest = {
     station_id: selectedStationId,
     horizon_days: horizonDays,
@@ -104,41 +75,39 @@ export const ForecastPage: React.FC = () => {
     date: hourlyDate,
   });
 
-
-
-  const meanDailyDemandKg = forecastData?.forecast?.length
-    ? forecastData.forecast.reduce((sum, p) => sum + p.forecast_demand_kg, 0) / forecastData.forecast.length
-    : null;
-
   return (
     <div className="space-y-6">
-      {/* Header & Planning Context */}
+      {/* Header with Persistent Synthetic Notice */}
       <MotionSection delay={0.05}>
         <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200 text-[11px] font-semibold tracking-wide uppercase text-teal-800">
                   <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
-                  Predictive Analytics
+                  Station Demand Analytics
                 </span>
-                <span className="text-xs text-slate-500 font-medium">Gujarat Gas Company Ltd. • Ahmedabad</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-50 border border-purple-200 text-[11px] font-bold tracking-wide uppercase text-purple-800">
+                  <FlaskConical className="w-3 h-3" />
+                  SIMULATED DATA — DEMONSTRATION ONLY
+                </span>
+                <span className="text-xs text-slate-500 font-medium">
+                  Gujarat Gas Network • {eligibleStations.length || 151} Verified Stations
+                </span>
               </div>
               <h2 className="text-xl font-bold text-slate-900 tracking-tight">
                 Station-Level Demand Forecasting
               </h2>
               <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
-                Multi-horizon seasonal forecasting (1–30 days) across operational Ahmedabad CNG stations powered by double-seasonal Holt-Winters and chronological baseline models.
+                Station-level CNG demand forecasting (7, 14, or 30 days) using additive Holt-Winters (7-day weekly seasonality) and 28-day rolling mean chronological validation.
               </p>
             </div>
-
-
           </div>
         </div>
       </MotionSection>
 
-      {/* Navigation Tabs (Forecast vs Diurnal Hourly Explorer) */}
-      <MotionSection delay={0.1}>
+      {/* Navigation Tabs */}
+      <MotionSection delay={0.08}>
         <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200 shadow-2xs max-w-fit">
           <button
             type="button"
@@ -163,31 +132,20 @@ export const ForecastPage: React.FC = () => {
             }`}
           >
             <Clock className="w-4 h-4 text-[#005F73]" />
-            Diurnal Hourly Demand Profiles (3 Stations)
+            Diurnal Hourly Demand Profiles ({eligibleStations.length || 151} Stations)
           </button>
         </div>
       </MotionSection>
 
-      {/* Main Tab Content */}
       {activeTab === 'forecast' ? (
         <div className="space-y-6">
-          {/* Demonstration Planning Presets */}
-          <MotionSection delay={0.12}>
-            <ForecastScenariosPanel
-              activeScenarioId={activeScenarioId}
-              onSelectScenario={handleSelectScenario}
-              onClearScenario={handleClearScenario}
-              meanDailyDemandKg={meanDailyDemandKg}
-            />
-          </MotionSection>
-
-          {/* Station Selection & Horizon Control Panels */}
-          <MotionSection delay={0.15}>
+          {/* Station Selection & Forecast Parameters */}
+          <MotionSection delay={0.1}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-1">
                 <div className="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs h-full flex flex-col justify-between">
                   <StationSelector
-                    stations={stationsData?.stations || []}
+                    stations={eligibleStations}
                     selectedStationId={selectedStationId}
                     onSelectStation={(id) => setSelectedStationId(id)}
                     isLoading={isStationsLoading}
@@ -203,8 +161,6 @@ export const ForecastPage: React.FC = () => {
                   onChangeModel={setModel}
                   includeBaseline={includeBaseline}
                   onToggleBaseline={setIncludeBaseline}
-                  aggregation={aggregation}
-                  onChangeAggregation={setAggregation}
                   isLoading={isForecastLoading}
                   onRunForecast={refetchForecast}
                 />
@@ -226,67 +182,28 @@ export const ForecastPage: React.FC = () => {
             <ErrorState
               title="Forecast Computation Error"
               code={forecastError.code}
-              message={`${forecastError.message} Ensure Member 2's backend service is running on http://localhost:8000 and station ${selectedStationId} is eligible.`}
+              message={`${forecastError.message} Ensure the FastAPI service is running on http://localhost:8000 and station ${selectedStationId} is eligible.`}
               onRetry={refetchForecast}
             />
           )}
 
-          {/* Interactive Recharts Forecast Chart */}
+          {/* Important Metrics (4 KPIs) */}
+          <MotionSection delay={0.14}>
+            <ForecastSummaryMetrics forecastData={forecastData} isLoading={isForecastLoading} />
+          </MotionSection>
+
+          {/* Main Historical vs. Forecasted Demand Chart */}
           <MotionSection delay={0.18}>
             <ForecastChart
               forecastData={forecastData}
-              historyPoints={historyData?.series || []}
-              isLoading={isForecastLoading || isHistoryLoading}
-              aggregation={aggregation}
+              historyPoints={forecastData?.historical_context}
+              isLoading={isForecastLoading}
               includeBaseline={includeBaseline}
             />
           </MotionSection>
 
-          {/* Model Evaluation Metrics Panel */}
-          <MotionSection delay={0.21}>
-            <ForecastMetricsPanel
-              evaluation={
-                forecastData?.evaluation || {
-                  baseline_model: 'rolling_mean_28d',
-                  baseline_mae_kg: 150.55,
-                  baseline_rmse_kg: 189.69,
-                  baseline_smape_pct: 11.41,
-                  model_mae_kg: null,
-                  model_rmse_kg: null,
-                  model_smape_pct: null,
-                  note: 'Metrics computed from synthetic data only. Do not claim real-world accuracy.',
-                }
-              }
-              trainPeriod={
-                forecastData?.train_period || {
-                  start: '2024-01-01',
-                  end: '2025-10-02',
-                  n_records: 641,
-                }
-              }
-              testPeriod={
-                forecastData?.test_period || {
-                  start: '2025-10-03',
-                  end: '2025-12-31',
-                  n_records: 90,
-                }
-              }
-              modelUsed={forecastData?.model_used || model}
-            />
-          </MotionSection>
-
-          {/* Reliability Checklist & Limitations Notice */}
-          {forecastData && (
-            <MotionSection delay={0.24}>
-              <ForecastReliabilityCard
-                reliability={forecastData.reliability}
-                limitations={forecastData.limitations}
-              />
-            </MotionSection>
-          )}
-
-          {/* Tabular Ledger of Projected Points */}
-          {forecastData && (
+          {/* Tabular Forecast Ledger */}
+          {forecastData && forecastData.forecast.length > 0 && (
             <MotionSection delay={0.27}>
               <ForecastDataTable
                 forecastPoints={forecastData.forecast}
@@ -297,7 +214,6 @@ export const ForecastPage: React.FC = () => {
           )}
         </div>
       ) : (
-        /* Diurnal Hourly Profile Explorer */
         <MotionSection delay={0.15}>
           <div className="space-y-6">
             <HourlyProfileChart
@@ -307,6 +223,7 @@ export const ForecastPage: React.FC = () => {
               onSelectStation={setHourlyStationId}
               selectedDate={hourlyDate}
               onSelectDate={setHourlyDate}
+              stations={eligibleStations}
             />
           </div>
         </MotionSection>
