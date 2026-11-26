@@ -43,9 +43,6 @@ export const MapPage: React.FC = () => {
     };
   }, []);
 
-  const verifiedStationsCount =
-    networkStations.filter((s) => s.cng_classification === 'VERIFIED_OPERATING_CNG').length || 151;
-
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -83,15 +80,6 @@ export const MapPage: React.FC = () => {
           >
             <Fuel className="w-4 h-4 text-[#5EEAD4] shrink-0" />
             <span>1. Existing CNG Station Map</span>
-            <span
-              className={`px-2 py-0.5 rounded-full text-xs font-mono font-bold ${
-                activeSection === 'stations'
-                  ? 'bg-[#0A9396]/30 text-[#5EEAD4]'
-                  : 'bg-slate-200 text-slate-700'
-              }`}
-            >
-              {verifiedStationsCount} Verified
-            </span>
           </button>
 
           <button

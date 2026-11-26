@@ -27,7 +27,7 @@ describe('Navigation Flow', () => {
     await user.click(alertsLink);
 
     expect(screen.getAllByText('Potential Supply-Shortfall Alerts').length).toBeGreaterThan(0);
-    expect(screen.getByText(/potential_shortfall_kg = max\(0, forecast_demand_kg - planned_supply_kg\)/i)).toBeInTheDocument();
+    expect(await screen.findByText('Shortfall Frequency')).toBeInTheDocument();
   });
 
   it('navigates to Map page and verifies station pin state', async () => {
@@ -53,17 +53,5 @@ describe('Navigation Flow', () => {
       screen.getByText(/What happens to the existing CNG network if we establish a new station at this location/i)
     ).toBeInTheDocument();
     expect(screen.getByText('No Proposed CNG Station Selected')).toBeInTheDocument();
-  });
-
-  it('navigates to Data Quality page and verifies documented data gaps', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-
-    const qualityLink = screen.getByText('Data Quality & Provenance');
-    await user.click(qualityLink);
-
-    expect(screen.getAllByText('Data Quality & Provenance Ledger').length).toBeGreaterThan(0);
-    expect(await screen.findByText('Documented Data Gaps Register')).toBeInTheDocument();
-    expect(screen.getByText('Verified station coordinates')).toBeInTheDocument();
   });
 });

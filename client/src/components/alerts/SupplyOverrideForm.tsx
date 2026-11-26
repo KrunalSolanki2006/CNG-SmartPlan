@@ -1,26 +1,78 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserSupplyOverride } from '../../types/api';
-import { Plus, Trash2, Edit3, RotateCcw } from 'lucide-react';
+import { Plus, Edit3, RotateCcw } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface SupplyOverrideFormProps {
+  stationId?: string;
   overrides: UserSupplyOverride[];
   onAddOrUpdateOverride: (override: UserSupplyOverride) => void;
-  onRemoveOverride: (date: string) => void;
-  onClearOverrides: () => void;
+  onRemoveOverride?: (date: string) => void;
+  onClearOverrides?: () => void;
   minDate?: string;
 }
 
 export const SupplyOverrideForm: React.FC<SupplyOverrideFormProps> = ({
+  stationId = 'default',
   overrides,
   onAddOrUpdateOverride,
-  onRemoveOverride,
-  onClearOverrides,
   minDate = '2026-01-01',
 }) => {
-  const [date, setDate] = useState<string>(minDate);
-  const [supplyKg, setSupplyKg] = useState<string>('1500');
+  const storageKey = `fuelcast_supply_old_values_${stationId}`;
+  const loadSavedOldValues = (key: string): Record<string, number> => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
+  };
+
+  const [date, setDate] = useState<string>(overrides[0]?.date || minDate);
+  const [supplyKg, setSupplyKg] = useState<string>('1600');
   const [inputError, setInputError] = useState<string | null>(null);
+  // Tracks original value before user updated a date so we can show "old -> updated" and revert
+  const [oldValuesByDate, setOldValuesByDate] = useState<Record<string, number>>(() =>
+    loadSavedOldValues(storageKey)
+  );
+
+  useEffect(() => {
+    setOldValuesByDate(loadSavedOldValues(storageKey));
+  }, [storageKey]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(oldValuesByDate));
+    } catch {
+      // Ignore storage quota errors
+    }
+  }, [storageKey, oldValuesByDate]);
+
+  useEffect(() => {
+    if (overrides.length > 0 && date === minDate) {
+      setDate(overrides[0].date);
+      setSupplyKg(String(overrides[0].supply_kg));
+    }
+  }, [overrides, date, minDate]);
+
+  // Prune oldValuesByDate entries if overrides were cleared or removed
+  useEffect(() => {
+    const activeDates = new Set(overrides.map((o) => o.date));
+    setOldValuesByDate((prev) => {
+      const next: Record<string, number> = {};
+      let changed = false;
+      for (const [d, val] of Object.entries(prev)) {
+        if (activeDates.has(d)) {
+          next[d] = val;
+        } else {
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [overrides]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,10 +89,36 @@ export const SupplyOverrideForm: React.FC<SupplyOverrideFormProps> = ({
       return;
     }
 
+    const roundedKg = Math.round(kg * 10) / 10;
+    const existing = overrides.find((o) => o.date === date);
+    if (existing && existing.supply_kg !== roundedKg) {
+      setOldValuesByDate((prev) => ({
+        ...prev,
+        [date]: prev[date] !== undefined ? prev[date] : existing.supply_kg,
+      }));
+    }
+
     onAddOrUpdateOverride({
       date,
-      supply_kg: Math.round(kg * 10) / 10,
+      supply_kg: roundedKg,
     });
+  };
+
+  const handleRevertUpdated = (targetDate: string) => {
+    const oldVal = oldValuesByDate[targetDate];
+    if (oldVal === undefined) return;
+    setOldValuesByDate((prev) => {
+      const next = { ...prev };
+      delete next[targetDate];
+      return next;
+    });
+    onAddOrUpdateOverride({
+      date: targetDate,
+      supply_kg: oldVal,
+    });
+    if (date === targetDate) {
+      setSupplyKg(String(oldVal));
+    }
   };
 
   return (
@@ -102,19 +180,6 @@ export const SupplyOverrideForm: React.FC<SupplyOverrideFormProps> = ({
         >
           Add / Update Override
         </Button>
-
-        {overrides.length > 0 && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={onClearOverrides}
-            leftIcon={<RotateCcw className="w-3.5 h-3.5 text-slate-500" />}
-            className="text-slate-500 hover:text-[#AE2012]"
-          >
-            Clear All Overrides
-          </Button>
-        )}
       </form>
 
       {inputError && (
@@ -124,31 +189,78 @@ export const SupplyOverrideForm: React.FC<SupplyOverrideFormProps> = ({
       {/* Overrides List */}
       {overrides.length > 0 && (
         <div className="mt-3 pt-3 border-t border-slate-100 space-y-2">
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">
-            Registered Overrides for API Dispatch:
-          </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-            {overrides.map((item) => (
-              <div
-                key={item.date}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs"
-              >
-                <div className="space-y-0.5">
-                  <span className="font-mono font-bold text-slate-900">{item.date}</span>
-                  <div className="text-[11px] text-[#005F73] font-mono font-bold">
-                    {item.supply_kg.toLocaleString()} kg
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  aria-label={`Remove override for ${item.date}`}
-                  onClick={() => onRemoveOverride(item.date)}
-                  className="text-slate-400 hover:text-[#AE2012] transition-colors p-1"
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">
+              Scheduled Dates (click any date to edit):
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {overrides.map((item) => {
+              const isSelected = item.date === date;
+              const oldVal = oldValuesByDate[item.date];
+              const isUpdated = oldVal !== undefined && oldVal !== item.supply_kg;
+
+              return (
+                <div
+                  key={item.date}
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs transition-all ${
+                    isUpdated
+                      ? `bg-amber-50 border-amber-400 text-amber-950 shadow-xs ${
+                          isSelected ? 'ring-2 ring-amber-300' : ''
+                        }`
+                      : isSelected
+                      ? 'bg-[#EAF6F2] border-[#0A9396] text-[#005F73] shadow-2xs'
+                      : 'bg-slate-50 border-slate-200 text-slate-800 hover:bg-slate-100'
+                  }`}
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDate(item.date);
+                      setSupplyKg(String(item.supply_kg));
+                      setInputError(null);
+                    }}
+                    className="flex items-center gap-1.5 font-mono cursor-pointer text-left"
+                    title="Click to edit this date's planned supply"
+                  >
+                    {isUpdated && (
+                      <span className="px-1.5 py-0.5 rounded bg-amber-200/80 text-amber-900 font-sans text-[9px] font-bold uppercase tracking-wide">
+                        Updated
+                      </span>
+                    )}
+                    <span className="font-bold">{item.date}</span>
+                    <span className="text-slate-400">•</span>
+                    {isUpdated ? (
+                      <span className="flex items-center gap-1">
+                        <span className="line-through text-slate-400">
+                          {oldVal.toLocaleString()}
+                        </span>
+                        <span className="text-amber-600 font-sans">→</span>
+                        <span className="font-bold text-amber-900">
+                          {item.supply_kg.toLocaleString()} kg
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="font-bold text-[#005F73]">
+                        {item.supply_kg.toLocaleString()} kg
+                      </span>
+                    )}
+                  </button>
+
+                  {isUpdated && (
+                    <button
+                      type="button"
+                      aria-label={`Revert override for ${item.date}`}
+                      title={`Revert ${item.date} back to ${oldVal.toLocaleString()} kg`}
+                      onClick={() => handleRevertUpdated(item.date)}
+                      className="text-amber-700 hover:text-amber-950 transition-colors p-0.5 cursor-pointer"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

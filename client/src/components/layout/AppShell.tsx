@@ -24,7 +24,6 @@ export const AppShell: React.FC = () => {
     '/alerts': 'Potential supply-shortfall tracking against planned available supply',
     '/map': 'Ahmedabad geographic analysis and candidate location exploratory assessment',
     '/simulator': 'Catchment capture, network diversion, and net additional demand estimation',
-    '/data-quality': 'Audit ledger, data gaps register, and synthetic data transparency documentation',
   };
 
   const pageSubtitle = subtitles[location.pathname] || 'Decision support platform for CNG planning';

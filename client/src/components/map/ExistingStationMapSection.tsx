@@ -506,10 +506,6 @@ export const ExistingStationMapSection: React.FC<ExistingStationMapSectionProps>
         {/* Status Strip */}
         <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100 flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200 text-[11px] font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
-              Showing {filteredStations.length} of {verifiedStations.length} Verified Stations
-            </span>
             {proposedCoords && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />

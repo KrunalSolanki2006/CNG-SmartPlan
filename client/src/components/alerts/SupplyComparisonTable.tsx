@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { SupplyComparisonPoint } from '../../types/api';
-import { DataOriginBadge } from '../ui/DataOriginBadge';
 import { Filter, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 interface SupplyComparisonTableProps {
@@ -82,13 +81,12 @@ export const SupplyComparisonTable: React.FC<SupplyComparisonTableProps> = ({
               <th className="py-2.5 px-3 text-right">Planned Supply</th>
               <th className="py-2.5 px-3 text-right">Potential Shortfall</th>
               <th className="py-2.5 px-3 text-center">Balance Status</th>
-              <th className="py-2.5 px-3 text-center">Data Origin</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {filteredPoints.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-6 text-xs text-slate-500">
+                <td colSpan={5} className="text-center py-6 text-xs text-slate-500">
                   No dates matching the selected status filter.
                 </td>
               </tr>
@@ -153,10 +151,6 @@ export const SupplyComparisonTable: React.FC<SupplyComparisonTableProps> = ({
                           Balanced
                         </span>
                       )}
-                    </td>
-
-                    <td className="py-2 px-3 text-center">
-                      <DataOriginBadge origin={point.supply_data_origin} size="sm" />
                     </td>
                   </tr>
                 );

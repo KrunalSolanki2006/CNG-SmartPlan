@@ -141,6 +141,16 @@ class ForecastService:
         return (id(store), id(daily_df), len(daily_df), max_date)
 
     @classmethod
+    def _disk_fingerprint(cls, daily_df: pd.DataFrame) -> Tuple[Any, ...]:
+        """Deterministic process-independent fingerprint for disk caches."""
+        if daily_df.empty:
+            return (0, "", "", 0)
+        min_date = str(daily_df["date"].min()) if "date" in daily_df.columns else ""
+        max_date = str(daily_df["date"].max()) if "date" in daily_df.columns else ""
+        n_stations = int(daily_df["station_id"].nunique()) if "station_id" in daily_df.columns else 0
+        return (len(daily_df), min_date, max_date, n_stations)
+
+    @classmethod
     def _get_station_meta(cls, station_id: str, stations_df: pd.DataFrame) -> Optional[Dict[str, Any]]:
         if not stations_df.empty and "station_id" in stations_df.columns:
             match = stations_df[stations_df["station_id"] == station_id]
@@ -638,9 +648,17 @@ class ForecastService:
         else:
             base_val_mae = base_val_rmse = base_val_smape = None
 
+        if effective_cutoff is None:
+            forecast_start_date = max(latest_hist_date + timedelta(days=1), current_local_date)
+        else:
+            forecast_start_date = latest_hist_date + timedelta(days=1)
+
+        offset_days = max(0, (forecast_start_date - (latest_hist_date + timedelta(days=1))).days)
+        total_steps = offset_days + horizon
+
         future_dates = [
-            (latest_hist_date + timedelta(days=i + 1)).strftime("%Y-%m-%d")
-            for i in range(horizon)
+            (forecast_start_date + timedelta(days=j)).strftime("%Y-%m-%d")
+            for j in range(horizon)
         ]
 
         model_mae: Optional[float] = None
@@ -680,30 +698,31 @@ class ForecastService:
                     full_sales[fit_for_test_end_idx:n_valid], eval_preds
                 )
 
-                # Full fit for future forecast beyond cutoff
+                # Full fit for future forecast beyond cutoff (stepped forward to forecast_start_date)
                 hw_full = ExponentialSmoothing(
                     full_sales,
                     trend="add",
                     seasonal="add",
                     seasonal_periods=7,
                 ).fit()
-                raw_forecast = hw_full.forecast(horizon)
+                raw_forecast = np.asarray(hw_full.forecast(total_steps), dtype=float)
 
                 residuals = full_sales - hw_full.fittedvalues
                 res_std = float(np.std(residuals, ddof=1)) if len(residuals) > 1 else float(np.std(residuals))
                 conf_int_available = True
 
-                for i, f_val in enumerate(raw_forecast):
-                    raw_val = float(f_val)
+                for j in range(horizon):
+                    step_idx = offset_days + j
+                    raw_val = float(raw_forecast[step_idx])
                     if raw_val < 0.0:
                         clamped_negative = True
                     pred_val = round(max(0.0, raw_val), 1)
-                    se_h = res_std * np.sqrt(1.0 + 0.04 * i)
+                    se_h = res_std * np.sqrt(1.0 + 0.04 * step_idx)
                     lower = round(max(0.0, pred_val - 1.96 * se_h), 1)
                     upper = round(max(lower, pred_val + 1.96 * se_h), 1)
                     forecast_points.append(
                         ForecastPoint(
-                            date=future_dates[i],
+                            date=future_dates[j],
                             forecast_demand_kg=pred_val,
                             lower_bound_kg=lower,
                             upper_bound_kg=upper,
@@ -1146,8 +1165,11 @@ class ForecastService:
             if cache_key in cls._network_cache:
                 return cls._network_cache[cache_key]
 
+        disk_fp = cls._disk_fingerprint(daily_df)
         cache_dir = Path(settings.data_dir) / "synthetic" / ".network_summary_cache"
-        key_hash = hashlib.sha256("|".join(str(x) for x in cache_key).encode("utf-8")).hexdigest()[:24]
+        key_hash = hashlib.sha256(
+            "|".join(str(x) for x in (disk_fp, effective_cutoff, ref_date_str, horizon_days, model)).encode("utf-8")
+        ).hexdigest()[:24]
         cache_file = cache_dir / f"{key_hash}.json"
         if cache_file.exists():
             try:

@@ -8,7 +8,6 @@ import {
   AlertTriangle,
   MapPin,
   Sliders,
-  ShieldCheck,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -24,7 +23,6 @@ export const NAV_ITEMS: NavItem[] = [
   { name: 'Supply Alerts', path: '/alerts', icon: AlertTriangle },
   { name: 'Network Map', path: '/map', icon: MapPin },
   { name: 'Impact Simulator', path: '/simulator', icon: Sliders },
-  { name: 'Data Quality & Provenance', path: '/data-quality', icon: ShieldCheck },
 ];
 
 export interface SideBarProps {

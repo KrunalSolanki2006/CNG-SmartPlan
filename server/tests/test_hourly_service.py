@@ -56,7 +56,19 @@ def test_hourly_demand_unsupported_station_rejected(client):
 
 
 def test_hourly_demand_out_of_range_date_rejected(client):
-    """Verify requesting date outside 2026-10-26 to 2026-11-24 returns 422 VALIDATION_ERROR."""
+    """Verify requesting date before 2026-10-26 returns 422 VALIDATION_ERROR."""
     response = client.get("/api/v1/hourly-demand?date=2024-06-01")
     assert response.status_code == 422
     assert response.json()["error"]["code"] == "VALIDATION_ERROR"
+
+
+def test_hourly_demand_current_date_projected_24h(client):
+    """Verify requesting current/future IST date returns 24 projected hourly records."""
+    from datetime import datetime, timedelta, timezone
+    today_ist = datetime.now(timezone(timedelta(hours=5, minutes=30))).date().strftime("%Y-%m-%d")
+    response = client.get(f"/api/v1/hourly-demand?station_id=AMD001&date={today_ist}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total_records"] == 24
+    assert [r["hour"] for r in data["records"]] == list(range(24))
+    assert all(r["date"] == today_ist and r["hourly_demand_kg"] > 0 for r in data["records"])

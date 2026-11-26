@@ -2,7 +2,7 @@ import React from 'react';
 import { SupplySummary } from '../../types/api';
 import { Card, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
-import { AlertTriangle, TrendingDown, Cpu, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, TrendingDown, ShieldAlert } from 'lucide-react';
 
 interface SupplySummaryCardsProps {
   summary: SupplySummary;
@@ -34,7 +34,7 @@ export const SupplySummaryCards: React.FC<SupplySummaryCardsProps> = ({
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* 1. Days with Potential Planning Shortfall */}
         <Card className="rounded-2xl border-slate-200 bg-white shadow-xs">
           <CardContent className="p-4 space-y-2">
@@ -92,25 +92,6 @@ export const SupplySummaryCards: React.FC<SupplySummaryCardsProps> = ({
             </div>
             <p className="text-[11px] text-slate-500">
               Net supply replenishment required to balance network demand
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* 4. Canonical Formula & Operational Notice */}
-        <Card className="rounded-2xl border-slate-200 bg-white shadow-xs">
-          <CardContent className="p-4 space-y-2 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-slate-500 font-bold flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-[#005F73]" />
-                Balance Calculation
-              </span>
-              <Badge variant="teal" size="sm">Rule Logic</Badge>
-            </div>
-            <div className="p-2 rounded-xl bg-slate-50 border border-slate-200 font-mono text-[10px] text-[#005F73] font-semibold break-all">
-              potential_shortfall_kg = max(0, forecast_demand_kg - planned_supply_kg)
-            </div>
-            <p className="text-[10px] text-slate-500 leading-tight">
-              Planning shortfall $\ne$ actual stockout; delivery deficit rather than instantaneous dispenser dry-out.
             </p>
           </CardContent>
         </Card>

@@ -257,7 +257,7 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
   });
 
   describe('Supply Alert Components', () => {
-    it('renders canonical shortfall formula and planning shortfall distinction', () => {
+    it('renders shortfall summary KPIs', () => {
       render(
         <SupplySummaryCards
           summary={SUPPLY_CHECK_FIXTURE_AMD001_7D.summary}
@@ -270,12 +270,6 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
       expect(screen.getByText('3')).toBeInTheDocument();
       expect(screen.getByText('Peak Day Shortfall')).toBeInTheDocument();
       expect(screen.getByText('Cumulative Deficit')).toBeInTheDocument();
-
-      // Canonical formula
-      expect(screen.getByText(/potential_shortfall_kg = max\(0, forecast_demand_kg - planned_supply_kg\)/i)).toBeInTheDocument();
-      expect(
-        screen.getByText(/Planning shortfall \$\\ne\$ actual stockout/i)
-      ).toBeInTheDocument();
     });
 
     it('renders supply chart and handles missing future supply warning', () => {
@@ -332,10 +326,47 @@ describe('Milestone 3 Forecasting, Alerts, and Hourly Demand Components', () => 
         date: '2026-01-06',
         supply_kg: 2000,
       });
+    });
 
-      // Remove override
-      await user.click(screen.getByLabelText('Remove override for 2026-01-05'));
-      expect(handleRemove).toHaveBeenCalledWith('2026-01-05');
+    it('highlights updated override with old value, allows re-updating, and supports reverting', async () => {
+      const user = userEvent.setup();
+      let currentOverrides = [{ date: '2026-11-26', supply_kg: 1600 }];
+      const handleAdd = vi.fn((ov: { date: string; supply_kg: number }) => {
+        currentOverrides = currentOverrides.map((item) =>
+          item.date === ov.date ? ov : item
+        );
+      });
+
+      const { rerender } = render(
+        <SupplyOverrideForm
+          overrides={currentOverrides}
+          onAddOrUpdateOverride={handleAdd}
+          onRemoveOverride={vi.fn()}
+          onClearOverrides={vi.fn()}
+        />
+      );
+
+      const supplyInput = screen.getByLabelText('Planned supply in kilograms');
+      await user.clear(supplyInput);
+      await user.type(supplyInput, '2000');
+      await user.click(screen.getByRole('button', { name: /Add \/ Update Override/i }));
+
+      rerender(
+        <SupplyOverrideForm
+          overrides={currentOverrides}
+          onAddOrUpdateOverride={handleAdd}
+          onRemoveOverride={vi.fn()}
+          onClearOverrides={vi.fn()}
+        />
+      );
+
+      expect(screen.getByText('Updated')).toBeInTheDocument();
+      expect(screen.getByText('1,600')).toBeInTheDocument();
+      expect(screen.getByText('2,000 kg')).toBeInTheDocument();
+
+      // Revert back to old value
+      await user.click(screen.getByLabelText('Revert override for 2026-11-26'));
+      expect(handleAdd).toHaveBeenLastCalledWith({ date: '2026-11-26', supply_kg: 1600 });
     });
 
     it('filters supply table rows by status', async () => {

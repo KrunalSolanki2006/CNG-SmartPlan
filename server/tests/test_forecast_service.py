@@ -47,14 +47,15 @@ def test_station_specific_out_of_sample_metrics(client):
 
 
 def test_forecast_horizons_7_14_30_and_dates_start_2026_11_25(client):
-    """Verify 7, 14, and 30 day horizons begin on 2026-11-25 after 2026-11-24 cutoff."""
+    """Verify 7, 14, and 30 day horizons begin on current IST date (>= 2026-11-25) after 2026-11-24 cutoff."""
     for h in [7, 14, 30]:
         response = client.get(f"/api/v1/forecast/AMD001?horizon_days={h}")
         assert response.status_code == 200
         data = response.json()
         assert len(data["forecast"]) == h
         assert data["data_through_date"] == "2026-11-24"
-        assert data["target_start_date"] == "2026-11-25"
+        assert data["target_start_date"] == data["current_date"]
+        assert data["target_start_date"] >= "2026-11-25"
         assert data["target_end_date"] == data["forecast"][-1]["date"]
 
         dates = [pt["date"] for pt in data["forecast"]]

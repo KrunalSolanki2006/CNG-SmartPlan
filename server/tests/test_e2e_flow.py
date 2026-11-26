@@ -89,7 +89,8 @@ def test_full_e2e_workflow(client):
     assert fc_data["station_id"] == "AMD001"
     assert fc_data["data_origin"] == "synthetic_demo"
     assert len(fc_data["forecast"]) == 7
-    assert fc_data["target_start_date"] == "2026-11-25"
+    assert fc_data["target_start_date"] >= "2026-11-25"
+    assert fc_data["target_start_date"] == fc_data["current_date"]
     assert fc_data["evaluation"]["baseline_mae_kg"] is not None
     assert fc_data["reliability"]["data_source"] == "synthetic_demo"
 

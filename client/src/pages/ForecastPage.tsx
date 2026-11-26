@@ -47,9 +47,13 @@ export const ForecastPage: React.FC = () => {
   const [model, setModel] = useState<'holt_winters' | 'rolling_mean_baseline'>('holt_winters');
   const [includeBaseline, setIncludeBaseline] = useState<boolean>(true);
 
-  // 3. Hourly profile state (synced to trailing 30-day period 2026-10-26 to 2026-11-24)
+  // 3. Hourly profile state (defaults to current IST date)
   const [hourlyStationId, setHourlyStationId] = useState<string>('AMD001');
-  const [hourlyDate, setHourlyDate] = useState<string>('2026-11-15');
+  const [hourlyDate, setHourlyDate] = useState<string>(() => {
+    const now = new Date();
+    const istMs = now.getTime() + (330 + now.getTimezoneOffset()) * 60000;
+    return new Date(istMs).toISOString().slice(0, 10);
+  });
 
   // 4. Station Forecast Query
   const forecastRequest: ForecastRequest = {

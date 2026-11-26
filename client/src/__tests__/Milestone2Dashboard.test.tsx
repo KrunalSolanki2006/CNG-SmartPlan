@@ -5,10 +5,8 @@ import { OverviewKPIs } from '../components/dashboard/OverviewKPIs';
 import { StationInventoryTable } from '../components/dashboard/StationInventoryTable';
 import { ForecastSummaryCard } from '../components/dashboard/ForecastSummaryCard';
 import { DataQualityFlagsBanner } from '../components/dashboard/DataQualityFlagsBanner';
-import { DataQualityPage } from '../pages/DataQualityPage';
 import { OVERVIEW_FIXTURE } from '../fixtures/overviewFixture';
 import { STATIONS_FIXTURE } from '../fixtures/stationsFixture';
-import { FixtureProvider } from '../context/FixtureContext';
 
 import { MemoryRouter } from 'react-router-dom';
 
@@ -126,40 +124,6 @@ describe('Milestone 2 Operations Dashboard & Data Quality Components', () => {
       expect(screen.getByText('7-Day Forecast Pipeline')).toBeInTheDocument();
       expect(screen.getByText('7 Days')).toBeInTheDocument();
       expect(screen.getByText('151 Stations')).toBeInTheDocument();
-    });
-  });
-
-  describe('DataQualityPage', () => {
-    it('renders technical validation vs real completeness distinction and 8 gaps', async () => {
-      localStorage.setItem('cng_smartplan_use_fixtures', 'true');
-
-      render(
-        <FixtureProvider>
-          <DataQualityPage />
-        </FixtureProvider>
-      );
-
-      expect(screen.getAllByText('Data Quality & Provenance Ledger').length).toBeGreaterThan(0);
-      expect(
-        screen.getByText(/Technical Validation \(PASS\) vs\. Real-World Completeness \(INCOMPLETE\)/i)
-      ).toBeInTheDocument();
-
-      // Wait for async fixture load
-      expect(await screen.findByText('150.55 kg/day')).toBeInTheDocument();
-      expect(screen.getByText('189.69 kg/day')).toBeInTheDocument();
-      expect(screen.getByText('11.41%')).toBeInTheDocument();
-
-      // Check gaps table
-      expect(screen.getByText('Documented Data Gaps Register')).toBeInTheDocument();
-      expect(screen.getByText('Verified station coordinates')).toBeInTheDocument();
-      expect(screen.getByText('Official holiday calendar 2024-2025')).toBeInTheDocument();
-
-      // Check external links security
-      const links = screen.getAllByRole('link');
-      links.forEach((l) => {
-        expect(l).toHaveAttribute('target', '_blank');
-        expect(l).toHaveAttribute('rel', 'noopener noreferrer');
-      });
     });
   });
 });

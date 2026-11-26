@@ -8,7 +8,6 @@ import { ForecastPage } from './pages/ForecastPage';
 import { AlertsPage } from './pages/AlertsPage';
 import { MapPage } from './pages/MapPage';
 import { SimulatorPage } from './pages/SimulatorPage';
-import { DataQualityPage } from './pages/DataQualityPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export const App: React.FC = () => {
@@ -24,7 +23,6 @@ export const App: React.FC = () => {
             <Route path="map" element={<MapPage />} />
             <Route path="simulator" element={<SimulatorPage />} />
             <Route path="candidates" element={<Navigate to="/map" replace />} />
-            <Route path="data-quality" element={<DataQualityPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

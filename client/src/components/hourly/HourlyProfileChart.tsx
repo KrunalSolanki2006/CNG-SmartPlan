@@ -3,15 +3,49 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
+  ReferenceLine,
 } from 'recharts';
 import { ForecastStationSummaryItem, HourlyResponse } from '../../types/api';
 import { Badge } from '../ui/Badge';
 import { Skeleton } from '../ui/Skeleton';
 import { Clock, CheckCircle } from 'lucide-react';
+
+function formatHour12Short(hour: number): string {
+  const h = ((hour % 24) + 24) % 24;
+  const period = h < 12 ? 'AM' : 'PM';
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}${period}`;
+}
+
+function formatHourRange12(hour: number): string {
+  return `${formatHour12Short(hour)}-${formatHour12Short(hour + 1)}`;
+}
+
+function getDemandTier(value: number, peak: number): {
+  label: 'Very High' | 'High' | 'Moderate' | 'Low';
+  color: string;
+  badgeClass: string;
+} {
+  if (peak <= 0) {
+    return { label: 'Low', color: '#38BDF8', badgeClass: 'bg-sky-500/20 text-sky-300' };
+  }
+  const ratio = value / peak;
+  if (ratio >= 0.8) {
+    return { label: 'Very High', color: '#DC2626', badgeClass: 'bg-red-500/20 text-red-300' };
+  }
+  if (ratio >= 0.6) {
+    return { label: 'High', color: '#F59E0B', badgeClass: 'bg-amber-500/20 text-amber-300' };
+  }
+  if (ratio >= 0.35) {
+    return { label: 'Moderate', color: '#0A9396', badgeClass: 'bg-teal-500/20 text-teal-300' };
+  }
+  return { label: 'Low', color: '#38BDF8', badgeClass: 'bg-sky-500/20 text-sky-300' };
+}
 
 interface HourlyProfileChartProps {
   data: HourlyResponse | null;
@@ -44,15 +78,22 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
         }));
 
   const periodStart = data?.period_start || '2026-10-26';
-  const periodEnd = data?.period_end || '2026-11-24';
+  const periodEnd = data?.period_end || selectedDate || '2026-11-26';
 
-  // Calculate daily sum and peak hour from returned records
+  // Calculate daily sum, AM/PM split, and peak hour from returned records
   const records = data?.records || [];
   const dailyTotalKg = records.reduce((acc, r) => acc + r.hourly_demand_kg, 0);
+  const amTotalKg = records
+    .filter((r) => r.hour < 12)
+    .reduce((acc, r) => acc + r.hourly_demand_kg, 0);
+  const pmTotalKg = records
+    .filter((r) => r.hour >= 12)
+    .reduce((acc, r) => acc + r.hourly_demand_kg, 0);
   const peakRecord = records.reduce<typeof records[0] | null>((max, curr) => {
     if (!max || curr.hourly_demand_kg > max.hourly_demand_kg) return curr;
     return max;
   }, null);
+  const peakKg = peakRecord?.hourly_demand_kg || 0;
 
   const simulationProfile = records[0]?.simulation_profile || 'commuter_corridor';
 
@@ -124,7 +165,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
         <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
           <span className="text-slate-500 block text-[11px] font-medium">Diurnal Peak Hour:</span>
           <span className="font-mono font-bold text-[#005F73] text-sm">
-            {peakRecord ? `${String(peakRecord.hour).padStart(2, '0')}:00 hrs` : '—'}
+            {peakRecord ? formatHourRange12(peakRecord.hour) : '—'}
           </span>
           <span className="text-[10px] text-slate-500 block mt-0.5">
             Peak: {peakRecord?.hourly_demand_kg.toFixed(1)} kg/hr
@@ -132,12 +173,41 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
         </div>
 
         <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
-          <span className="text-slate-500 block text-[11px] font-medium">Temporal Coverage:</span>
-          <span className="font-mono font-bold text-slate-900 text-sm">30 Days</span>
+          <span className="text-slate-500 block text-[11px] font-medium">AM vs. PM Split (12h / 12h):</span>
+          <span className="font-mono font-bold text-slate-900 text-sm">
+            {amTotalKg.toFixed(0)} <span className="text-xs font-normal text-slate-500">AM</span> /{' '}
+            {pmTotalKg.toFixed(0)} <span className="text-xs font-normal text-slate-500">PM kg</span>
+          </span>
           <span className="text-[10px] text-slate-500 block mt-0.5">
-            {periodStart} to {periodEnd} ({stationOptions.length} stations)
+            12AM–12PM vs 12PM–12AM ({stationOptions.length} stations)
           </span>
         </div>
+      </div>
+
+      {/* Demand Level Color Legend + AM/PM Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-600 px-1">
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="font-semibold text-slate-700">Demand Level:</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#38BDF8]" />
+            Low (&lt;35%)
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#0A9396]" />
+            Moderate (35–59%)
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#F59E0B]" />
+            High (60–79%)
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#DC2626]" />
+            Very High (≥80%)
+          </span>
+        </div>
+        <span className="font-mono text-[10px] text-slate-500">
+          AM: 12AM–12PM (12h) | PM: 12PM–12AM (12h)
+        </span>
       </div>
 
       {/* Recharts Bar Chart */}
@@ -148,20 +218,24 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
           No hourly records returned for {selectedStationId} on {selectedDate}.
         </div>
       ) : (
-        <div className="w-full h-[280px] select-none">
+        <div className="w-full h-[300px] select-none">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={records}
-              margin={{ top: 10, right: 10, bottom: 20, left: 10 }}
+              margin={{ top: 18, right: 10, bottom: 28, left: 10 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#ECE6D9" vertical={false} />
               <XAxis
                 dataKey="hour"
                 stroke="#647078"
-                fontSize={11}
+                fontSize={10}
                 tickLine={false}
                 axisLine={{ stroke: '#E3DDCE' }}
-                tickFormatter={(val: number) => `${String(val).padStart(2, '0')}:00`}
+                interval={0}
+                angle={-35}
+                textAnchor="end"
+                height={48}
+                tickFormatter={(val: number) => formatHour12Short(val)}
               />
               <YAxis
                 stroke="#647078"
@@ -176,14 +250,34 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
                   fill: '#647078',
                 }}
               />
+              <ReferenceLine
+                x={12}
+                stroke="#0F172A"
+                strokeDasharray="4 4"
+                strokeWidth={1.5}
+                label={{
+                  value: 'PM Starts (12PM)',
+                  position: 'top',
+                  fill: '#0F172A',
+                  fontSize: 10,
+                  fontWeight: 700,
+                }}
+              />
               <Tooltip
                 content={({ active, payload }) => {
                   if (!active || !payload || payload.length === 0) return null;
                   const item = payload[0].payload as typeof records[0];
+                  const tier = getDemandTier(item.hourly_demand_kg, peakKg);
+                  const periodLabel = item.hour < 12 ? 'AM (Morning/Night)' : 'PM (Afternoon/Evening)';
                   return (
                     <div className="bg-[#001219]/95 text-white p-2.5 rounded-xl text-xs shadow-xl border border-slate-800 space-y-1">
-                      <div className="font-bold text-slate-400">
-                        {String(item.hour).padStart(2, '0')}:00 – {String(item.hour + 1).padStart(2, '0')}:00
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="font-bold text-slate-200">
+                          {formatHourRange12(item.hour)}
+                        </span>
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${tier.badgeClass}`}>
+                          {tier.label}
+                        </span>
                       </div>
                       <div className="text-[11px] text-slate-200">
                         Hourly Demand:{' '}
@@ -192,7 +286,7 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
                         </span>
                       </div>
                       <div className="text-[10px] text-slate-400">
-                        Profile: {item.simulation_profile}
+                        {periodLabel} • Profile: {item.simulation_profile}
                       </div>
                     </div>
                   );
@@ -201,9 +295,13 @@ export const HourlyProfileChart: React.FC<HourlyProfileChartProps> = ({
               <Bar
                 dataKey="hourly_demand_kg"
                 name="Hourly Demand (kg)"
-                fill="#0A9396"
                 radius={[4, 4, 0, 0]}
-              />
+              >
+                {records.map((entry) => {
+                  const tier = getDemandTier(entry.hourly_demand_kg, peakKg);
+                  return <Cell key={`cell-${entry.hour}`} fill={tier.color} />;
+                })}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>

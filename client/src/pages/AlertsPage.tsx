@@ -43,10 +43,57 @@ export const AlertsPage: React.FC = () => {
   // 2. Horizon state
   const [horizonDays, setHorizonDays] = useState<number>(7);
 
-  // 3. User overrides state for future supply planning
-  const [userOverrides, setUserOverrides] = useState<UserSupplyOverride[]>([]);
+  // 3. User overrides state for future supply planning (persisted per station in localStorage)
+  const loadSavedOverrides = (sid: string): UserSupplyOverride[] => {
+    try {
+      const raw = localStorage.getItem(`fuelcast_supply_overrides_${sid}`);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
 
+  const loadSavedAutoKg = (sid: string): number | null => {
+    try {
+      const raw = localStorage.getItem(`fuelcast_supply_auto_kg_${sid}`);
+      if (raw === null) return 1600;
+      const parsed = JSON.parse(raw);
+      return typeof parsed === 'number' || parsed === null ? parsed : 1600;
+    } catch {
+      return 1600;
+    }
+  };
 
+  const [userOverrides, setUserOverrides] = useState<UserSupplyOverride[]>(() =>
+    loadSavedOverrides('AMD001')
+  );
+  const [autoSupplyKg, setAutoSupplyKg] = useState<number | null>(() =>
+    loadSavedAutoKg('AMD001')
+  );
+
+  // Reload saved overrides when switching stations
+  useEffect(() => {
+    setUserOverrides(loadSavedOverrides(selectedStationId));
+    setAutoSupplyKg(loadSavedAutoKg(selectedStationId));
+  }, [selectedStationId]);
+
+  // Persist overrides and auto baseline to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        `fuelcast_supply_overrides_${selectedStationId}`,
+        JSON.stringify(userOverrides)
+      );
+      localStorage.setItem(
+        `fuelcast_supply_auto_kg_${selectedStationId}`,
+        JSON.stringify(autoSupplyKg)
+      );
+    } catch {
+      // Ignore storage quota errors
+    }
+  }, [selectedStationId, userOverrides, autoSupplyKg]);
 
   const handleAddOrUpdateOverride = (override: UserSupplyOverride) => {
     setUserOverrides((prev) => {
@@ -56,14 +103,17 @@ export const AlertsPage: React.FC = () => {
   };
 
   const handleRemoveOverride = (date: string) => {
+    setAutoSupplyKg(null);
     setUserOverrides((prev) => prev.filter((o) => o.date !== date));
   };
 
   const handleClearOverrides = () => {
+    setAutoSupplyKg(null);
     setUserOverrides([]);
   };
 
   const handleApplyPresetSupply = (targetKg: number) => {
+    setAutoSupplyKg(targetKg);
     if (!supplyData?.comparison) return;
     const newOverrides: UserSupplyOverride[] = supplyData.comparison.map((pt) => ({
       date: pt.date,
@@ -87,20 +137,23 @@ export const AlertsPage: React.FC = () => {
     refetch: refetchSupply,
   } = useSupplyCheck(supplyRequest);
 
-  // Auto-populate intelligent baseline supply (1,600 kg/day) if future dates lack allocation
+  // Auto-populate intelligent baseline supply if future dates lack allocation (including horizon switches)
   useEffect(() => {
-    if (
-      supplyData?.comparison &&
-      supplyData.summary.days_covered === 0 &&
-      userOverrides.length === 0
-    ) {
-      const defaultOverrides: UserSupplyOverride[] = supplyData.comparison.map((pt) => ({
-        date: pt.date,
-        supply_kg: 1600,
-      }));
-      setUserOverrides(defaultOverrides);
+    if (autoSupplyKg === null || !supplyData?.comparison) return;
+    const existingDates = new Set(userOverrides.map((o) => o.date));
+    const missingDates = supplyData.comparison.filter(
+      (pt) => pt.supply_data_origin !== 'synthetic_demo' && !existingDates.has(pt.date)
+    );
+    if (missingDates.length > 0) {
+      setUserOverrides((prev) => {
+        const merged = [...prev];
+        for (const pt of missingDates) {
+          merged.push({ date: pt.date, supply_kg: autoSupplyKg });
+        }
+        return merged.sort((a, b) => a.date.localeCompare(b.date));
+      });
     }
-  }, [supplyData, userOverrides.length]);
+  }, [supplyData, userOverrides, autoSupplyKg]);
 
 
 
@@ -244,6 +297,7 @@ export const AlertsPage: React.FC = () => {
       {/* Future Supply Overrides Form */}
       <MotionSection delay={0.25}>
         <SupplyOverrideForm
+          stationId={selectedStationId}
           overrides={userOverrides}
           onAddOrUpdateOverride={handleAddOrUpdateOverride}
           onRemoveOverride={handleRemoveOverride}

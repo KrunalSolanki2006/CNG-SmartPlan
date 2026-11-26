@@ -21,6 +21,7 @@
     "commercial_vehicle_density_proxy": 88.0,
     "pipeline_proximity_meters": 350.0,
     "land_zoning": "Heavy Industrial & Logistics (GIDC Approved)",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -55,6 +56,7 @@
     "commercial_vehicle_density_proxy": 96.0,
     "pipeline_proximity_meters": 180.0,
     "land_zoning": "Commercial Logistics & Warehousing Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -89,6 +91,7 @@
     "commercial_vehicle_density_proxy": 92.5,
     "pipeline_proximity_meters": 220.0,
     "land_zoning": "Special Economic Zone & Export Processing Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -123,6 +126,7 @@
     "commercial_vehicle_density_proxy": 91.0,
     "pipeline_proximity_meters": 120.0,
     "land_zoning": "Heavy Chemical & Petrochemical Industrial",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -157,6 +161,7 @@
     "commercial_vehicle_density_proxy": 82.0,
     "pipeline_proximity_meters": 410.0,
     "land_zoning": "Engineering, Foundry & Automotive Casting Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -191,6 +196,7 @@
     "commercial_vehicle_density_proxy": 94.0,
     "pipeline_proximity_meters": 290.0,
     "land_zoning": "Industrial, Warehousing & Inland Container Depot Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -225,6 +231,7 @@
     "commercial_vehicle_density_proxy": 79.5,
     "pipeline_proximity_meters": 310.0,
     "land_zoning": "Heavy Engineering, Power T&D & Equipment Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -259,6 +266,7 @@
     "commercial_vehicle_density_proxy": 90.0,
     "pipeline_proximity_meters": 480.0,
     "land_zoning": "Heavy Commercial & Maritime Logistics Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -293,6 +301,7 @@
     "commercial_vehicle_density_proxy": 85.0,
     "pipeline_proximity_meters": 260.0,
     "land_zoning": "Industrial Engineering & Metal Fabrication",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -327,6 +336,7 @@
     "commercial_vehicle_density_proxy": 89.0,
     "pipeline_proximity_meters": 80.0,
     "land_zoning": "PCPIR Port Chemical & Hazardous Goods SEZ",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -361,6 +371,7 @@
     "commercial_vehicle_density_proxy": 95.0,
     "pipeline_proximity_meters": 150.0,
     "land_zoning": "Heavy Ceramic, Vitrified Tile & Clay Processing",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -395,6 +406,7 @@
     "commercial_vehicle_density_proxy": 84.0,
     "pipeline_proximity_meters": 210.0,
     "land_zoning": "Agro-Food Processing, Packaging & Dairy Logistics",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -429,6 +441,7 @@
     "commercial_vehicle_density_proxy": 81.0,
     "pipeline_proximity_meters": 380.0,
     "land_zoning": "Heavy Engineering, Steel Rerolling & Port Freight",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -463,6 +476,7 @@
     "commercial_vehicle_density_proxy": 78.0,
     "pipeline_proximity_meters": 440.0,
     "land_zoning": "Brass Parts, Electroplating & Foundry MSME",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -497,6 +511,7 @@
     "commercial_vehicle_density_proxy": 68.0,
     "pipeline_proximity_meters": 250.0,
     "land_zoning": "High-Tech Semiconductor, Clean Energy & Logistics Zone",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": "2026-11-04T14:00:00Z",
     "available_criteria": [
@@ -531,6 +546,7 @@
     "commercial_vehicle_density_proxy": null,
     "pipeline_proximity_meters": null,
     "land_zoning": "Agricultural / Unclassified",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-02T10:00:00Z",
     "last_verified_at": null,
     "available_criteria": [
@@ -566,6 +582,7 @@
     "commercial_vehicle_density_proxy": 65.0,
     "pipeline_proximity_meters": 450.0,
     "land_zoning": "Commercial / Industrial GIDC",
+    "expected_daily_capacity_kg": null,
     "retrieved_at": "2026-11-25T02:00:00Z",
     "last_verified_at": null,
     "available_criteria": [
@@ -576,5 +593,40 @@
     ],
     "missing_criteria": [],
     "notes": "Heavy commercial diesel-to-CNG fleet conversion opportunity along the Delhi-Mumbai freight corridor."
+  },
+  {
+    "candidate_id": "GUJ_CAN_018",
+    "name": "new station",
+    "category": "urban_commercial",
+    "address": "Pinned Location (22.2955\u00b0N, 70.8017\u00b0E)",
+    "locality": "Pinned Location (22.2955\u00b0N, 70.8017\u00b0E)",
+    "city": "Pinned Location (22.2955\u00b0N",
+    "district": "70.8017\u00b0E)",
+    "state": "Gujarat",
+    "latitude": 22.295522,
+    "longitude": 70.80173,
+    "place_id": null,
+    "verification_status": "proposed_candidate",
+    "source_evidence": "Proposed by user via Map Pin / Places Autocomplete",
+    "discovery_method": "user_interactive_proposal",
+    "road_corridor": "Urban Arterial Link",
+    "nearest_major_highway": "SH/NH Corridor",
+    "highway_tier": "State Highway",
+    "traffic_pcu_per_day": null,
+    "commercial_vehicle_density_proxy": null,
+    "pipeline_proximity_meters": 500.0,
+    "land_zoning": "Commercial / GIDC",
+    "expected_daily_capacity_kg": null,
+    "retrieved_at": "2026-11-25T02:00:00Z",
+    "last_verified_at": null,
+    "available_criteria": [
+      "service_gap",
+      "road_accessibility",
+      "distance"
+    ],
+    "missing_criteria": [
+      "demand"
+    ],
+    "notes": "Newly proposed candidate expansion site."
   }
 ]

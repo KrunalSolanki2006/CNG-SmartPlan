@@ -18,7 +18,6 @@ describe('App Component', () => {
     expect(screen.getByText('Supply Alerts')).toBeInTheDocument();
     expect(screen.getByText('Network Map')).toBeInTheDocument();
     expect(screen.getAllByText('Impact Simulator').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Data Quality & Provenance').length).toBeGreaterThan(0);
   });
 
   it('displays the enterprise planning header and organization branding', () => {

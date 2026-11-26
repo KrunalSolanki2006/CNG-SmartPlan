@@ -1,118 +1,107 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  ArrowRight,
-} from 'lucide-react';
+import { RefreshCw, Clock } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { ErrorState } from '../components/ui/ErrorState';
-import { OverviewKPIs } from '../components/dashboard/OverviewKPIs';
-import { HistoricalDemandOverview } from '../components/dashboard/HistoricalDemandOverview';
-import { StationInventoryTable } from '../components/dashboard/StationInventoryTable';
-import { ForecastSummaryCard } from '../components/dashboard/ForecastSummaryCard';
 import { MotionSection } from '../components/ui/MotionContainer';
-import { useOverview } from '../hooks/useOverview';
-import { useStations } from '../hooks/useStations';
+import { ExecutiveKPIs } from '../components/dashboard/ExecutiveKPIs';
+import { GujaratNetworkOverviewCard } from '../components/dashboard/GujaratNetworkOverviewCard';
+import { DemandForecastOverviewCard } from '../components/dashboard/DemandForecastOverviewCard';
+import { SupplyAlertsOverviewCard } from '../components/dashboard/SupplyAlertsOverviewCard';
+import { NetworkIntelligenceExpansionSection } from '../components/dashboard/NetworkIntelligenceExpansionSection';
+import { useDashboardOverview } from '../hooks/useDashboardOverview';
 import { useFixtureMode } from '../context/FixtureContext';
 
 export const DashboardPage: React.FC = () => {
-  const navigate = useNavigate();
   const { useFixtures } = useFixtureMode();
-
-  const {
-    data: overviewData,
-    isLoading: isOverviewLoading,
-    error: overviewError,
-    refetch: refetchOverview,
-  } = useOverview();
-
-  const {
-    data: stationsData,
-    isLoading: isStationsLoading,
-    error: stationsError,
-    refetch: refetchStations,
-  } = useStations();
-
-  const handleRefreshAll = () => {
-    refetchOverview();
-    refetchStations();
-  };
+  const { data, isLoading, error, refetch } = useDashboardOverview(7);
 
   return (
     <div className="space-y-6">
-      {/* Operations Dashboard Hero & Controls */}
+      {/* 1. Dashboard Header */}
       <MotionSection delay={0.05}>
         <div className="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2.5 flex-wrap mb-1.5">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-200 text-[11px] font-semibold tracking-wide uppercase text-teal-800">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
-                  CGD Intelligent Network
-                </span>
-                <span className="text-xs text-slate-500 font-medium">
-                  Gujarat Gas Company Ltd. • Gujarat ({stationsData?.total ?? overviewData?.station_counts.total_in_inventory ?? 151} Stations)
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0A9396]" />
+                  Gujarat CNG Network Overview
                 </span>
               </div>
               <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                Network Operations & Demand Intelligence
+                Main Dashboard — Gujarat CNG Network Overview
               </h2>
               <p className="text-xs text-slate-600 max-w-2xl leading-relaxed mt-1">
-                Executive decision-support platform delivering real-time station inventory intelligence, predictive Holt-Winters demand forecasting, and geospatial network expansion simulation.
+                Executive network overview for Gujarat Gas Company Limited integrating verified CNG infrastructure, aggregated demand forecasts, supply alerts, and expansion insights.
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5 self-start md:self-center shrink-0 flex-wrap">
-
-
+            <div className="flex flex-col sm:items-end gap-2 shrink-0">
+              {data?.provenance.dashboard_generated_at && (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-500">
+                  <Clock className="w-3.5 h-3.5 text-[#0A9396]" />
+                  Updated: {data.provenance.dashboard_generated_at}
+                </span>
+              )}
               <Button
-                variant="primary"
+                variant="outline"
                 size="sm"
-                onClick={() => navigate('/simulator')}
-                className="font-medium rounded-xl shadow-xs"
-                rightIcon={<ArrowRight className="w-3.5 h-3.5 text-white" />}
+                onClick={refetch}
+                leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
+                className="rounded-xl"
               >
-                Impact Simulator
+                Refresh Overview
               </Button>
             </div>
           </div>
         </div>
       </MotionSection>
 
-      {/* Global API Error State if Backend fails and Fixtures are NOT enabled */}
-      {overviewError && !useFixtures && (
+      {/* Error State with Retry */}
+      {error && !useFixtures && (
         <ErrorState
-          title="Backend Connection Required"
-          code={overviewError.code}
-          message={`${overviewError.message} Ensure Member 2's FastAPI service is running on http://localhost:8000 (uvicorn main:app).`}
-          onRetry={handleRefreshAll}
+          title="Main Dashboard Overview Unavailable"
+          code={error.code}
+          message={`${error.message} Ensure the FastAPI service is running on http://localhost:8000.`}
+          onRetry={refetch}
         />
       )}
 
-      {/* 4 Core Overview KPI Cards */}
+      {/* 2. Section 1: KPI Cards — Network at a Glance */}
       <MotionSection delay={0.1}>
-        <OverviewKPIs data={overviewData} isLoading={isOverviewLoading} />
+        <ExecutiveKPIs data={data} isLoading={isLoading} />
       </MotionSection>
 
-      {/* Main Analysis Section: Historical Demand Chart & Forecast Pipeline Card */}
-      <MotionSection delay={0.2}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <HistoricalDemandOverview stations={stationsData?.stations || []} />
-          </div>
-
-          <div className="space-y-4">
-            <ForecastSummaryCard summary={overviewData?.forecast_summary} />
-          </div>
-        </div>
+      {/* 3. Section 2: Gujarat CNG Network Overview */}
+      <MotionSection delay={0.14}>
+        <GujaratNetworkOverviewCard
+          networkSummary={data?.network_summary}
+          isLoading={isLoading}
+        />
       </MotionSection>
 
-      {/* Station Inventory View / Master Table */}
-      <MotionSection delay={0.25}>
-        <StationInventoryTable
-          data={stationsData}
-          isLoading={isStationsLoading}
-          error={stationsError}
-          onRetry={refetchStations}
+      {/* 4. Section 3: Demand Forecast Overview */}
+      <MotionSection delay={0.18}>
+        <DemandForecastOverviewCard
+          forecast={data?.aggregated_forecast}
+          isLoading={isLoading}
+        />
+      </MotionSection>
+
+      {/* 5. Section 4: Supply Alerts & Notifications */}
+      <MotionSection delay={0.22}>
+        <SupplyAlertsOverviewCard
+          alerts={data?.supply_alerts}
+          isLoading={isLoading}
+        />
+      </MotionSection>
+
+      {/* 6. Section 5: Network Intelligence & Expansion Insights */}
+      <MotionSection delay={0.26}>
+        <NetworkIntelligenceExpansionSection
+          intelligence={data?.network_intelligence}
+          expansion={data?.expansion_insights}
+          isLoading={isLoading}
         />
       </MotionSection>
     </div>
